@@ -6,6 +6,6 @@ namespace project.dal
     {
         public string Name { get; set; }
         public Color Color { get; set; }
-        //komentarmore
+        public ICollection<ActivityTagList>? Activities { get; set; } // Odstranit "?" (je tu kvuli testu)
     }
 }
