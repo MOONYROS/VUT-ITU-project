@@ -10,5 +10,6 @@ namespace project.dal
         public bool Finished { get; set; }
         public Color Color { get; set; }
         public User User { get; set; }
+        //test koment
     }
 }
