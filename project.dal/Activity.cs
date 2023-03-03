@@ -2,8 +2,9 @@
 
 namespace project.dal
 {
-    public record Activity
+    public record Activity : IEntityID
     {
+        public Guid Id { get; set; }
         public DateOnly DateFrom { get; set; }
         public TimeOnly TimeFrom { get; set; }
         public DateOnly DateTo { get; set; }

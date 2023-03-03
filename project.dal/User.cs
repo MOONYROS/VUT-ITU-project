@@ -1,7 +1,8 @@
 ﻿namespace project.dal
 {
-    public record User
+    public record User : IEntityID
     {
+        public Guid Id { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }
         public string? ImageUrl { get; set; }

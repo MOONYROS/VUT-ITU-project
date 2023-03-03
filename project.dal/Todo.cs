@@ -2,8 +2,9 @@
 
 namespace project.dal
 {
-    public record Todo
+    public record Todo : IEntityID
     {
+        public Guid Id { get; set; }
         public string  Name { get; set; }
         public DateOnly Date { get; set; }
         public bool Finished { get; set; }
