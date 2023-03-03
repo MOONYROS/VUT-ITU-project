@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace project.dal
+namespace project.DAL.Entities
 {
-    public record Activity : IEntityID
+    public record ActivityEntity : IEntityID
     {
         public Guid Id { get; set; }
         public DateOnly DateFrom { get; set; }
@@ -11,9 +11,9 @@ namespace project.dal
         public TimeOnly TimeTo { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
-        public Color Color { get; set; }
-        public ICollection<ActivityTagList> Tags { get; set;}
-        public Project? Project { get; set; }
-        public User User { get; set; }
+        //public Color Color { get; set; }
+        public ICollection<ActivityTagListEntity> Tags { get; set; }
+        public ProjectEntity? Project { get; set; }
+        public UserEntity User { get; set; }
     }
 }
