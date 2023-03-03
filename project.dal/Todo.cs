@@ -2,8 +2,7 @@
 
 namespace project.dal
 {
-
-    public class Todo
+    public record Todo
     {
         public string  Name { get; set; }
         public DateOnly Date { get; set; }

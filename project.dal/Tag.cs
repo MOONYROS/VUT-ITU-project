@@ -2,7 +2,7 @@
 
 namespace project.dal
 {
-    public class Tag
+    public record Tag
     {
         public string Name { get; set; }
         public Color Color { get; set; }

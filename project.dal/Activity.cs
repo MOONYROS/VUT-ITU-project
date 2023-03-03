@@ -2,7 +2,7 @@
 
 namespace project.dal
 {
-    public class Activity
+    public record Activity
     {
         public DateOnly DateFrom { get; set; }
         public TimeOnly TimeFrom { get; set; }

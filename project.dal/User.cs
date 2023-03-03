@@ -1,6 +1,6 @@
 ﻿namespace project.dal
 {
-    public class User
+    public record User
     {
         public string FullName { get; set; }
         public string UserName { get; set; }

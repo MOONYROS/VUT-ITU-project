@@ -10,6 +10,10 @@ namespace project.DAL
 {
     public class ProjectDbContext : DbContext
     {
+        private readonly bool _seedDemoData;
+
+        public ProjectDbContext(DbContextOptions contextOptions, bool seedDemoData = false) 
+            : base(contextOptions) => _seedDemoData = seedDemoData;
         public DbSet<Activity> Activities => Set<Activity>();
         public DbSet<ActivityTagList> ATLists => Set<ActivityTagList>();
         public DbSet<Project> Projects => Set<Project>();
