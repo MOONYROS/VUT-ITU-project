@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿    using System.Drawing;
 
 namespace project.DAL.Entities
 {
@@ -11,7 +11,8 @@ namespace project.DAL.Entities
         public TimeOnly TimeTo { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
-        //public Color Color { get; set; }
+        /* TODO: Trida Color je moc slozity typ do databaze 
+         * public Color Color { get; set; } */
         public ICollection<ActivityTagListEntity> Tags { get; set; }
         public ProjectEntity? Project { get; set; }
         public UserEntity User { get; set; }

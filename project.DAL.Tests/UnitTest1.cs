@@ -20,7 +20,7 @@ namespace project.DAL.Tests
             var tag = new TagEntity()
             {
                 Name = "Test",
-                Color = System.Drawing.Color.Blue,
+                // Color = System.Drawing.Color.Blue,
                 Activities = null
             };
             _dbContextSUT.Tags.Add(tag);

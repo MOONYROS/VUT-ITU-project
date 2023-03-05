@@ -8,6 +8,6 @@
         public string? ImageUrl { get; set; }
         public ICollection<UserProjectListEntity> Projects { get; set; }
         public ICollection<ActivityEntity> Activities { get; set; }
-        public ICollection<TodoEntity>? Todos { get; set; }
+        public ICollection<TodoEntity> Todos { get; set; }
     }
 }

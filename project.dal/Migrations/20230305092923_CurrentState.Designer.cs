@@ -11,7 +11,7 @@ using project.DAL;
 namespace project.DAL.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20230303212817_CurrentState")]
+    [Migration("20230305092923_CurrentState")]
     partial class CurrentState
     {
         /// <inheritdoc />

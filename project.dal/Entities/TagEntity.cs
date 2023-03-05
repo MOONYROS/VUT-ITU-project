@@ -6,7 +6,8 @@ namespace project.DAL.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        //public Color Color { get; set; }
-        public ICollection<ActivityTagListEntity>? Activities { get; set; } // Odstranit "?" (je tu kvuli testu)
+        /* TODO: Trida Color je moc slozity typ do databaze 
+         * public Color Color { get; set; } */
+        public ICollection<ActivityTagListEntity> Activities { get; set; } 
     }
 }
