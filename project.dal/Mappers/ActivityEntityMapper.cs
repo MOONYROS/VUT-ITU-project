@@ -19,6 +19,7 @@ namespace project.DAL.Mappers
             existingEntity.Name = newEntity.Name;
             existingEntity.TimeFrom = newEntity.TimeFrom;
             existingEntity.TimeTo = newEntity.TimeTo;
+            existingEntity.Color = newEntity.Color;
         }
     }
 }
