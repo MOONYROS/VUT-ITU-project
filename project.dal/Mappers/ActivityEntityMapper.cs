@@ -20,5 +20,6 @@ namespace project.DAL.Mappers
             existingEntity.TimeFrom = newEntity.TimeFrom;
             existingEntity.TimeTo = newEntity.TimeTo;
         }
+    }
 }
 

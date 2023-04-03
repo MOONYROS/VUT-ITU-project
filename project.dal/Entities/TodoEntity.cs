@@ -4,10 +4,10 @@ namespace project.DAL.Entities
 {
     public record TodoEntity : IEntityID
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public DateOnly Date { get; set; }
-        public bool Finished { get; set; }
+        public required Guid Id { get; set; }
+        public required string Name { get; set; }
+        public required DateOnly Date { get; set; }
+        public required bool Finished { get; set; }
         public UserEntity User { get; set; }
     }
 }
