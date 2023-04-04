@@ -13,12 +13,10 @@ namespace project.DAL.Mappers
     {
         public void MapToExistingEntity(ActivityEntity existingEntity, ActivityEntity newEntity)
         {
-            existingEntity.DateFrom = newEntity.DateFrom;
-            existingEntity.DateTo = newEntity.DateTo;
-            existingEntity.Description = newEntity.Description;
+            existingEntity.DateTimeFrom = newEntity.DateTimeFrom;
+            existingEntity.DateTimeTo = newEntity.DateTimeTo;
             existingEntity.Name = newEntity.Name;
-            existingEntity.TimeFrom = newEntity.TimeFrom;
-            existingEntity.TimeTo = newEntity.TimeTo;
+            existingEntity.Description = newEntity.Description;
             existingEntity.Color = newEntity.Color;
         }
     }
