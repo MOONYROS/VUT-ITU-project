@@ -11,7 +11,7 @@ public record ActivityDetailModel : ModelBase
     public required Color Color { get; set; }
     public string? Description { get; set; }
     public ObservableCollection<TagListModel> Tags { get; set; } = new();
-    public static ActivityListModel Empty => new()
+    public static ActivityDetailModel Empty => new()
     {
         // TODO: Change default color to match UI
         Id = Guid.NewGuid(),
