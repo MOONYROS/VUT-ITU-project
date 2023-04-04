@@ -10,4 +10,8 @@
     <Folder Include="Mappers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\project.dal\project.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

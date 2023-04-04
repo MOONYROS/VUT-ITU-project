@@ -1,0 +1,45 @@
+﻿using System.Drawing;
+using project.BL.Mappers.Interfaces;
+using project.BL.Models;
+using project.DAL.Entities;
+
+namespace project.BL.Mappers;
+
+public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListModel, ActivityDetailModel>,
+    IActivityModelMapper
+{
+    public override ActivityListModel MapToListModel(ActivityEntity? entity)
+        => entity is null
+            ? ActivityListModel.Empty
+            : new ActivityListModel
+            {
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color)
+            };
+
+    public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
+        => entity is null
+            ? ActivityDetailModel.Empty
+            : new ActivityDetailModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color),
+                Description = entity.Description
+            };
+
+    public override ActivityEntity MapToEntity(ActivityDetailModel model)
+        => new()
+        {
+            Id = model.Id,
+            DateTimeFrom = model.DateTimeFrom,
+            DateTimeTo = model.DateTimeTo,
+            Name = model.Name,
+            Color = model.Color.ToArgb(),
+            Description = model.Description
+        };
+}
