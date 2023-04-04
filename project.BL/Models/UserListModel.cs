@@ -12,8 +12,8 @@ namespace project.BL.Models
         public string? ImageUrl { get; set; }
         public static UserListModel Empty => new()
         {
-            Name = string.Empty,
-            Id = Guid.NewGuid()
+            Id = Guid.NewGuid(),
+            Name = string.Empty
         };
     }
 }

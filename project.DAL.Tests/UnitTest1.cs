@@ -17,11 +17,13 @@ namespace project.DAL.Tests
         [Fact]
         public void Tag_Add_Added()
         {
-            var tag = new TagEntity()
+            var tag = new TagEntity
             {
                 Name = "Test",
                 // Color = System.Drawing.Color.Blue,
-                Activities = null
+                Activities = null,
+                Id = default,
+                Color = 0
             };
             _dbContextSUT.Tags.Add(tag);
             _dbContextSUT.SaveChanges();
