@@ -22,10 +22,37 @@ namespace project.DAL
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserProjectListEntity> UPLists => Set<UserProjectListEntity>();
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(i => i.Projects)
+                .WithOne(i => i.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProjectEntity>()
+                .HasMany<UserProjectListEntity>()
+                .WithOne(i => i.Project)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TagEntity>()
+                .HasMany<ActivityTagListEntity>()
+                .WithOne(i => i.Tag)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ActivityEntity>()
+                .HasMany<ActivityTagListEntity>()
+                .WithOne(i => i.Activity)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+        
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Filename=sqlitedb1; cache=shared");
             base.OnConfiguring(optionsBuilder);
         }
+        */
     }
 }
