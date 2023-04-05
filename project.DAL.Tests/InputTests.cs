@@ -99,6 +99,6 @@ namespace project.DAL.Tests
             Assert.Equal(dbEntity.Date, entity.Date);
             Assert.Equal(dbEntity.Finished, entity.Finished);
 
-        }*/
+        }
     }
 }
