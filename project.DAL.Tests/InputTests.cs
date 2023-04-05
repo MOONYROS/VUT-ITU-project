@@ -6,7 +6,6 @@ namespace project.DAL.Tests
 {
     public class InputTests : DbContextTestsBase
     {
-        
         [Fact]
 
         public async Task AddNewUser()
@@ -50,7 +49,7 @@ namespace project.DAL.Tests
         }
         
 
-        /*
+        
         [Fact]
         public async Task AddNewProject()
         {
@@ -70,19 +69,24 @@ namespace project.DAL.Tests
             Assert.Equal(dbEntity.Name, entity.Name);
             Assert.Equal(dbEntity.Description, entity.Description);
         }
-        */
-        
 
-        /*
         [Fact]
         public async Task AddTodo()
         {
+            UserEntity user = new()
+            {
+                Id = Guid.NewGuid(),
+                FullName = "Adam",
+                UserName = "Malysak"
+            };
+
             TodoEntity entity = new()
             {
                 Id = Guid.NewGuid(),
                 Name = "Spachat neziti",
                 Date = DateOnly.Parse("January 1, 2000"),
-                Finished = false
+                Finished = false,
+                User = user
             };
 
             ProjectDbContextSUT.Todos.Add(entity);

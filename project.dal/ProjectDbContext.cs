@@ -29,7 +29,12 @@ namespace project.DAL
             modelBuilder.Entity<UserEntity>()
                 .HasMany(i => i.Projects)
                 .WithOne(i => i.User)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(i=>i.Todos)
+                .WithOne(i => i.User)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ProjectEntity>()
                 .HasMany<UserProjectListEntity>()
@@ -39,11 +44,16 @@ namespace project.DAL
             modelBuilder.Entity<TagEntity>()
                 .HasMany<ActivityTagListEntity>()
                 .WithOne(i => i.Tag)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ActivityEntity>()
                 .HasMany<ActivityTagListEntity>()
                 .WithOne(i => i.Activity)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TodoEntity>()
+                .HasOne(i=>i.User)
+                .WithMany(i => i.Todos)
                 .OnDelete(DeleteBehavior.Cascade);
         }
         
