@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using project.DAL;
 using Microsoft.EntityFrameworkCore;
 using project.DAL.Entities;
@@ -7,7 +8,6 @@ namespace project.DAL.Tests
     public class InputTests : DbContextTestsBase
     {
         [Fact]
-
         public async Task AddNewUser()
         {
             UserEntity entity = new()
@@ -26,7 +26,6 @@ namespace project.DAL.Tests
             Assert.Equal(dbEntity.FullName, entity.FullName);
             Assert.Equal(dbEntity.UserName, entity.UserName);
         }
-
         
         [Fact]
         public async Task AddNewTag()
@@ -47,8 +46,6 @@ namespace project.DAL.Tests
             Assert.Equal(dbEntity.Name, entity.Name);
             Assert.Equal(dbEntity.Color, entity.Color);
         }
-        
-
         
         [Fact]
         public async Task AddNewProject()
@@ -71,7 +68,7 @@ namespace project.DAL.Tests
         }
 
         [Fact]
-        public async Task AddTodo()
+        public async Task AddNewUserWithTodo()
         {
             UserEntity user = new()
             {
@@ -80,25 +77,72 @@ namespace project.DAL.Tests
                 UserName = "Malysak"
             };
 
-            TodoEntity entity = new()
+            TodoEntity todo = new()
             {
                 Id = Guid.NewGuid(),
                 Name = "Spachat neziti",
                 Date = DateOnly.Parse("January 1, 2000"),
                 Finished = false,
-                User = user
+                User = user,
+                UserId = user.Id
             };
 
-            ProjectDbContextSUT.Todos.Add(entity);
+            ProjectDbContextSUT.Todos.Add(todo);
+            ProjectDbContextSUT.Users.Add(user);
             await ProjectDbContextSUT.SaveChangesAsync();
 
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbEntity = await dbx.Todos.SingleAsync(i => i.Id == entity.Id);
+            var dbTodo = await dbx.Todos.SingleAsync(i => i.Id == todo.Id);
 
-            Assert.Equal(dbEntity.Name, entity.Name);
-            Assert.Equal(dbEntity.Date, entity.Date);
-            Assert.Equal(dbEntity.Finished, entity.Finished);
+            Assert.Equal(dbTodo.Name, todo.Name);
+            Assert.Equal(dbTodo.Date, todo.Date);
+            Assert.Equal(dbTodo.Finished, todo.Finished);
+        }
 
+        [Fact]
+        public async Task AddNewProjectWithActivity()
+        {
+            UserEntity user = new()
+            {
+                Id = Guid.NewGuid(),
+                FullName = "Ondrej Koumar",
+                UserName = "Koumy"
+            };
+            ProjectEntity project = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "ICS projekt speedrun any%",
+                Description = "set seed glitchless WR attempt"
+            };
+
+            ActivityEntity activity = new()
+            {
+                Id = Guid.NewGuid(),
+                DateTimeFrom = default,
+                DateTimeTo = default,
+                Name = "Writing tests",
+                Color = 0,
+                Project = null,
+                ProjectId = project.Id,
+                User = user,
+                UserId = user.Id
+            };
+
+            ProjectDbContextSUT.Users.Add(user);
+            ProjectDbContextSUT.Projects.Add(project);
+            ProjectDbContextSUT.Activities.Add(activity);
+            await ProjectDbContextSUT.SaveChangesAsync();
+
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbActivity = await dbx.Activities.SingleAsync(i => i.Id == activity.Id);
+            var dbProject = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
+            var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+
+            Assert.Equal(user.Id, dbActivity.User.Id);
+            Debug.Assert(dbActivity.Project != null, "dbActivity.Project != null");
+            Assert.Equal(project.Id, dbActivity.Project.Id);
+            Assert.Equal(user.Id, dbActivity.UserId);
+            Assert.Equal(project.Id, dbActivity.ProjectId);
         }
     }
 }

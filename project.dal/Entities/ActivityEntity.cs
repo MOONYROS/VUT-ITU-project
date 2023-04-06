@@ -11,9 +11,9 @@ namespace project.DAL.Entities
         public string? Description { get; set; }
         public required int Color { get; set; }
         public ICollection<ActivityTagListEntity> Tags { get; init; } = new List<ActivityTagListEntity>();
-        public ProjectEntity? Project { get; set; }
+        public required ProjectEntity? Project { get; set; }
         public required Guid? ProjectId { get; set; }
-        public UserEntity User { get; set; }
+        public required UserEntity User { get; set; }
         public required Guid UserId { get; set; }
     }
 }
