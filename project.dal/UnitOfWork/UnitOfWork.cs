@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using projectk.DAL.Repositories;
 using project.DAL.Repositories;
 using project.DAL.Entities;
 using project.DAL.Mappers;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
-using System;
+
 
 namespace project.DAL.UnitOfWork
 {

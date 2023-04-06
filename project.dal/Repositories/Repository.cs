@@ -1,12 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using project.DAL.Entities;
+﻿using project.DAL.Entities;
 using project.DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
-using project.DAL.Repositories;
 
-namespace projectk.DAL.Repositories;
+namespace project.DAL.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class, IEntityID
