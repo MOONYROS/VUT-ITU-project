@@ -2,6 +2,7 @@ using System.Diagnostics;
 using project.DAL;
 using Microsoft.EntityFrameworkCore;
 using project.DAL.Entities;
+using project.DAL.Tests.Seeds;
 
 namespace project.DAL.Tests
 {
@@ -115,17 +116,12 @@ namespace project.DAL.Tests
                 Description = "set seed glitchless WR attempt"
             };
 
-            ActivityEntity activity = new()
+            ActivityEntity activity = ActivitySeeds.ActivitySeed() with
             {
-                Id = Guid.NewGuid(),
-                DateTimeFrom = default,
-                DateTimeTo = default,
-                Name = "Writing tests",
-                Color = 0,
-                Project = null,
-                ProjectId = project.Id,
                 User = user,
-                UserId = user.Id
+                UserId = user.Id,
+                Project = project,
+                ProjectId = project.Id
             };
 
             ProjectDbContextSUT.Users.Add(user);
