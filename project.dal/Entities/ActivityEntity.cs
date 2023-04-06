@@ -10,8 +10,10 @@ namespace project.DAL.Entities
         public required string Name { get; set; }
         public string? Description { get; set; }
         public required int Color { get; set; }
-        public ICollection<ActivityTagListEntity> Tags { get; set; }
+        public ICollection<ActivityTagListEntity> Tags { get; init; } = new List<ActivityTagListEntity>();
         public ProjectEntity? Project { get; set; }
+        public required Guid? ProjectId { get; set; }
         public UserEntity User { get; set; }
+        public required Guid UserId { get; set; }
     }
 }

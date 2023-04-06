@@ -8,6 +8,7 @@ namespace project.DAL.Entities
         public required string Name { get; set; }
         public required DateOnly Date { get; set; }
         public required bool Finished { get; set; }
-        public UserEntity User { get; set; }
+        public UserEntity User { get; set; } 
+        public required Guid UserId { get; set; }
     }
 }
