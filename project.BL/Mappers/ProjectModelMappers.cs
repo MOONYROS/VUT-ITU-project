@@ -13,7 +13,8 @@ public class ProjectModelMappers : ModelMapperBase<ProjectEntity, ProjectListMod
             ? ProjectListModel.Empty
             : new ProjectListModel()
             {
-                Name = string.Empty
+                Id = entity.Id,
+                Name = entity.Name,
             };
 
     public override ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
@@ -21,15 +22,16 @@ public class ProjectModelMappers : ModelMapperBase<ProjectEntity, ProjectListMod
             ? ProjectDetailModel.Empty
             : new ProjectDetailModel
             {
-                Name = string.Empty,
-                Description = string.Empty
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description
             };
 
     public override ProjectEntity MapToEntity(ProjectDetailModel model)
         => new()
         {
-            Id = Guid.NewGuid(),
-            Name = string.Empty,
-            Description = string.Empty
+            Id = model.Id,
+            Name = model.Name,
+            Description = model.Description
         };
 }

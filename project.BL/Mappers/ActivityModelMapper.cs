@@ -13,6 +13,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             ? ActivityListModel.Empty
             : new ActivityListModel
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 DateTimeFrom = entity.DateTimeFrom,
                 DateTimeTo = entity.DateTimeTo,
