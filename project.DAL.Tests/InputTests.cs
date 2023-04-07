@@ -157,7 +157,48 @@ namespace project.DAL.Tests
             Assert.NotEqual(dbUser1.Id, dbUser2.Id);
             Assert.NotEqual(dbUser1.Id, dbActivity2.Id);
             Assert.NotEqual(dbUser2.Id, dbActivity1.Id);
+        }
 
+        [Fact]
+        public async Task AddTwoActivitiesToProject()
+        {
+            var user = UserSeeds.UserSeed();
+            
+            var project = ProjectSeeds.ProjectSeed();
+
+            var activity1 = ActivitySeeds.ActivitySeed() with
+            {
+                User = user,
+                UserId = user.Id,
+                Project = project,
+                ProjectId = project.Id
+            };
+            var activity2 = ActivitySeeds.ActivitySeed() with
+            {
+                User = user,
+                UserId = user.Id,
+                Project = project,
+                ProjectId = project.Id
+            };
+
+            ProjectDbContextSUT.Users.Add(user);
+            ProjectDbContextSUT.Projects.Add(project);
+            ProjectDbContextSUT.Activities.Add(activity1);
+            ProjectDbContextSUT.Activities.Add(activity2);
+            await ProjectDbContextSUT.SaveChangesAsync();
+            
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbActivity1 = await dbx.Activities.SingleAsync(i => i.Id == activity1.Id);
+            var dbActivity2 = await dbx.Activities.SingleAsync(i => i.Id == activity2.Id);
+            var dbProject = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
+            var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+            
+            Assert.Equal(dbActivity1.User.Id, dbActivity2.User.Id);
+            Assert.Equal(dbProject.Id, activity1.ProjectId);
+            Assert.Equal(dbProject.Id, activity2.ProjectId);
+            Assert.Equal(dbUser.Id, user.Id);
+            
+            Assert.NotEqual(dbActivity1.Id, activity2.Id);
         }
     }
 }
