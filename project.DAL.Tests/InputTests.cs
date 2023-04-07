@@ -11,21 +11,16 @@ namespace project.DAL.Tests
         [Fact]
         public async Task AddNewUser()
         {
-            UserEntity entity = new()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Adam Malysak",
-                UserName = "Malys"
-            };
-
-            ProjectDbContextSUT.Users.Add(entity);
+            var user = UserSeeds.UserSeed();
+            
+            ProjectDbContextSUT.Users.Add(user);
             await ProjectDbContextSUT.SaveChangesAsync();
 
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbEntity = await dbx.Users.SingleAsync(i => i.Id == entity.Id);
+            var dbEntity = await dbx.Users.SingleAsync(i => i.Id == user.Id);
 
-            Assert.Equal(dbEntity.FullName, entity.FullName);
-            Assert.Equal(dbEntity.UserName, entity.UserName);
+            Assert.Equal(dbEntity.FullName, user.FullName);
+            Assert.Equal(dbEntity.UserName, user.UserName);
         }
         
         [Fact]

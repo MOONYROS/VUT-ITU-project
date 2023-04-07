@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using project.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace project.DAL
 {
     public class ProjectDbContext : DbContext
@@ -25,8 +19,7 @@ namespace project.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // TODO: DeleteBehavior should be restrict or cascade
+            
             modelBuilder.Entity<UserEntity>()
                 .HasMany(i => i.Projects)
                 .WithOne(i => i.User)
@@ -40,9 +33,8 @@ namespace project.DAL
             modelBuilder.Entity<UserEntity>()
                 .HasMany(i => i.Activities)
                 .WithOne(i => i.User)
-                // TODO: Should deleting user delete activities that are part of projects?
-                // Possible solution might be ProjectActivityEntity and UserActivityEntity separately
-                .OnDelete(DeleteBehavior.Cascade); // Cascade is fine in the meanwhile
+                // Project is more like a tag within the activity (not shared between users)
+                .OnDelete(DeleteBehavior.Cascade); // Deleting user will delete all his activities
 
             modelBuilder.Entity<ProjectEntity>()
                 .HasMany(i=>i.Users)

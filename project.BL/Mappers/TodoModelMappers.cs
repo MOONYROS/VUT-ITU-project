@@ -30,12 +30,19 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
             };
 
     public override TodoEntity MapToEntity(TodoDetailModel model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public TodoEntity MapToEntity(TodoDetailModel model, UserEntity user)
         => new()
         {
             Id = Guid.NewGuid(),
             Name = model.Name,
             Date = model.Date,
-            Finished = model.Finished
+            Finished = model.Finished,
+            User = user,
+            UserId = user.Id, 
         };
 
 }

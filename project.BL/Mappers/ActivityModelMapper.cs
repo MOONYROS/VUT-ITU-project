@@ -33,13 +33,21 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
-        => new()
-        {
-            Id = model.Id,
-            DateTimeFrom = model.DateTimeFrom,
-            DateTimeTo = model.DateTimeTo,
-            Name = model.Name,
-            Color = model.Color.ToArgb(),
-            Description = model.Description
-        };
+    {
+        throw new NotImplementedException();
+    }
+
+    public ActivityEntity MapToEntity(ActivityDetailModel model, Guid userId, Guid? projectId) => new()
+    {
+        Id = model.Id,
+        DateTimeFrom = model.DateTimeFrom,
+        DateTimeTo = model.DateTimeTo,
+        Name = model.Name,
+        Color = model.Color.ToArgb(),
+        Description = model.Description,
+        Project = null,
+        ProjectId = projectId,
+        User = null,
+        UserId = userId
+    };
 }
