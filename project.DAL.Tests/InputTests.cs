@@ -31,59 +31,40 @@ namespace project.DAL.Tests
         [Fact]
         public async Task AddNewTag()
         {
-            TagEntity entity = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Odpoledni hrani",
-                Color = 1
-            };
+            var tag = TagSeeds.TagSeed();
 
-            ProjectDbContextSUT.Tags.Add(entity);
+            ProjectDbContextSUT.Tags.Add(tag);
             await ProjectDbContextSUT.SaveChangesAsync();
 
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbEntity = await dbx.Tags.SingleAsync(i => i.Id == entity.Id);
+            var dbEntity = await dbx.Tags.SingleAsync(i => i.Id == tag.Id);
 
-            Assert.Equal(dbEntity.Name, entity.Name);
-            Assert.Equal(dbEntity.Color, entity.Color);
+            Assert.Equal(dbEntity.Name, tag.Name);
+            Assert.Equal(dbEntity.Color, tag.Color);
         }
         
         [Fact]
         public async Task AddNewProject()
         {
-            ProjectEntity entity = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Brno siege",
-                Description= "Zazvon v 11"
-            };
-
-            ProjectDbContextSUT.Projects.Add(entity);
+            var project = ProjectSeeds.ProjectSeed();
+            
+            ProjectDbContextSUT.Projects.Add(project);
             await ProjectDbContextSUT.SaveChangesAsync();
 
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbEntity = await dbx.Projects.SingleAsync(i => i.Id == entity.Id);
+            var dbEntity = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
 
-            Assert.Equal(dbEntity.Name, entity.Name);
-            Assert.Equal(dbEntity.Description, entity.Description);
+            Assert.Equal(dbEntity.Name, project.Name);
+            Assert.Equal(dbEntity.Description, project.Description);
         }
 
         [Fact]
         public async Task AddNewUserWithTodo()
         {
-            UserEntity user = new()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Adam",
-                UserName = "Malysak"
-            };
+            var user = UserSeeds.UserSeed();
 
-            TodoEntity todo = new()
+            var todo = TodoSeeds.TodoSeed() with
             {
-                Id = Guid.NewGuid(),
-                Name = "Spachat neziti",
-                Date = DateOnly.Parse("January 1, 2000"),
-                Finished = false,
                 User = user,
                 UserId = user.Id
             };
@@ -103,20 +84,11 @@ namespace project.DAL.Tests
         [Fact]
         public async Task AddNewProjectWithActivity()
         {
-            UserEntity user = new()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Ondrej Koumar",
-                UserName = "Koumy"
-            };
-            ProjectEntity project = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "ICS projekt speedrun any%",
-                Description = "set seed glitchless WR attempt"
-            };
+            var user = UserSeeds.UserSeed();
+            
+            var project = ProjectSeeds.ProjectSeed();
 
-            ActivityEntity activity = ActivitySeeds.ActivitySeed() with
+            var activity = ActivitySeeds.ActivitySeed() with
             {
                 User = user,
                 UserId = user.Id,
