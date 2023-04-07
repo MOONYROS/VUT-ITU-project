@@ -17,16 +17,16 @@ public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, Acti
     
     public override ActivityDetailModel MapToListModel(ActivityTagListEntity? entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public override TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public override ActivityTagListEntity MapToEntity(TagDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }

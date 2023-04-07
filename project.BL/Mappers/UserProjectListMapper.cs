@@ -18,31 +18,31 @@ public class UserProjectListMapper : ModelMapperBase<UserProjectListEntity, Proj
 
     public override ProjectDetailModel MapToListModel(UserProjectListEntity? entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     ProjectDetailModel IModelMapper<UserProjectListEntity, UserDetailModel, ProjectDetailModel>.MapToDetailModel(UserProjectListEntity entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public UserProjectListEntity MapToEntity(ProjectDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     UserDetailModel IModelMapper<UserProjectListEntity, UserDetailModel, ProjectDetailModel>.MapToListModel(UserProjectListEntity? entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public override UserDetailModel MapToDetailModel(UserProjectListEntity entity)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public override UserProjectListEntity MapToEntity(UserDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }

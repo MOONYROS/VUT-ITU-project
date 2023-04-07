@@ -31,7 +31,7 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
 
     public override TodoEntity MapToEntity(TodoDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public TodoEntity MapToEntity(TodoDetailModel model, UserEntity user)
@@ -45,4 +45,23 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
             UserId = user.Id, 
         };
 
+    public TodoListModel MapToListModel(TodoDetailModel detail)
+    {
+        throw new NotSupportedException();
+    }
+
+    public TodoEntity MapToEntity(TodoDetailModel model, Guid todoId)
+    {
+        throw new NotSupportedException();
+    }
+
+    public void MapToExistingDetailModel(TodoDetailModel detail, TodoListModel todo)
+    {
+        throw new NotSupportedException();
+    }
+
+    public TodoEntity MapToEntity(TodoListModel model)
+    {
+        throw new NotSupportedException();
+    }
 }

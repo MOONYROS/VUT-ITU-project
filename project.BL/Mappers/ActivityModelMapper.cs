@@ -34,7 +34,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public ActivityEntity MapToEntity(ActivityDetailModel model, Guid userId, Guid? projectId) => new()
