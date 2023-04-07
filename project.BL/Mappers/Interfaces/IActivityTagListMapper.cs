@@ -5,4 +5,5 @@ namespace project.BL.Mappers.Interfaces;
 
 public interface IActivityTagListMapper : IModelMapper<ActivityTagListEntity, ActivityDetailModel, TagDetailModel>
 {
+    ActivityTagListEntity MapToEntity(ActivityDetailModel activity, TagDetailModel tag);
 }

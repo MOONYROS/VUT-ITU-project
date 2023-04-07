@@ -15,7 +15,7 @@ public class UserProjectListMapper : ModelMapperBase<UserProjectListEntity, Proj
             ProjectId = project.Id,
             UserId = user.Id
         };
-
+    
     public override ProjectDetailModel MapToListModel(UserProjectListEntity? entity)
     {
         throw new NotSupportedException();

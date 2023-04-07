@@ -31,12 +31,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
                 Color = Color.FromArgb(entity.Color),
                 Description = entity.Description
             };
-
-    public override ActivityEntity MapToEntity(ActivityDetailModel model)
-    {
-        throw new NotSupportedException();
-    }
-
+    
     public ActivityEntity MapToEntity(ActivityDetailModel model, Guid userId, Guid? projectId) => new()
     {
         Id = model.Id,
@@ -50,4 +45,9 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
         User = null,
         UserId = userId
     };
+    
+    public override ActivityEntity MapToEntity(ActivityDetailModel model)
+    {
+        throw new NotSupportedException();
+    }
 }
