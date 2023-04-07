@@ -107,5 +107,57 @@ namespace project.DAL.Tests
             Assert.Equal(user.Id, dbActivity.UserId);
             Assert.Equal(project.Id, dbActivity.ProjectId);
         }
+
+        [Fact]
+        public async Task AddTwoUsersDifferentProject()
+        {
+            var user1 = UserSeeds.UserSeed();
+            var user2 = UserSeeds.UserSeed();
+        
+            var project1 = ProjectSeeds.ProjectSeed();
+            var project2 = ProjectSeeds.ProjectSeed();
+
+            var activity1 = ActivitySeeds.ActivitySeed() with
+            {
+                User = user1,
+                UserId = user1.Id,
+                Project = project1,
+                ProjectId = project1.Id
+            };
+            var activity2 = ActivitySeeds.ActivitySeed() with
+            {
+                User = user2,
+                UserId = user2.Id,
+                Project = project2,
+                ProjectId = project2.Id
+            };
+            
+            ProjectDbContextSUT.Users.Add(user1);
+            ProjectDbContextSUT.Users.Add(user2);
+            ProjectDbContextSUT.Projects.Add(project1);
+            ProjectDbContextSUT.Projects.Add(project2);
+            ProjectDbContextSUT.Activities.Add(activity1);
+            ProjectDbContextSUT.Activities.Add(activity2);
+            await ProjectDbContextSUT.SaveChangesAsync();
+            
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbActivity1 = await dbx.Activities.SingleAsync(i => i.Id == activity1.Id);
+            var dbActivity2 = await dbx.Activities.SingleAsync(i => i.Id == activity2.Id);
+            var dbProject1 = await dbx.Projects.SingleAsync(i => i.Id == project1.Id);
+            var dbProject2 = await dbx.Projects.SingleAsync(i => i.Id == project2.Id);
+            var dbUser1 = await dbx.Users.SingleAsync(i => i.Id == user1.Id);
+            var dbUser2 = await dbx.Users.SingleAsync(i => i.Id == user2.Id);
+            
+            Assert.Equal(dbActivity1.User.Id, user1.Id);
+            Assert.Equal(dbActivity2.User.Id, user2.Id);
+            Assert.Equal(dbUser1.Id, user1.Id);
+            Assert.Equal(dbUser2.Id, user2.Id);
+
+            Assert.NotEqual(dbProject1.Id, dbProject2.Id);
+            Assert.NotEqual(dbUser1.Id, dbUser2.Id);
+            Assert.NotEqual(dbUser1.Id, dbActivity2.Id);
+            Assert.NotEqual(dbUser2.Id, dbActivity1.Id);
+
+        }
     }
 }
