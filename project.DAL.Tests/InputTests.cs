@@ -1,7 +1,5 @@
 using System.Diagnostics;
-using project.DAL;
 using Microsoft.EntityFrameworkCore;
-using project.DAL.Entities;
 using project.DAL.Tests.Seeds;
 
 namespace project.DAL.Tests
@@ -106,6 +104,8 @@ namespace project.DAL.Tests
             Assert.Equal(project.Id, dbActivity.Project.Id);
             Assert.Equal(user.Id, dbActivity.UserId);
             Assert.Equal(project.Id, dbActivity.ProjectId);
+            Assert.Equal(dbProject.Id, dbActivity.ProjectId);
+            Assert.Equal(dbActivity.User.Id, dbUser.Id);
         }
 
         [Fact]
