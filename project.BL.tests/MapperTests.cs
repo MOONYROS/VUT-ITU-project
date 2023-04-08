@@ -15,7 +15,7 @@ namespace project.BL.tests;
 public class MapperTests : DbContextTestsBase
 {
     [Fact]
-    public async Task MapUser()
+    public async Task MapUser_EntityToModel()
     {
         // Insert user into database
         var user = UserSeeds.UserSeed();
@@ -46,7 +46,7 @@ public class MapperTests : DbContextTestsBase
     }
 
     [Fact]
-    public void MapActivityWithTag()
+    public void MapActivityWithTag_EntityToModel()
     {
         var user = UserSeeds.UserSeed();
         var activity = ActivitySeeds.ActivitySeed() with
@@ -86,7 +86,7 @@ public class MapperTests : DbContextTestsBase
     }
 
     [Fact]
-    public void MapProject()
+    public void MapProject_EntityToModel()
     {
         var project = ProjectSeeds.ProjectSeed();
 
@@ -99,7 +99,7 @@ public class MapperTests : DbContextTestsBase
     }
 
     [Fact]
-    public void MapProjectWithUsers()
+    public void MapProjectWithUsers_EntityToModel()
     {
         var user1 = UserSeeds.UserSeed();
         var user2 = UserSeeds.UserSeed();
