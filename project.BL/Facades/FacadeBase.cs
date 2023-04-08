@@ -33,6 +33,11 @@ public abstract class
         ModelMapper = modelMapper;
     }
 
+    // protected FacadeBase(IUnitOfWorkFactory unitOfWorkFactory, IActivityTagListMapper activityTagListMapper)
+    // {
+    //     throw new NotImplementedException();
+    // }
+
     protected virtual string IncludesNavigationPathDetail => string.Empty;
 
     public async Task DeleteAsync(Guid id)
