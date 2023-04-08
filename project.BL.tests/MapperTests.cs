@@ -107,7 +107,7 @@ public class MapperTests : DbContextTestsBase
 
         var userMapper = new UserModelMapper();
         var projectMapper = new ProjectModelMappers();
-        var userProjectListMapper = new UserProjectListMapper();
+        var userProjectListMapper = new UserProjectModelMapper();
 
         var mappedUser1 = userMapper.MapToDetailModel(user1);
         var mappedUser2 = userMapper.MapToDetailModel(user2);
