@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using project.DAL.Entities;
 using project.DAL.Tests.Seeds;
 
 namespace project.DAL.Tests
@@ -199,6 +200,55 @@ namespace project.DAL.Tests
             Assert.Equal(dbUser.Id, user.Id);
             
             Assert.NotEqual(dbActivity1.Id, activity2.Id);
+        }
+
+        [Fact]
+        public async Task AddTwoUsersToProject()
+        {
+            var user1 = UserSeeds.UserSeed();
+            var user2 = UserSeeds.UserSeed();
+
+            var project = ProjectSeeds.ProjectSeed() with
+            {
+                Users = new List<UserProjectListEntity>()
+            };
+
+            var user1InProject = new UserProjectListEntity
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = project.Id,
+                Project = project,
+                UserId = user1.Id,
+                User = user1
+            };
+            var user2InProject = new UserProjectListEntity
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = project.Id,
+                Project = project,
+                UserId = user2.Id,
+                User = user2
+            };
+            
+            project.Users.Add(user1InProject);
+            project.Users.Add(user2InProject);
+            user2.Projects.Add(user2InProject);
+            user1.Projects.Add(user1InProject);
+            
+            ProjectDbContextSUT.Users.Add(user1);
+            ProjectDbContextSUT.Users.Add(user2);
+            ProjectDbContextSUT.Projects.Add(project);
+            await ProjectDbContextSUT.SaveChangesAsync();
+            
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbProject = await dbx.Projects.Include(i => i.Users).SingleAsync(i => i.Id == project.Id);
+            var dbUser1 = await dbx.Users.Include(i => i.Projects).ThenInclude(i => i.Project).SingleAsync(i => i.Id == user1.Id);
+            var dbUser2 = await dbx.Users.Include(i => i.Projects).ThenInclude(i => i.Project).SingleAsync(i => i.Id == user2.Id);
+
+            Assert.NotEqual(dbUser1.Id, dbUser2.Id);
+            
+            DeepAssert.Equal(project.Users, dbProject.Users);
+            DeepAssert.Equal(project, dbProject);
         }
     }
 }
