@@ -4,7 +4,7 @@ using project.BL.Mappers.Interfaces;
 
 namespace project.BL.Mappers;
 
-public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel>,
+public class ActivityTagModelMapper : ModelMapperBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel>,
     IActivityTagListMapper
 {
     public ActivityTagListEntity MapToEntity(ActivityDetailModel activity, TagDetailModel tag)
@@ -19,7 +19,6 @@ public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, Acti
     {
         activity.Tags.Add(tag);
     }
-
 
     public override ActivityTagListModel MapToListModel(ActivityTagListEntity? entity)
     {

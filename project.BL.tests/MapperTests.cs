@@ -73,7 +73,7 @@ public class MapperTests : DbContextTestsBase
         var activityMapper = new ActivityModelMapper();
         var mappedActivity = activityMapper.MapToDetailModel(activity);
         
-        var activityTagListMapper = new ActivityTagListMapper();
+        var activityTagListMapper = new ActivityTagModelMapper();
         activityTagListMapper.AddTagToActivity(refTag, mappedActivity);
         
         Assert.Equal(refActivity.Id, mappedActivity.Id);
