@@ -5,7 +5,7 @@ using project.DAL.Entities;
 namespace project.BL.Mappers;
 
 public class UserProjectModelMapper : ModelMapperBase<UserProjectListEntity, UserProjectListModel, UserProjectDetailModel>,
-    IUserProjectListMapper
+    IUserProjectModelMapper
 {
     public override UserProjectListModel MapToListModel(UserProjectListEntity? entity)
         => entity is null
