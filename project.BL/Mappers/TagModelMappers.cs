@@ -13,7 +13,7 @@ public class TagModelMapper : ModelMapperBase<TagEntity, TagListModel, TagDetail
             ? TagListModel.Empty
             : new TagListModel
             {
-                Id = Guid.NewGuid(),
+                Id = entity.Id,
                 Name = entity.Name,
                 Color = Color.FromArgb(entity.Color)
             };
@@ -23,7 +23,7 @@ public class TagModelMapper : ModelMapperBase<TagEntity, TagListModel, TagDetail
             ? TagDetailModel.Empty
             : new TagDetailModel
             {
-                Id = Guid.NewGuid(),
+                Id = entity.Id,
                 Name = entity.Name,
                 Color = Color.FromArgb(entity.Color)
             };
@@ -31,7 +31,7 @@ public class TagModelMapper : ModelMapperBase<TagEntity, TagListModel, TagDetail
     public override TagEntity MapToEntity(TagDetailModel model)
         => new()
         {
-            Id = Guid.NewGuid(),
+            Id = model.Id,
             Name = model.Name,
             Color = model.Color.ToArgb()
         };

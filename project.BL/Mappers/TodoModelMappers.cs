@@ -12,7 +12,7 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
             ? TodoListModel.Empty
             : new TodoListModel
             {
-                Id = Guid.NewGuid(),
+                Id = entity.Id,
                 Name = entity.Name,
                 Date = entity.Date,
                 Finished = entity.Finished
@@ -23,7 +23,7 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
             ? TodoDetailModel.Empty
             : new TodoDetailModel
             {
-                Id = Guid.NewGuid(),
+                Id = entity.Id,
                 Name = entity.Name,
                 Date = entity.Date,
                 Finished = entity.Finished
@@ -32,7 +32,7 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
     public TodoEntity MapToEntity(TodoDetailModel model, UserEntity user)
         => new()
         {
-            Id = Guid.NewGuid(),
+            Id = model.Id,
             Name = model.Name,
             Date = model.Date,
             Finished = model.Finished,

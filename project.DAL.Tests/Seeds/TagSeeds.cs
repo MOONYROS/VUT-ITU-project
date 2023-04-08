@@ -2,7 +2,7 @@
 
 namespace project.DAL.Tests.Seeds;
 
-public class TagSeeds
+public static class TagSeeds
 {
     private static int _counter = 0;
     private static int TagCounter() => ++_counter;

@@ -1,7 +1,5 @@
 using System.Diagnostics;
-using project.DAL;
 using Microsoft.EntityFrameworkCore;
-using project.DAL.Entities;
 using project.DAL.Tests.Seeds;
 
 namespace project.DAL.Tests

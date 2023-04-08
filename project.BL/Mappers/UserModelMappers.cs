@@ -12,7 +12,7 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
             ? UserListModel.Empty
             : new UserListModel
             {
-                Id = Guid.NewGuid(),
+                Id = entity.Id,
                 UserName = entity.UserName
             };
 
@@ -21,15 +21,15 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
             ? UserDetailModel.Empty
             : new UserDetailModel
             {
+                Id = entity.Id,
                 FullName = entity.FullName,
-                UserName = entity.UserName,
-                Id = Guid.NewGuid()
+                UserName = entity.UserName
             };
 
     public override UserEntity MapToEntity(UserDetailModel model)
         => new()
         {
-            Id = Guid.NewGuid(),
+            Id = model.Id,
             FullName = model.FullName,
             UserName = model.UserName,
             ImageUrl = model.ImageUrl
