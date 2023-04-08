@@ -55,14 +55,6 @@ public class MapperTests : DbContextTestsBase
             UserId = user.Id
         };
         var tag = TagSeeds.TagSeed();
-        var tagInActivity = new ActivityTagListEntity
-        {
-            Id = Guid.NewGuid(),
-            ActivityId = activity.Id,
-            Activity = activity,
-            TagId = tag.Id,
-            Tag = tag
-        };
 
         var tagMapper = new TagModelMapper();
         var refTag = tagMapper.MapToDetailModel(tag);
@@ -82,7 +74,7 @@ public class MapperTests : DbContextTestsBase
         var mappedActivity = activityMapper.MapToDetailModel(activity);
         
         var activityTagListMapper = new ActivityTagListMapper();
-        activityTagListMapper.MapActivityTagListToDetailModel(refTag, mappedActivity);
+        activityTagListMapper.AddTagToActivity(refTag, mappedActivity);
         
         Assert.Equal(refActivity.Id, mappedActivity.Id);
         Assert.Equal(refActivity.Color, mappedActivity.Color);

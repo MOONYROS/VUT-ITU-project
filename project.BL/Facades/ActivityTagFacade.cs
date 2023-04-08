@@ -8,7 +8,7 @@ using project.DAL.UnitOfWork;
 namespace project.BL.Facades;
 
 public class ActivityTagFacade  :
-    FacadeBase<ActivityTagListEntity, ActivityListModel, TagDetailModel, ActivityTagListEntityMapper>, IActivityTagFacade
+    FacadeBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel, ActivityTagListEntityMapper>, IActivityTagFacade
 {
     private readonly IActivityTagListMapper _activityTagListMapper;
     public ActivityTagFacade(   

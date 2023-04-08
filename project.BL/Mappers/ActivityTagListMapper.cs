@@ -4,7 +4,7 @@ using project.BL.Mappers.Interfaces;
 
 namespace project.BL.Mappers;
 
-public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, ActivityDetailModel, TagDetailModel>,
+public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel>,
     IActivityTagListMapper
 {
     public ActivityTagListEntity MapToEntity(ActivityDetailModel activity, TagDetailModel tag)
@@ -15,22 +15,23 @@ public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, Acti
             TagId = tag.Id
         };
 
-    public void MapActivityTagListToDetailModel(TagDetailModel tag, ActivityDetailModel activity)
+    public void AddTagToActivity(TagDetailModel tag, ActivityDetailModel activity)
     {
         activity.Tags.Add(tag);
     }
-    
-    public override ActivityDetailModel MapToListModel(ActivityTagListEntity? entity)
+
+
+    public override ActivityTagListModel MapToListModel(ActivityTagListEntity? entity)
     {
         throw new NotSupportedException();
     }
 
-    public override TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
+    public override ActivityTagDetailModel MapToDetailModel(ActivityTagListEntity entity)
     {
         throw new NotSupportedException();
     }
 
-    public override ActivityTagListEntity MapToEntity(TagDetailModel model)
+    public override ActivityTagListEntity MapToEntity(ActivityTagDetailModel model)
     {
         throw new NotSupportedException();
     }
