@@ -1,7 +1,4 @@
-﻿using project.DAL.Entities;
-
-
-namespace project.BL.Mappers.Interfaces;
+﻿namespace project.BL.Mappers.Interfaces;
 
 public interface IModelMapper<TEntity, out TListModel, TDetailModel>
 {

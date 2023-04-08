@@ -1,6 +1,4 @@
-﻿    using System.Drawing;
-
-namespace project.DAL.Entities
+﻿namespace project.DAL.Entities
 {
     public record ActivityEntity : IEntityID
     {

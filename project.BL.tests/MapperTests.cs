@@ -1,14 +1,8 @@
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Drawing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Client;
 using project.BL.Mappers;
 using project.DAL.Tests;
 using project.DAL.Tests.Seeds;
 using project.BL.Models;
-using project.DAL.Entities;
 
 namespace project.BL.tests;
 
