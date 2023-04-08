@@ -14,6 +14,11 @@ public class ActivityTagListMapper : ModelMapperBase<ActivityTagListEntity, Acti
             ActivityId = activity.Id,
             TagId = tag.Id
         };
+
+    public void MapActivityTagListToDetailModel(TagDetailModel tag, ActivityDetailModel activity)
+    {
+        activity.Tags.Add(tag);
+    }
     
     public override ActivityDetailModel MapToListModel(ActivityTagListEntity? entity)
     {

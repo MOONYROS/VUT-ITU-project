@@ -2,7 +2,7 @@
 
 namespace project.DAL.Tests.Seeds;
 
-public class TodoSeeds
+public static class TodoSeeds
 {
     private static int _counter = 0;
     private static int TodoCounter() => ++_counter;

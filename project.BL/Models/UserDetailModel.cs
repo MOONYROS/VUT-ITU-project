@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
+﻿using System.Collections.ObjectModel;
 
 namespace project.BL.Models;
 public record UserDetailModel : ModelBase
@@ -13,7 +7,7 @@ public record UserDetailModel : ModelBase
     public required string FullName { get; set; }
     public string? ImageUrl { get; set; }
     public ObservableCollection<ActivityListModel> Activities { get; init; } = new();
-    public ObservableCollection<ProjectListModel> Projects { get; init; } = new();
+    public ObservableCollection<ProjectDetailModel> Projects { get; set; } = new();
     public ObservableCollection<TagListModel> Tags { get; init; } = new();
     public ObservableCollection<TodoListModel> Todos { get; init; } = new();
 
