@@ -112,8 +112,8 @@ public class MapperTests : DbContextTestsBase
         var mappedUser1 = userMapper.MapToDetailModel(user1);
         var mappedUser2 = userMapper.MapToDetailModel(user2);
         var mappedProject = projectMapper.MapToDetailModel(project);
-        userProjectListMapper.ConnectUserWithProjectModel(mappedUser1, mappedProject);
-        userProjectListMapper.ConnectUserWithProjectModel(mappedUser2, mappedProject);
+        userProjectListMapper.AddUserToProject(mappedUser1, mappedProject);
+        userProjectListMapper.AddUserToProject(mappedUser2, mappedProject);
 
         var refProject = new ProjectDetailModel
         {
