@@ -15,17 +15,10 @@ namespace project.BL.tests;
 public class MapperTests : DbContextTestsBase
 {
     [Fact]
-    public async Task MapUser_EntityToModel()
+    public void MapUser_EntityToModel()
     {
-        // Insert user into database
+        // Create new user entity
         var user = UserSeeds.UserSeed();
-        
-        ProjectDbContextSUT.Users.Add(user);
-        await ProjectDbContextSUT.SaveChangesAsync();
-        
-        // Get updated dbContext with the new user
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
 
         // Create reference UserDetailModel
         var refUser = new UserDetailModel
@@ -35,14 +28,12 @@ public class MapperTests : DbContextTestsBase
             FullName = user.FullName
         };
 
-        // Map user from database to UserDetailModel
+        // Map user entity to UserDetailModel
         var mapper = new UserModelMapper();
-        var mappedUser = mapper.MapToDetailModel(dbUser);
+        var mappedUser = mapper.MapToDetailModel(user);
         
         // Compare
-        Assert.Equal(refUser.Id, mappedUser.Id);
-        Assert.Equal(refUser.FullName, mappedUser.FullName);
-        Assert.Equal(refUser.UserName, mappedUser.UserName);
+        DeepAssert.Equal(refUser, mappedUser);
     }
 
     [Fact]
@@ -76,13 +67,7 @@ public class MapperTests : DbContextTestsBase
         var activityTagListMapper = new ActivityTagModelMapper();
         activityTagListMapper.AddTagToActivity(refTag, mappedActivity);
         
-        Assert.Equal(refActivity.Id, mappedActivity.Id);
-        Assert.Equal(refActivity.Color, mappedActivity.Color);
-        Assert.Equal(refActivity.Description, mappedActivity.Description);
-        Assert.Equal(refActivity.Name, mappedActivity.Name);
-        Assert.Equal(refActivity.DateTimeFrom, mappedActivity.DateTimeFrom);
-        Assert.Equal(refActivity.DateTimeTo, mappedActivity.DateTimeTo);
-        Assert.Equal(refActivity.Tags, mappedActivity.Tags);
+        DeepAssert.Equal(refActivity, mappedActivity);
     }
 
     [Fact]
@@ -141,9 +126,8 @@ public class MapperTests : DbContextTestsBase
         };
         refUser2.Projects.Add(mappedProject);
 
-        // Assert.Equal(refProject, mappedProject); Dont know why it fails
-        Assert.Equal(refUser1.Projects, mappedUser1.Projects);
-        Assert.Equal(refUser2.Projects, mappedUser2.Projects);
-        Assert.Equal(refProject.Users, mappedProject.Users);
+        DeepAssert.Equal(refProject, mappedProject);
+        DeepAssert.Equal(refUser1, mappedUser1);
+        DeepAssert.Equal(refUser2, mappedUser2);
     }
 }
