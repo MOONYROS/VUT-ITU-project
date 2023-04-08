@@ -15,6 +15,12 @@ public class UserProjectListMapper : ModelMapperBase<UserProjectListEntity, Proj
             ProjectId = project.Id,
             UserId = user.Id
         };
+
+    public void ConnectUserWithProjectModel(UserDetailModel user, ProjectDetailModel project)
+    {
+        project.Users.Add(user);
+        user.Projects.Add(project);
+    }
     
     public override ProjectDetailModel MapToListModel(UserProjectListEntity? entity)
     {
