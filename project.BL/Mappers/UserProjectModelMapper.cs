@@ -5,7 +5,7 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class UserProjectModelMapper : ModelMapperBase<UserProjectListEntity, ProjectDetailModel, UserDetailModel>,
+public class UserProjectModelMapper : ModelMapperBase<UserProjectListEntity, UserProjectListModel, UserProjectDetailModel>,
     IUserProjectListMapper
 {
     public UserProjectListEntity MapToEntity(ProjectDetailModel project, UserDetailModel user) 
