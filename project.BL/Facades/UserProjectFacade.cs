@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using project.BL.Facades.Interfaces;
+using project.BL.Mappers.Interfaces;
+using project.BL.Models;
+using project.DAL.Entities;
+using project.DAL.Mappers;
+using project.DAL.UnitOfWork;
 
-namespace project.BL.Facades.Interfaces
+namespace project.BL.Facades;
+
+public class UserProjectFacade :
+    FacadeBase<UserProjectListEntity, UserProjectListModel, UserProjectDetailModel, UserProjectListEntityMapper>, IUserProjectFacade
 {
-    internal class UserProjectFacade
+    public UserProjectFacade(
+        IUnitOfWorkFactory unitOfWorkFactory,
+        IUserProjectModelMapper modelMapper)
+        : base(unitOfWorkFactory, modelMapper)
     {
     }
+    
 }
