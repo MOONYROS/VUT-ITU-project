@@ -5,7 +5,7 @@ using project.DAL.Tests.Seeds;
 
 namespace project.DAL.Tests
 {
-    public class InputTests : DbContextTestsBase
+    public class DbContextTests : DbContextTestsBase
     {
         [Fact]
         public async Task AddNewUser()
