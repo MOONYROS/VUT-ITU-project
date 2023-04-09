@@ -159,7 +159,7 @@ namespace project.DAL.Tests
             Assert.NotEqual(dbUser1.Id, dbActivity2.Id);
             Assert.NotEqual(dbUser2.Id, dbActivity1.Id);
         }
-
+        
         [Fact]
         public async Task AddTwoActivitiesToProject()
         {
@@ -249,6 +249,60 @@ namespace project.DAL.Tests
             
             DeepAssert.Equal(project.Users, dbProject.Users);
             DeepAssert.Equal(project, dbProject);
+        }
+
+        [Fact]
+        public async Task AddTwoActivitiesToProjectCollection()
+        {
+            var user = UserSeeds.UserSeed();
+            
+            var project = ProjectSeeds.ProjectSeed() with
+            {
+                Activities = new List<ActivityEntity>()
+            };
+
+            var activity1InProject = new ActivityEntity
+            {
+                Id = Guid.NewGuid(),
+                DateTimeFrom = default,
+                DateTimeTo = default,
+                Name = "Activity 1",
+                Color = 16711935,
+                Project = project,
+                ProjectId = project.Id,
+                User = user,
+                UserId = user.Id
+            };
+            var activity2InProject = new ActivityEntity
+            {
+                Id = Guid.NewGuid(),
+                DateTimeFrom = default,
+                DateTimeTo = default,
+                Name = "Activity 2",
+                Color = 16738740,
+                Project = project,
+                ProjectId = project.Id,
+                User = user,
+                UserId = user.Id
+            };
+            
+            project.Activities.Add(activity1InProject);
+            project.Activities.Add(activity2InProject);
+
+            ProjectDbContextSUT.Users.Add(user);
+            ProjectDbContextSUT.Projects.Add(project);
+            await ProjectDbContextSUT.SaveChangesAsync();
+
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbProject = await dbx.Projects.Include(i => i.Activities).SingleAsync(i => i.Id == project.Id);
+            var dbActivity1 = await dbx.Activities.Include(i => i.Project).SingleAsync(i => i.Id == activity1InProject.Id);
+            var dbActivity2 = await dbx.Activities.Include(i => i.Project).SingleAsync(i => i.Id == activity2InProject.Id);
+            
+            Assert.NotEqual(dbActivity1.Id, dbActivity2.Id);
+            Assert.Equal(activity1InProject.User.Id, activity2InProject.User.Id);
+            Assert.Equal(activity1InProject.ProjectId, activity2InProject.ProjectId);
+            
+            DeepAssert.Equal(project.Activities.Count, dbProject.Activities.Count);
         }
     }
 }
