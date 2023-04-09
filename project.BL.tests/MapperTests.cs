@@ -210,8 +210,11 @@ public class MapperTests : DbContextTestsBase
             Name = tag2.Name,
             Color = tag2.Color.ToArgb(),
         };
-        activityTagMapper.AddTagToActivity_Entities(refActivity, refTag1, refTag1InActivity);
-        activityTagMapper.AddTagToActivity_Entities(refActivity, refTag2, refTag2InActivity);
+        refActivity.Tags.Add(refTag1InActivity);
+        refTag1.Activities.Add(refTag1InActivity);
+        refActivity.Tags.Add(refTag2InActivity);
+        refTag2.Activities.Add(refTag2InActivity);
+        
 
         // Asserts
         DeepAssert.Equal(refActivity, mappedActivity);
