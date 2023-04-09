@@ -232,9 +232,9 @@ namespace project.DAL.Tests
             
             project.Users.Add(user1InProject);
             project.Users.Add(user2InProject);
-            user2.Projects.Add(user2InProject);
             user1.Projects.Add(user1InProject);
-            
+            user2.Projects.Add(user2InProject);
+
             ProjectDbContextSUT.Users.Add(user1);
             ProjectDbContextSUT.Users.Add(user2);
             ProjectDbContextSUT.Projects.Add(project);
@@ -298,11 +298,76 @@ namespace project.DAL.Tests
             var dbActivity1 = await dbx.Activities.Include(i => i.Project).SingleAsync(i => i.Id == activity1InProject.Id);
             var dbActivity2 = await dbx.Activities.Include(i => i.Project).SingleAsync(i => i.Id == activity2InProject.Id);
             
-            Assert.NotEqual(dbActivity1.Id, dbActivity2.Id);
             Assert.Equal(activity1InProject.User.Id, activity2InProject.User.Id);
             Assert.Equal(activity1InProject.ProjectId, activity2InProject.ProjectId);
             
+            Assert.NotEqual(dbActivity1.Id, dbActivity2.Id);
+            
             DeepAssert.Equal(project.Activities.Count, dbProject.Activities.Count);
+        }
+
+        // TODO nefunkfcni test, vypisuje 'Sequence has no elements'
+        // Naposledy jsem to resil tak, ze elementy nebyly predany ProjectDbContextSUT, ale tady nevim.
+        // Chova se to velmi podobne, ale myslim si, ze to nebude ten stejny problem.
+        [Fact]
+        public async Task AddTwoActivitiesToTwoTags()
+        {
+            var user = UserSeeds.UserSeed();
+            
+            var project = ProjectSeeds.ProjectSeed();
+        
+            var tag1 = TagSeeds.TagSeed();
+            var tag2 = TagSeeds.TagSeed();
+        
+            var activity1 = ActivitySeeds.ActivitySeed() with
+            {
+                Project = project,
+                ProjectId = project.Id,
+                User = user,
+                UserId = user.Id
+            };
+            var activity2 = ActivitySeeds.ActivitySeed() with
+            {
+                Project = project,
+                ProjectId = project.Id,
+                User = user,
+                UserId = user.Id
+            };
+            
+            var tagActivity1 = new ActivityTagListEntity
+            {
+                Id = Guid.NewGuid(),
+                ActivityId = activity1.Id,
+                TagId = tag1.Id
+            };
+            var tagActivity2 = new ActivityTagListEntity
+            {
+                Id = Guid.NewGuid(),
+                ActivityId = activity2.Id,
+                TagId = tag2.Id
+            };
+            
+            activity1.Tags.Add(tagActivity1);
+            activity2.Tags.Add(tagActivity2);
+            tag1.Activities.Add(tagActivity1);
+            tag2.Activities.Add(tagActivity2);
+        
+            ProjectDbContextSUT.Users.Add(user);
+            ProjectDbContextSUT.Projects.Add(project);
+            ProjectDbContextSUT.Tags.Add(tag1);
+            ProjectDbContextSUT.Tags.Add(tag2);
+            ProjectDbContextSUT.Activities.Add(activity1);
+            ProjectDbContextSUT.Activities.Add(activity2);
+            await ProjectDbContextSUT.SaveChangesAsync();
+            
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var dbProject = await dbx.Projects.Include(i => i.Activities).SingleAsync(i => i.Id == project.Id);
+            var dbActivity1 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == tagActivity1.Id); // pri prechodu z tohoto mista to crashuje
+            var dbActivity2 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == tagActivity2.Id);
+            var dbTag1 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tagActivity1.Id);
+            var dbTag2 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tagActivity2.Id);
+            
+            Assert.Equal(activity1.Id, activity1.Id);
         }
     }
 }
