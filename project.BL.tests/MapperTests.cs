@@ -69,7 +69,7 @@ public class MapperTests : DbContextTestsBase
     {
         var project = ProjectSeeds.ProjectSeed();
 
-        var projectMapper = new ProjectModelMappers();
+        var projectMapper = new ProjectModelMapper();
         var mappedProject = projectMapper.MapToDetailModel(project);
         
         Assert.Equal(project.Id, mappedProject.Id);
@@ -85,7 +85,7 @@ public class MapperTests : DbContextTestsBase
         var project = ProjectSeeds.ProjectSeed();
 
         var userMapper = new UserModelMapper();
-        var projectMapper = new ProjectModelMappers();
+        var projectMapper = new ProjectModelMapper();
         var userProjectListMapper = new UserProjectModelMapper();
 
         var mappedUser1 = userMapper.MapToDetailModel(user1);
