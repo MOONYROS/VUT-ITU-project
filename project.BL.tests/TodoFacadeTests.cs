@@ -21,6 +21,8 @@ namespace project.BL.tests
         [Fact]
         public async Task TodoTest()
         {
+            var user = ModelSeeds.UserSeeds.UserSeed();
+
             var model = new TodoDetailModel()
             {
                 Id = Guid.Empty,
@@ -29,7 +31,7 @@ namespace project.BL.tests
                 Date = DateOnly.Parse("January 1, 2000")
             };
 
-            var _ = await _todoFacadeSUT.SaveAsync(model);
+            var _ = await _todoFacadeSUT.SaveAsync(model, user.);
         }
 
     }
