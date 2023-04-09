@@ -67,6 +67,34 @@ public abstract class
         return ModelMapper.MapToListModel(entities);
     }
 
+    public async Task<TDetailModel> SaveAsync(TDetailModel model, Guid id)
+    {
+        TDetailModel result;
+
+        GuardCollectionsAreNotSet(model);
+
+        TEntity entity = ModelMapper.MapToEntity(model, id);
+
+        IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IRepository<TEntity> repository = uow.GetRepository<TEntity, TEntityMapper>();
+
+        if (await repository.ExistsAsync(entity))
+        {
+            TEntity updatedEntity = await repository.UpdateAsync(entity);
+            result = ModelMapper.MapToDetailModel(updatedEntity);
+        }
+        else
+        {
+            entity.Id = Guid.NewGuid();
+            TEntity insertedEntity = await repository.InsertAsync(entity);
+            result = ModelMapper.MapToDetailModel(insertedEntity);
+        }
+
+        await uow.CommitAsync();
+
+        return result;
+    }
+
     public virtual async Task<TDetailModel> SaveAsync(TDetailModel model)
     {
         TDetailModel result;
