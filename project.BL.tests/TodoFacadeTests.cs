@@ -1,6 +1,7 @@
 ﻿using project.BL.Facades.Interfaces;
 using project.BL.Facades;
 using project.BL.Models;
+using project.DAL.Tests;
 
 namespace project.BL.tests
 {
@@ -16,7 +17,7 @@ namespace project.BL.tests
         }
 
         [Fact]
-        public async Task TodoTest()
+        public async Task TodoSaveAsyncTest()
         {
             var user = ModelSeeds.UserSeeds.UserSeed();
 
@@ -30,6 +31,55 @@ namespace project.BL.tests
 
             var dbUserModel = await _userFacadeSUT.SaveAsync(user);
             var _ = await _todoFacadeSUT.SaveAsync(todo, dbUserModel.Id);
+        }
+
+        [Fact]
+        public async Task TodoGetAsyncTest()
+        {
+            var user = ModelSeeds.UserSeeds.UserSeed();
+
+            var todo = new TodoDetailModel()
+            {
+                Id = Guid.Empty,
+                Name = "Test",
+                Finished = false,
+                Date = DateOnly.Parse("January 1, 2000")
+            };
+
+            var dbUserModel = await _userFacadeSUT.SaveAsync(user);
+            var returnedTodoModel = await _todoFacadeSUT.SaveAsync(todo, dbUserModel.Id);
+            todo.Id = returnedTodoModel.Id;
+
+
+            var todoDbModel = await _todoFacadeSUT.GetAsync(todo.Id);
+            DeepAssert.Equal(todoDbModel, todo);
+        }
+
+        [Fact]
+        public async Task TodoDeleteAsyncTest()
+        {
+            var user = ModelSeeds.UserSeeds.UserSeed();
+
+            var todo = new TodoDetailModel()
+            {
+                Id = Guid.Empty,
+                Name = "Test",
+                Finished = false,
+                Date = DateOnly.Parse("January 1, 2000")
+            };
+
+            var dbUserModel = await _userFacadeSUT.SaveAsync(user);
+            var returnedTodoModel = await _todoFacadeSUT.SaveAsync(todo, dbUserModel.Id);
+            todo.Id = returnedTodoModel.Id;
+
+
+            var todoDbModel = await _todoFacadeSUT.GetAsync(todo.Id);
+            DeepAssert.Equal(todoDbModel, todo);
+
+            await _todoFacadeSUT.DeleteAsync(todo.Id);
+
+            var expectedNull = await _userFacadeSUT.GetAsync(todo.Id);
+            Assert.Null(expectedNull);
         }
     }
 }

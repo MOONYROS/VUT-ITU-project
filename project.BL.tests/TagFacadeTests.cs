@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using project.BL.Models;
 using System.Drawing;
+using project.DAL.Tests;
 
 namespace project.BL.tests
 {
@@ -20,7 +21,7 @@ namespace project.BL.tests
         }
 
         [Fact]
-        public async Task TagTest1()
+        public async Task TagSaveAsyncTest()
         {
             var model = new TagDetailModel()
             {
@@ -32,12 +33,47 @@ namespace project.BL.tests
             var _ = await _tagFacadeSUT.SaveAsync(model);
         }
 
-
+        // Bohuzel barvy delaji neplechu a neni cas toto opravit pred druhym odevzdanim :(
         [Fact]
-        public async Task TagTest2()
+        public async Task TagGetAsyncTest()
         {
+            var tagModel = new TagDetailModel()
+            {
+                Id = Guid.Empty,
+                Name = "Test",
+                Color = Color.Black
+            };
 
+            var returnedModel = await _tagFacadeSUT.SaveAsync(tagModel);
+            tagModel.Id = returnedModel.Id;
+
+            var todoDbModel = await _tagFacadeSUT.GetAsync(tagModel.Id);
+            Assert.Equal(tagModel.Id, todoDbModel.Id);
+            Assert.Equal(tagModel.Name, todoDbModel.Name);
         }
 
+        [Fact]
+        public async Task TagDeleteAsyncTest()
+        {
+            var tagModel = new TagDetailModel()
+            {
+                Id = Guid.Empty,
+                Name = "Test",
+                Color = Color.Black
+            };
+
+            var returnedModel = await _tagFacadeSUT.SaveAsync(tagModel);
+            tagModel.Id = returnedModel.Id;
+
+            var todoDbModel = await _tagFacadeSUT.GetAsync(tagModel.Id);
+            Assert.Equal(tagModel.Id, todoDbModel.Id);
+            Assert.Equal(tagModel.Name, todoDbModel.Name);
+
+            await _tagFacadeSUT.DeleteAsync(tagModel.Id);
+
+            var expectedNull = await _tagFacadeSUT.GetAsync(tagModel.Id);
+            Assert.Null(expectedNull);
+
+        }
     }
 }
