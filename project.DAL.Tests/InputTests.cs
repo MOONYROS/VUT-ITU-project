@@ -59,7 +59,6 @@ namespace project.DAL.Tests
 
             var todo = TodoSeeds.TodoSeed() with
             {
-                User = user,
                 UserId = user.Id
             };
 
@@ -120,16 +119,16 @@ namespace project.DAL.Tests
 
             var activity1 = ActivitySeeds.ActivitySeed() with
             {
-                User = user1,
+                User = null,
                 UserId = user1.Id,
-                Project = project1,
+                Project = null,
                 ProjectId = project1.Id
             };
             var activity2 = ActivitySeeds.ActivitySeed() with
             {
-                User = user2,
+                User = null,
                 UserId = user2.Id,
-                Project = project2,
+                Project = null,
                 ProjectId = project2.Id
             };
             
@@ -242,11 +241,10 @@ namespace project.DAL.Tests
             
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
             var dbProject = await dbx.Projects.Include(i => i.Users).SingleAsync(i => i.Id == project.Id);
-            var dbUser1 = await dbx.Users.Include(i => i.Projects).ThenInclude(i => i.Project).SingleAsync(i => i.Id == user1.Id);
-            var dbUser2 = await dbx.Users.Include(i => i.Projects).ThenInclude(i => i.Project).SingleAsync(i => i.Id == user2.Id);
+            var dbUser1 = await dbx.Users.Include(i => i.Projects).SingleAsync(i => i.Id == user1.Id);
+            var dbUser2 = await dbx.Users.Include(i => i.Projects).SingleAsync(i => i.Id == user2.Id);
 
             Assert.NotEqual(dbUser1.Id, dbUser2.Id);
-            
             DeepAssert.Equal(project.Users, dbProject.Users);
             DeepAssert.Equal(project, dbProject);
         }
@@ -313,24 +311,17 @@ namespace project.DAL.Tests
         public async Task AddTwoActivitiesToTwoTags()
         {
             var user = UserSeeds.UserSeed();
-            
-            var project = ProjectSeeds.ProjectSeed();
-        
             var tag1 = TagSeeds.TagSeed();
             var tag2 = TagSeeds.TagSeed();
         
             var activity1 = ActivitySeeds.ActivitySeed() with
             {
-                Project = project,
-                ProjectId = project.Id,
-                User = user,
+                User = null,
                 UserId = user.Id
             };
             var activity2 = ActivitySeeds.ActivitySeed() with
             {
-                Project = project,
-                ProjectId = project.Id,
-                User = user,
+                User = null,
                 UserId = user.Id
             };
             
@@ -351,9 +342,8 @@ namespace project.DAL.Tests
             activity2.Tags.Add(tagActivity2);
             tag1.Activities.Add(tagActivity1);
             tag2.Activities.Add(tagActivity2);
-        
+
             ProjectDbContextSUT.Users.Add(user);
-            ProjectDbContextSUT.Projects.Add(project);
             ProjectDbContextSUT.Tags.Add(tag1);
             ProjectDbContextSUT.Tags.Add(tag2);
             ProjectDbContextSUT.Activities.Add(activity1);
@@ -361,13 +351,13 @@ namespace project.DAL.Tests
             await ProjectDbContextSUT.SaveChangesAsync();
             
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbProject = await dbx.Projects.Include(i => i.Activities).SingleAsync(i => i.Id == project.Id);
-            var dbActivity1 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == tagActivity1.Id); // pri prechodu z tohoto mista to crashuje
-            var dbActivity2 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == tagActivity2.Id);
-            var dbTag1 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tagActivity1.Id);
-            var dbTag2 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tagActivity2.Id);
+            var dbActivity1 = await dbx.Activities.Include(i => i.Tags).Include(i=>i.User).SingleAsync(i => i.Id == activity1.Id); // pri prechodu z tohoto mista to crashuje
+            var dbActivity2 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == activity2.Id);
+            var dbTag1 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tag1.Id);
+            var dbTag2 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tag2.Id);
             
-            Assert.Equal(activity1.Id, activity1.Id);
+            DeepAssert.Equal(activity1, dbActivity1);
+            Assert.Equal(activity1.Id, dbActivity1.Id);
         }
     }
 }
