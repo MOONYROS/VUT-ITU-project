@@ -99,13 +99,13 @@ namespace project.DAL.Tests
             var dbProject = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
             var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
 
-            Assert.Equal(user.Id, dbActivity.User.Id);
+            Assert.Equal(user.Id, dbActivity.UserId);
             Debug.Assert(dbActivity.Project != null, "dbActivity.Project != null");
             Assert.Equal(project.Id, dbActivity.Project.Id);
             Assert.Equal(user.Id, dbActivity.UserId);
             Assert.Equal(project.Id, dbActivity.ProjectId);
             Assert.Equal(dbProject.Id, dbActivity.ProjectId);
-            Assert.Equal(dbActivity.User.Id, dbUser.Id);
+            Assert.Equal(dbUser.Id, user.Id);
         }
 
         [Fact]
@@ -148,8 +148,8 @@ namespace project.DAL.Tests
             var dbUser1 = await dbx.Users.SingleAsync(i => i.Id == user1.Id);
             var dbUser2 = await dbx.Users.SingleAsync(i => i.Id == user2.Id);
             
-            Assert.Equal(dbActivity1.User.Id, user1.Id);
-            Assert.Equal(dbActivity2.User.Id, user2.Id);
+            Assert.Equal(dbActivity1.UserId, user1.Id);
+            Assert.Equal(dbActivity2.UserId, user2.Id);
             Assert.Equal(dbUser1.Id, user1.Id);
             Assert.Equal(dbUser2.Id, user2.Id);
 
@@ -193,7 +193,7 @@ namespace project.DAL.Tests
             var dbProject = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
             var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
             
-            Assert.Equal(dbActivity1.User.Id, dbActivity2.User.Id);
+            Assert.Equal(dbActivity1.UserId, dbActivity2.UserId);
             Assert.Equal(dbProject.Id, activity1.ProjectId);
             Assert.Equal(dbProject.Id, activity2.ProjectId);
             Assert.Equal(dbUser.Id, user.Id);
@@ -304,9 +304,6 @@ namespace project.DAL.Tests
             DeepAssert.Equal(project.Activities.Count, dbProject.Activities.Count);
         }
 
-        // TODO nefunkfcni test, vypisuje 'Sequence has no elements'
-        // Naposledy jsem to resil tak, ze elementy nebyly predany ProjectDbContextSUT, ale tady nevim.
-        // Chova se to velmi podobne, ale myslim si, ze to nebude ten stejny problem.
         [Fact]
         public async Task AddTwoActivitiesToTwoTags()
         {
@@ -351,13 +348,16 @@ namespace project.DAL.Tests
             await ProjectDbContextSUT.SaveChangesAsync();
             
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var dbActivity1 = await dbx.Activities.Include(i => i.Tags).Include(i=>i.User).SingleAsync(i => i.Id == activity1.Id); // pri prechodu z tohoto mista to crashuje
+            var dbActivity1 = await dbx.Activities.Include(i => i.Tags).Include(i=>i.User).SingleAsync(i => i.Id == activity1.Id);
             var dbActivity2 = await dbx.Activities.Include(i => i.Tags).SingleAsync(i => i.Id == activity2.Id);
             var dbTag1 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tag1.Id);
             var dbTag2 = await dbx.Tags.Include(i => i.Activities).SingleAsync(i => i.Id == tag2.Id);
             
-            DeepAssert.Equal(activity1, dbActivity1);
             Assert.Equal(activity1.Id, dbActivity1.Id);
+            Assert.NotEqual(dbActivity1.Id, dbActivity2.Id);
+            Assert.NotEqual(dbTag1.Id, dbTag2.Id);
+            
+            DeepAssert.Equal(activity1, dbActivity1);
         }
     }
 }
