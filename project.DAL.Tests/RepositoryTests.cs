@@ -1,14 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using project.DAL.Entities;
 using project.DAL.Mappers;
 using project.DAL.Repositories;
 using project.DAL.Tests.Seeds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace project.DAL.Tests
 {
