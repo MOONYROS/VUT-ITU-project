@@ -12,8 +12,8 @@ public class ActivityTagFacade  :
 {
     public ActivityTagFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
-        IActivityTagListMapper activityTagListMapper)
-        : base(unitOfWorkFactory, activityTagListMapper)
+        IActivityTagModelMapper activityTagModelMapper)
+        : base(unitOfWorkFactory, activityTagModelMapper)
     {
     }
 }
