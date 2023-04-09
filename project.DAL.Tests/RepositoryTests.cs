@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using project.DAL.Entities;
 using project.DAL.Mappers;
 using project.DAL.Repositories;
@@ -54,6 +55,7 @@ namespace project.DAL.Tests
             var Repo = new Repository<UserEntity>(dbx, Mapper);
 
             await Repo.InsertAsync(user);
+            await dbx.SaveChangesAsync();
 
             var dbxUserList = dbx.Users.ToList();
             Assert.Equal(user.FullName, dbxUserList[0].FullName);
@@ -73,7 +75,9 @@ namespace project.DAL.Tests
             user.UserName = "Test";
             await Repo.UpdateAsync(user);
 
-            Assert.Equal(user.UserName, dbx.Users.First().UserName);
+            var dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+
+            Assert.Equal(user.UserName, dbUser.UserName);
         }
         [Fact]
         public async Task RepositoryDeleteTest()
@@ -87,6 +91,8 @@ namespace project.DAL.Tests
             var Repo = new Repository<UserEntity>(dbx, Mapper);
 
             Repo.Delete(user.Id);
+            await dbx.SaveChangesAsync();
+
             var userList = dbx.Users.ToList();
             Assert.True(userList.IsNullOrEmpty());
         }
