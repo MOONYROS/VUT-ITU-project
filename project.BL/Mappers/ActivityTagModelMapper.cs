@@ -15,7 +15,14 @@ public class ActivityTagModelMapper : ModelMapperBase<ActivityTagListEntity, Act
             TagId = tag.Id
         };
 
-    public void AddTagToActivity(TagDetailModel tag, ActivityDetailModel activity)
+    public void AddTagToActivity_Entities(ActivityEntity activity, TagEntity tag,
+        ActivityTagListEntity tagInActivity)
+    {
+        activity.Tags.Add(tagInActivity);
+        tag.Activities.Add(tagInActivity);
+    }
+
+    public void AddTagToActivity_Models(TagDetailModel tag, ActivityDetailModel activity)
     {
         activity.Tags.Add(tag);
     }

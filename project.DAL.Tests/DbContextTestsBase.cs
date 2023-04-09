@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-
 namespace project.DAL.Tests
 {
     public class DbContextTestsBase : IAsyncLifetime
