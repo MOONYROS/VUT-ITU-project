@@ -5,7 +5,7 @@ using project.BL.Mappers.Interfaces;
 namespace project.BL.Mappers;
 
 public class ActivityTagModelMapper : ModelMapperBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel>,
-    IActivityTagListMapper
+    IActivityTagModelMapper
 {
     public ActivityTagListEntity MapToEntity(ActivityDetailModel activity, TagDetailModel tag)
         => new()
