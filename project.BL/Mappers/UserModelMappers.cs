@@ -34,4 +34,9 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
             UserName = model.UserName,
             ImageUrl = model.ImageUrl
         };
+
+    public override UserEntity MapToEntity(UserDetailModel model, Guid guid)
+    {
+        throw new NotSupportedException();
+    }
 }

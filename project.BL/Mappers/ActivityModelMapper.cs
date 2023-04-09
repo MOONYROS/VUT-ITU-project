@@ -51,4 +51,9 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     {
         throw new NotSupportedException();
     }
+
+    public override ActivityEntity MapToEntity(ActivityDetailModel model, Guid guid)
+    {
+        throw new NotSupportedException();
+    }
 }

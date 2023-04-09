@@ -33,4 +33,9 @@ public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListMode
             Name = model.Name,
             Description = model.Description
         };
+
+    public override ProjectEntity MapToEntity(ProjectDetailModel model, Guid guid)
+    {
+        throw new NotSupportedException();
+    }
 }

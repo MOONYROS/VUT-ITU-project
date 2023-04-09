@@ -18,24 +18,23 @@ public class UserProjectModelMapper : ModelMapperBase<UserProjectListEntity, Use
             };
 
     public override UserProjectDetailModel MapToDetailModel(UserProjectListEntity entity)
-        => new UserProjectDetailModel
-            {
-                Id = entity.Id,
-                UserId = entity.UserId,
-                ProjectId = entity.ProjectId,
-            };
+        => new()
+        {
+            Id = entity.Id,
+            UserId = entity.UserId,
+            ProjectId = entity.ProjectId,
+        };
 
     public override UserProjectListEntity MapToEntity(UserProjectDetailModel model)
-        => new UserProjectListEntity
+        => new()
         {
             Id = model.Id,
             ProjectId = model.ProjectId,
             UserId = model.UserId,
         };
 
-    public void AddUserToProject(UserDetailModel user, ProjectDetailModel project)
+    public override UserProjectListEntity MapToEntity(UserProjectDetailModel model, Guid guid)
     {
-        project.Users.Add(user);
-        user.Projects.Add(project);
+        throw new NotSupportedException();
     }
 }

@@ -35,4 +35,9 @@ public class TagModelMapper : ModelMapperBase<TagEntity, TagListModel, TagDetail
             Name = model.Name,
             Color = model.Color.ToArgb()
         };
+
+    public override TagEntity MapToEntity(TagDetailModel model, Guid guid)
+    {
+        throw new NotSupportedException();
+    }
 }

@@ -29,15 +29,14 @@ public class TodoModelMapper : ModelMapperBase<TodoEntity, TodoListModel, TodoDe
                 Finished = entity.Finished
             };
     
-    public TodoEntity MapToEntity(TodoDetailModel model, UserEntity user)
+    public override TodoEntity MapToEntity(TodoDetailModel model, Guid userId)
         => new()
         {
             Id = model.Id,
             Name = model.Name,
             Date = model.Date,
             Finished = model.Finished,
-            User = user,
-            UserId = user.Id, 
+            UserId = userId, 
         };
     
     public override TodoEntity MapToEntity(TodoDetailModel model)
