@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using project.BL.Models;
+﻿using project.BL.Models;
 using project.BL.Mappers.Interfaces;
 using project.DAL.Entities;
 using project.DAL.Mappers;
@@ -11,7 +7,7 @@ using project.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Reflection;
-using project.BL.Mappers;
+using project.BL.Facades.Interfaces;
 
 namespace project.BL.Facades;
 
@@ -32,11 +28,6 @@ public abstract class
         UnitOfWorkFactory = unitOfWorkFactory;
         ModelMapper = modelMapper;
     }
-
-    // protected FacadeBase(IUnitOfWorkFactory unitOfWorkFactory, IActivityTagListMapper activityTagListMapper)
-    // {
-    //     throw new NotImplementedException();
-    // }
 
     protected virtual string IncludesNavigationPathDetail => string.Empty;
 

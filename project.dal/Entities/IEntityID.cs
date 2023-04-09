@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace project.DAL.Entities
+﻿namespace project.DAL.Entities
 {
     public interface IEntityID
     {

@@ -1,4 +1,4 @@
-﻿using project.BL.Mappers;
+﻿using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -10,11 +10,10 @@ namespace project.BL.Facades;
 public class ActivityTagFacade  :
     FacadeBase<ActivityTagListEntity, ActivityTagListModel, ActivityTagDetailModel, ActivityTagListEntityMapper>, IActivityTagFacade
 {
-    private readonly IActivityTagListMapper _activityTagListMapper;
-    public ActivityTagFacade(   
+    public ActivityTagFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         IActivityTagListMapper activityTagListMapper)
-        : base(unitOfWorkFactory, activityTagListMapper) =>
-        _activityTagListMapper = activityTagListMapper;
-
+        : base(unitOfWorkFactory, activityTagListMapper)
+    {
+    }
 }
