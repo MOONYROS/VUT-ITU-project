@@ -4,7 +4,7 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class ProjectModelMappers : ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>,
+public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>,
     IProjectModelMapper
 {
     public override ProjectListModel MapToListModel(ProjectEntity? entity)
