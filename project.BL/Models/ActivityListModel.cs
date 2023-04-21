@@ -8,10 +8,10 @@ public record ActivityListModel : ModelBase
     public required DateTime DateTimeFrom { get; set; }
     public required DateTime DateTimeTo { get; set; }
     public required Color Color { get; set; }
-    public ObservableCollection<TagListModel> Tags { get; set; } = new();
+    public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
+    public ProjectListModel? Project { get; set; }
     public static ActivityListModel Empty => new()
     {
-        // TODO: Change default color to match UI
         Id = Guid.NewGuid(),
         Name = string.Empty,
         DateTimeFrom = default,

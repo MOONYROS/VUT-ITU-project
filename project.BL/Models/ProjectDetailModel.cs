@@ -6,9 +6,8 @@ namespace project.BL.Models;
 public record ProjectDetailModel : ModelBase
 {
     public required string Name { get; set; }
-    public Color Color { get; set; }
     public required string Description { get; set; }
-    public ObservableCollection<UserDetailModel> Users { get; init; } = new();
+    public ObservableCollection<UserListModel> Users { get; init; } = new();
 
     public static ProjectDetailModel Empty => new()
     {
