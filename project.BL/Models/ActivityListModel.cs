@@ -2,6 +2,7 @@
 using System.Drawing;
 
 namespace project.BL.Models;
+
 public record ActivityListModel : ModelBase
 {
     public required string Name { get; set; }

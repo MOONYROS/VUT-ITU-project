@@ -1,7 +1,8 @@
-﻿using System.Runtime.CompilerServices;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace project.BL.Models;
+
 public abstract record ModelBase : INotifyPropertyChanged, IModel
 {
     public Guid Id { get; set; }

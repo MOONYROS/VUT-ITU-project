@@ -1,7 +1,6 @@
-﻿namespace project.DAL.Entities
+﻿namespace project.DAL.Entities;
+
+public interface IEntityID
 {
-    public interface IEntityID
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

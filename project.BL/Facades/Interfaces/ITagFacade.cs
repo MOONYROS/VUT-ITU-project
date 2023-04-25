@@ -2,6 +2,7 @@
 using project.DAL.Entities;
 
 namespace project.BL.Facades.Interfaces;
+
 public interface ITagFacade : IFacade<TagEntity, TagListModel, TagDetailModel>
 {
 }

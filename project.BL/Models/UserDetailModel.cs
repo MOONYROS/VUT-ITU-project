@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 namespace project.BL.Models;
+
 public record UserDetailModel : ModelBase
 {
     public required string UserName { get; set; }

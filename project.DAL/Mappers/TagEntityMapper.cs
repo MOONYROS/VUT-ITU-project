@@ -1,13 +1,12 @@
 ﻿using project.DAL.Entities;
 
-namespace project.DAL.Mappers
+namespace project.DAL.Mappers;
+
+public class TagEntityMapper : IEntityIDMapper<TagEntity>
 {
-    public class TagEntityMapper : IEntityIDMapper<TagEntity>
+    public void MapToExistingEntity(TagEntity existingEntity, TagEntity newEntity)
     {
-        public void MapToExistingEntity(TagEntity existingEntity, TagEntity newEntity)
-        {
-            existingEntity.Name = newEntity.Name;
-            existingEntity.Color= newEntity.Color;
-        }
+        existingEntity.Name = newEntity.Name;
+        existingEntity.Color= newEntity.Color;
     }
 }

@@ -2,52 +2,51 @@
 using project.BL.Facades.Interfaces;
 using project.DAL.Tests;
 
-namespace project.BL.tests
+namespace project.BL.tests;
+
+public class UserFacadeTests :  FacadeTestsBase
 {
-    public class UserFacadeTests :  FacadeTestsBase
+    private readonly IUserFacade _userFacadeSUT;
+
+    public UserFacadeTests()
     {
-        private readonly IUserFacade _userFacadeSUT;
+        _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
+    }
 
-        public UserFacadeTests()
-        {
-            _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
-        }
+    [Fact]
+    public async Task UserFacadeSaveAsyncTest()
+    {
+        var userModel = ModelSeeds.UserSeeds.UserSeed();
+        var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
+        userModel.Id = returnedDbModel.Id;
 
-        [Fact]
-        public async Task UserFacadeSaveAsyncTest()
-        {
-            var userModel = ModelSeeds.UserSeeds.UserSeed();
-            var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
-            userModel.Id = returnedDbModel.Id;
+        DeepAssert.Equal(userModel, returnedDbModel);
+    }
 
-            DeepAssert.Equal(userModel, returnedDbModel);
-        }
+    [Fact]
+    public async Task UserFacadeGetAsyncTest()
+    {
+        var userModel = ModelSeeds.UserSeeds.UserSeed();
+        var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
+        userModel.Id = returnedDbModel.Id;
 
-        [Fact]
-        public async Task UserFacadeGetAsyncTest()
-        {
-            var userModel = ModelSeeds.UserSeeds.UserSeed();
-            var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
-            userModel.Id = returnedDbModel.Id;
+        var userDbModel = await _userFacadeSUT.GetAsync(userModel.Id);
+        DeepAssert.Equal(userModel, userDbModel);
+    }
 
-            var userDbModel = await _userFacadeSUT.GetAsync(userModel.Id);
-            DeepAssert.Equal(userModel, userDbModel);
-        }
-
-        [Fact]
-        public async Task UserFacadeDeleteAsyncTest()
-        {
-            var userModel = ModelSeeds.UserSeeds.UserSeed();
-            var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
-            userModel.Id = returnedDbModel.Id;
+    [Fact]
+    public async Task UserFacadeDeleteAsyncTest()
+    {
+        var userModel = ModelSeeds.UserSeeds.UserSeed();
+        var returnedDbModel = await _userFacadeSUT.SaveAsync(userModel);
+        userModel.Id = returnedDbModel.Id;
             
-            var userDbModel = await _userFacadeSUT.GetAsync(userModel.Id);
-            DeepAssert.Equal(userModel, userDbModel);
+        var userDbModel = await _userFacadeSUT.GetAsync(userModel.Id);
+        DeepAssert.Equal(userModel, userDbModel);
 
-            await _userFacadeSUT.DeleteAsync(userModel.Id);
+        await _userFacadeSUT.DeleteAsync(userModel.Id);
 
-            var expectedNull = await _userFacadeSUT.GetAsync(userModel.Id);
-            Assert.Null(expectedNull);
-        }
+        var expectedNull = await _userFacadeSUT.GetAsync(userModel.Id);
+        Assert.Null(expectedNull);
     }
 }

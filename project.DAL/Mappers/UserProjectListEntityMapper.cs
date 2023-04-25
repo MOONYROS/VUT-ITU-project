@@ -1,13 +1,12 @@
 ﻿using project.DAL.Entities;
 
-namespace project.DAL.Mappers
+namespace project.DAL.Mappers;
+
+public class UserProjectListEntityMapper : IEntityIDMapper<UserProjectListEntity>
 {
-    public class UserProjectListEntityMapper : IEntityIDMapper<UserProjectListEntity>
+    public void MapToExistingEntity(UserProjectListEntity existingEntity, UserProjectListEntity newEntity)
     {
-        public void MapToExistingEntity(UserProjectListEntity existingEntity, UserProjectListEntity newEntity)
-        {
-            existingEntity.UserId= newEntity.UserId;
-            existingEntity.ProjectId= newEntity.ProjectId;
-        }
+        existingEntity.UserId= newEntity.UserId;
+        existingEntity.ProjectId= newEntity.ProjectId;
     }
 }

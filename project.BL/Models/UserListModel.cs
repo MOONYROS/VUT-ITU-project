@@ -1,4 +1,5 @@
 ﻿namespace project.BL.Models;
+
 public record UserListModel : ModelBase
 {
     public required string UserName { get; set; }

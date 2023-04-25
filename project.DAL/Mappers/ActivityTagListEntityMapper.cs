@@ -1,13 +1,12 @@
 ﻿using project.DAL.Entities;
 
-namespace project.DAL.Mappers
+namespace project.DAL.Mappers;
+
+public class ActivityTagListEntityMapper : IEntityIDMapper<ActivityTagListEntity>
 {
-    public class ActivityTagListEntityMapper : IEntityIDMapper<ActivityTagListEntity>
+    public void MapToExistingEntity(ActivityTagListEntity existingEntity, ActivityTagListEntity newEntity)
     {
-        public void MapToExistingEntity(ActivityTagListEntity existingEntity, ActivityTagListEntity newEntity)
-        {
-            existingEntity.ActivityId = newEntity.ActivityId;
-            existingEntity.TagId = newEntity.TagId;
-        }
+        existingEntity.ActivityId = newEntity.ActivityId;
+        existingEntity.TagId = newEntity.TagId;
     }
 }

@@ -1,6 +1,5 @@
-﻿using System.Drawing;
+﻿namespace project.BL.Models;
 
-namespace project.BL.Models;
 public record ProjectListModel : ModelBase
 {
     public required string Name { get; set; }

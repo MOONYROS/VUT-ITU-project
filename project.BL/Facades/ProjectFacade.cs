@@ -17,5 +17,5 @@ public class ProjectFacade :
     {
     }
     //protected override string IncludesNavigationPathDetail =>
-      //  $"{nameof(ProjectEntity.Activities)}.{nameof(IngredientAmountEntity.Ingredient)}";
+    //  $"{nameof(ProjectEntity.Activities)}.{nameof(IngredientAmountEntity.Ingredient)}";
 }

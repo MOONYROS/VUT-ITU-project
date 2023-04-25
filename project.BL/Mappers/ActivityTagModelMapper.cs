@@ -1,6 +1,6 @@
-﻿using project.BL.Models;
+﻿using project.BL.Mappers.Interfaces;
+using project.BL.Models;
 using project.DAL.Entities;
-using project.BL.Mappers.Interfaces;
 
 namespace project.BL.Mappers;
 
