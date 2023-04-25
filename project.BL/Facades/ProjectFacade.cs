@@ -16,6 +16,4 @@ public class ProjectFacade :
         : base(unitOfWorkFactory, modelMapper)
     {
     }
-    //protected override string IncludesNavigationPathDetail =>
-    //  $"{nameof(ProjectEntity.Activities)}.{nameof(IngredientAmountEntity.Ingredient)}";
 }

@@ -24,60 +24,52 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Projects)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting user shouldn't delete project
+            .OnDelete(DeleteBehavior.Restrict); 
             
         modelBuilder.Entity<UserEntity>()
             .HasMany(i=>i.Todos)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Cascade); // Deleting user will delete all his Todos
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Activities)
             .WithOne(i => i.User)
             // Project is more like a tag within the activity (not shared between users)
-            .OnDelete(DeleteBehavior.Cascade); // Deleting user will delete all his activities
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<ProjectEntity>()
             .HasMany(i=>i.Users)
             .WithOne(i => i.Project)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting project shouldnt delete users
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<ProjectEntity>()
             .HasMany(i => i.Activities)
             .WithOne(i => i.Project)
-            .OnDelete(DeleteBehavior.Cascade); // Deleting project should delete its activities
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<TagEntity>()
             .HasMany(i=>i.Activities)
             .WithOne(i => i.Tag)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting tag shouldnt delete activities
+            .OnDelete(DeleteBehavior.Restrict); 
             
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i=>i.Tags)
             .WithOne(i => i.Activity)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting activity shouldnt delete tags
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.User)
             .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting activity shouldnt delete user
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.Project)
             .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting activity shouldnt delete project
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<TodoEntity>()
             .HasOne(i=>i.User)
             .WithMany(i => i.Todos)
-            .OnDelete(DeleteBehavior.Restrict); // Deleting to do should delete user
+            .OnDelete(DeleteBehavior.Restrict);
     }
-        
-    /*
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Filename=sqlitedb1; cache=shared");
-        base.OnConfiguring(optionsBuilder);
-    }
-    */
 }
