@@ -8,5 +8,6 @@ public abstract class
     public abstract TListModel MapToListModel(TEntity? entity);
     public abstract TDetailModel MapToDetailModel(TEntity entity);
     public abstract TEntity MapToEntity(TDetailModel model);
-    public abstract TEntity MapToEntity(TDetailModel model, Guid guid);
+
+    public abstract IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity> entities);
 }

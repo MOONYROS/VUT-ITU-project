@@ -3,6 +3,6 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers.Interfaces;
 
-public interface ITagModelMapper : IModelMapper<TagEntity, TagListModel, TagDetailModel>
+public interface ITagModelMapper : IModelMapperDetailOnly<TagEntity, TagDetailModel>
 {
 }

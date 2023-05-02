@@ -8,35 +8,22 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
     IUserModelMapper
 {
     public override UserListModel MapToListModel(UserEntity? entity)
-        => entity is null
-            ? UserListModel.Empty
-            : new UserListModel
-            {
-                Id = entity.Id,
-                UserName = entity.UserName
-            };
-
-    public override UserDetailModel MapToDetailModel(UserEntity? entity)
-        => entity is null
-            ? UserDetailModel.Empty
-            : new UserDetailModel
-            {
-                Id = entity.Id,
-                FullName = entity.FullName,
-                UserName = entity.UserName
-            };
+    {
+        throw new NotImplementedException();
+    }
 
     public override UserEntity MapToEntity(UserDetailModel model)
-        => new()
-        {
-            Id = model.Id,
-            FullName = model.FullName,
-            UserName = model.UserName,
-            ImageUrl = model.ImageUrl
-        };
-
-    public override UserEntity MapToEntity(UserDetailModel model, Guid guid)
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<UserListModel> MapToListModel(IEnumerable<UserEntity> entities)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override UserDetailModel MapToDetailModel(UserEntity entity)
+    {
+        throw new NotImplementedException();
     }
 }

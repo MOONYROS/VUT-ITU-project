@@ -3,6 +3,6 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers.Interfaces;
 
-public interface ITodoModelMapper : IModelMapper<TodoEntity, TodoListModel, TodoDetailModel>
+public interface ITodoModelMapper : IModelMapperDetailOnly<TodoEntity, TodoDetailModel>
 {
 }

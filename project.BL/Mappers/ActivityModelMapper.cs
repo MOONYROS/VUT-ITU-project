@@ -8,52 +8,59 @@ namespace project.BL.Mappers;
 public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListModel, ActivityDetailModel>,
     IActivityModelMapper
 {
+    private ProjectModelMapper _projectMapper;
+    public ActivityModelMapper(ProjectModelMapper projectMapper)
+        => _projectMapper = projectMapper;
     public override ActivityListModel MapToListModel(ActivityEntity? entity)
-        => entity is null
-            ? ActivityListModel.Empty
-            : new ActivityListModel
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                DateTimeFrom = entity.DateTimeFrom,
-                DateTimeTo = entity.DateTimeTo,
-                Color = Color.FromArgb(entity.Color)
-            };
-
-    public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
-        => entity is null
-            ? ActivityDetailModel.Empty
-            : new ActivityDetailModel
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                DateTimeFrom = entity.DateTimeFrom,
-                DateTimeTo = entity.DateTimeTo,
-                Color = Color.FromArgb(entity.Color),
-                Description = entity.Description
-            };
-    
-    public ActivityEntity MapToEntity(ActivityDetailModel model, Guid userId, Guid? projectId) => new()
     {
-        Id = model.Id,
-        DateTimeFrom = model.DateTimeFrom,
-        DateTimeTo = model.DateTimeTo,
-        Name = model.Name,
-        Color = model.Color.ToArgb(),
-        Description = model.Description,
-        Project = null,
-        ProjectId = projectId,
-        User = null,
-        UserId = userId
-    };
-    
+        throw new NotImplementedException();
+    }
+
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
     {
         throw new NotSupportedException();
     }
 
-    public override ActivityEntity MapToEntity(ActivityDetailModel model, Guid guid)
+    public override IEnumerable<ActivityListModel> MapToListModel(IEnumerable<ActivityEntity> entities)
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
+
+    public override ActivityDetailModel MapToDetailModel(ActivityEntity entity)
+        => new()
+        {
+            Name = entity.Name,
+            DateTimeFrom = entity.DateTimeFrom,
+            DateTimeTo = entity.DateTimeTo,
+            Color = Color.FromArgb(entity.Color),
+            Description = entity.Description,
+            UserId = entity.UserId,
+            Project = _projectMapper.MapToDetailModel(entity.ProjectId)
+        };
+        
+
+    public ActivityEntity MapToEntity(ActivityDetailModel activity, Guid userGuid, Guid? projectGuid)
+        => new()
+        {
+            Id = activity.Id,
+            DateTimeFrom = activity.DateTimeFrom,
+            DateTimeTo = activity.DateTimeTo,
+            Name = activity.Name,
+            Description = activity.Description,
+            Color = activity.Color.ToArgb(),
+            UserId = userGuid,
+            ProjectId = projectGuid
+        };
+    public ActivityEntity MapToEntity(ActivityDetailModel activity, Guid? projectGuid)
+        => new()
+        {
+            Id = activity.Id,
+            DateTimeFrom = activity.DateTimeFrom,
+            DateTimeTo = activity.DateTimeTo,
+            Name = activity.Name,
+            Description = activity.Description,
+            Color = activity.Color.ToArgb(),
+            UserId = activity.UserId,
+            ProjectId = projectGuid
+        };
 }
