@@ -35,7 +35,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             Color = Color.FromArgb(entity.Color),
             Description = entity.Description,
             UserId = entity.UserId,
-            Project = _projectMapper.MapToDetailModel(entity.ProjectId)
+            Project = _projectMapper.MapToListModel(entity.Project)
         };
         
 
