@@ -9,4 +9,5 @@ public abstract class ModelMapperBaseDetailOnly<TEntity, TDetailModel>
     public abstract TDetailModel MapToDetailModel(TEntity entity);
     public abstract TEntity MapToEntity(TDetailModel model);
     public abstract TEntity MapToEntity(TDetailModel model, Guid userGuid);
+    public abstract IEnumerable<TDetailModel> MapToDetailModel(IEnumerable<TEntity> entities);
 }

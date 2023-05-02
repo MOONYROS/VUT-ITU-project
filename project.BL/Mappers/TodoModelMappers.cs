@@ -20,4 +20,9 @@ public class TodoModelMapper : ModelMapperBaseDetailOnly<TodoEntity, TodoDetailM
     {
         throw new NotImplementedException();
     }
+
+    public override IEnumerable<TodoDetailModel> MapToDetailModel(IEnumerable<TodoEntity> entities)
+    {
+        throw new NotImplementedException();
+    }
 }
