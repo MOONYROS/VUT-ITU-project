@@ -4,8 +4,7 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
-    IUserModelMapper
+public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>
 {
     public override UserListModel MapToListModel(UserEntity? entity)
     {

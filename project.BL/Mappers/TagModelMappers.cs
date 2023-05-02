@@ -5,8 +5,7 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailModel>,
-    ITagModelMapper
+public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailModel>
 {
     public override TagDetailModel MapToDetailModel(TagEntity entity)
     {

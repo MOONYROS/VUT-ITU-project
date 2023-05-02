@@ -8,7 +8,7 @@ namespace project.BL.Mappers;
 public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListModel, ActivityDetailModel>,
     IActivityModelMapper
 {
-    private ProjectModelMapper _projectMapper;
+    private readonly ProjectModelMapper _projectMapper;
     public ActivityModelMapper(ProjectModelMapper projectMapper)
         => _projectMapper = projectMapper;
     public override ActivityListModel MapToListModel(ActivityEntity? entity)
