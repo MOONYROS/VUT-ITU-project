@@ -31,18 +31,12 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             Project = _projectMapper.MapToListModel(entity.Project),
             Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
         };
-        
-
+    
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
     {
         throw new NotSupportedException();
     }
-
-    public override IEnumerable<ActivityListModel> MapToListModel(IEnumerable<ActivityEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
         => entity is null ?
         ActivityDetailModel.Empty : 
@@ -57,7 +51,6 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             UserId = entity.UserId,
             Project = _projectMapper.MapToListModel(entity.Project)
         };
-        
 
     public ActivityEntity MapToEntity(ActivityDetailModel activity, Guid userGuid, Guid? projectGuid)
         => new()

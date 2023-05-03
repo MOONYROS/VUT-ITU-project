@@ -10,5 +10,6 @@ public abstract class
     public abstract TDetailModel MapToDetailModel(TEntity entity);
     public abstract TEntity MapToEntity(TDetailModel model);
 
-    public abstract IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity> entities);
+    public IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity> entities)
+        => entities.Select(MapToListModel);
 }

@@ -16,11 +16,6 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<UserListModel> MapToListModel(IEnumerable<UserEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
-
     public override UserDetailModel MapToDetailModel(UserEntity entity)
     {
         throw new NotImplementedException();

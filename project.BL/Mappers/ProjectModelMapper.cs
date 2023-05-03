@@ -16,11 +16,6 @@ public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListMode
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<ProjectListModel> MapToListModel(IEnumerable<ProjectEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
-
     public override ProjectDetailModel MapToDetailModel(ProjectEntity entity)
     {
         throw new NotImplementedException();
