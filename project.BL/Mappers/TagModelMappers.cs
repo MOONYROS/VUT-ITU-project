@@ -28,14 +28,12 @@ public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailMode
     {
         throw new NotImplementedException();
     }
-    
-    public TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
-    {
-        throw new NotImplementedException();
-    }
 
-    public IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
+    public TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
+        => new()
+        {
+            Id = entity.Tag.Id,
+            Name = entity.Tag.Name,
+            Color = Color.FromArgb(entity.Tag.Color)
+        };
 }

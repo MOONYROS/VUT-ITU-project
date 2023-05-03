@@ -3,8 +3,9 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers.Interfaces;
 
-public interface ITagModelMapper : IModelMapperDetailOnly<TagEntity, TagDetailModel>
+public interface ITagModelMapper
 {
     TagDetailModel MapToDetailModel(ActivityTagListEntity entity);
-    IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities);
+    IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
+        => entities.Select(MapToDetailModel);
 }

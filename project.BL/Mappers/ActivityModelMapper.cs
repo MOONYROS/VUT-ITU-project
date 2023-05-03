@@ -29,7 +29,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             Color = Color.FromArgb(entity.Color),
             Project = _projectMapper.MapToListModel(entity.Project),
             // Tady potrebujem tag entities, ne activityTag
-            Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableColelction()
+            Tags = _tagModelMapper.MapToDetailModel(entity.Tags)
         };
         
 
