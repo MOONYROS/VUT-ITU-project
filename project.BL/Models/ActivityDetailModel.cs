@@ -15,7 +15,7 @@ public record ActivityDetailModel : ModelBase
     public required Guid UserId { get; set; }
     public static ActivityDetailModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
         DateTimeFrom = default,
         DateTimeTo = default,
