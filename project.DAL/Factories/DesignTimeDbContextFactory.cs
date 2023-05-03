@@ -5,7 +5,7 @@ namespace project.DAL.Factories;
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ProjectDbContext>
 {
 
-    private const string connectionString = $"DataSource=Project;Cache=Shared";
+    private const string connectionString = $"database;Cache=Shared";
     private readonly DbContextSqLiteFactory _dbContextSqLiteFactory;
 
     public DesignTimeDbContextFactory() 

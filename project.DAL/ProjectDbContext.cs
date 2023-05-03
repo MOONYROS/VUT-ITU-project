@@ -10,12 +10,12 @@ public class ProjectDbContext : DbContext
     public ProjectDbContext(DbContextOptions contextOptions, bool seedDemoData = false)
         : base(contextOptions) => _seedDemoData = seedDemoData;
     public DbSet<ActivityEntity> Activities => Set<ActivityEntity>();
-    public DbSet<ActivityTagListEntity> AtLists => Set<ActivityTagListEntity>();
+    public DbSet<ActivityTagListEntity> ATLists => Set<ActivityTagListEntity>();
     public DbSet<ProjectEntity> Projects => Set<ProjectEntity>();
     public DbSet<TagEntity> Tags => Set<TagEntity>();
     public DbSet<TodoEntity> Todos => Set<TodoEntity>();
     public DbSet<UserEntity> Users => Set<UserEntity>();
-    public DbSet<UserProjectListEntity> UpLists => Set<UserProjectListEntity>();
+    public DbSet<UserProjectListEntity> UPLists => Set<UserProjectListEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
