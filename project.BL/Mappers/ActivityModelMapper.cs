@@ -49,7 +49,8 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             Color = Color.FromArgb(entity.Color),
             Description = entity.Description,
             UserId = entity.UserId,
-            Project = _projectMapper.MapToListModel(entity.Project)
+            Project = _projectMapper.MapToListModel(entity.Project),
+            Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
         };
 
     public ActivityEntity MapToEntity(ActivityDetailModel activity, Guid userGuid, Guid? projectGuid)
