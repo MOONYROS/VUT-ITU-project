@@ -10,9 +10,9 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     IActivityModelMapper
 {
     private readonly ProjectModelMapper _projectMapper;
-    private readonly TagModelMapper _tagModelMapper;
+    private readonly ITagModelMapper _tagModelMapper;
 
-    public ActivityModelMapper(ProjectModelMapper projectMapper, TagModelMapper tagModelMapper)
+    public ActivityModelMapper(ProjectModelMapper projectMapper, ITagModelMapper tagModelMapper)
     {
         _projectMapper = projectMapper;
         _tagModelMapper = tagModelMapper;
@@ -23,13 +23,13 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
         ActivityListModel.Empty :
         new ActivityListModel
         {
+            Id = entity.Id,
             Name = entity.Name,
             DateTimeFrom = entity.DateTimeFrom,
             DateTimeTo = entity.DateTimeTo,
             Color = Color.FromArgb(entity.Color),
             Project = _projectMapper.MapToListModel(entity.Project),
-            // Tady potrebujem tag entities, ne activityTag
-            Tags = _tagModelMapper.MapToDetailModel(entity.Tags)
+            Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
         };
         
 
@@ -48,6 +48,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
         ActivityDetailModel.Empty : 
         new ActivityDetailModel
         {
+            Id = entity.Id,
             Name = entity.Name,
             DateTimeFrom = entity.DateTimeFrom,
             DateTimeTo = entity.DateTimeTo,
