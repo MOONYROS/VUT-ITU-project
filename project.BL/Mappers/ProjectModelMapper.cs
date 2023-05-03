@@ -19,22 +19,24 @@ public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListMode
         ProjectListModel.Empty :
         new ProjectListModel
         {
-            Name = entity.Name
+            Name = entity.Name,
+            Id = entity.Id
         };
 
     public override ProjectEntity MapToEntity(ProjectDetailModel project)
-    => new()
-    {
-        Id = project.Id,
-        Name = project.Name,
-        Description = project.Description
-    };
+        => new()
+        {
+            Id = project.Id,
+            Name = project.Name,
+            Description = project.Description
+        };
 
     public override ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
         => entity is null ?
         ProjectDetailModel.Empty :
         new ProjectDetailModel
         {
+            Id = entity.Id,
             Name = entity.Name,
             Description = entity.Description,
             Users = _userModelMapper.MapToListModel(entity.Users).ToObservableCollection()

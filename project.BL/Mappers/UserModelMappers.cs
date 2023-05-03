@@ -6,7 +6,8 @@ using System.Drawing;
 
 namespace project.BL.Mappers;
 
-public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>
+public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
+    IUserModelMapper
 {
     private readonly IActivityModelMapper _activityModelMapper;
 
@@ -26,23 +27,33 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
         };
 
     public override UserEntity MapToEntity(UserDetailModel model)
-    => new()
-    {
-        Id = model.Id,
-        FullName = model.FullName,
-        UserName = model.UserName,
-        ImageUrl = model.ImageUrl
-    };
-
-    public override UserDetailModel MapToDetailModel(UserEntity entity)
-    => entity is null ?
-        UserDetailModel.Empty :
-        new UserDetailModel
+        => new()
         {
-            Id = entity.Id,
-            FullName = entity.FullName,
-            UserName = entity.UserName,
-            ImageUrl = entity.ImageUrl,
-            Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection()
+            Id = model.Id,
+            FullName = model.FullName,
+            UserName = model.UserName,
+            ImageUrl = model.ImageUrl
         };
+
+    public override UserDetailModel MapToDetailModel(UserEntity? entity)
+        => entity is null ?
+            UserDetailModel.Empty :
+            new UserDetailModel
+            {
+                Id = entity.Id,
+                FullName = entity.FullName,
+                UserName = entity.UserName,
+                ImageUrl = entity.ImageUrl,
+                Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection()
+            };
+
+    public UserListModel MapToListModel(UserProjectListEntity entity) 
+        => entity.User is null 
+            ? UserListModel.Empty 
+            : new UserListModel
+            {
+                Id = entity.UserId,
+                UserName = entity.User.UserName,
+                ImageUrl = entity.User.ImageUrl
+            };
 }
