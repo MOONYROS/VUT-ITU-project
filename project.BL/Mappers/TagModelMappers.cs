@@ -6,7 +6,8 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailModel>
+public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailModel>,
+    ITagModelMapper
 {
     public override TagDetailModel MapToDetailModel(TagEntity entity)
     {
@@ -27,15 +28,13 @@ public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailMode
     {
         throw new NotImplementedException();
     }
-
-
-    public override TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
+    
+    public TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
     {
         throw new NotImplementedException();
     }
 
-
-    public override IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
+    public IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
     {
         throw new NotImplementedException();
     }
