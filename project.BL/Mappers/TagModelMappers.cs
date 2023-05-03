@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -9,31 +10,38 @@ namespace project.BL.Mappers;
 public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailModel>,
     ITagModelMapper
 {
-    public override TagDetailModel MapToDetailModel(TagEntity entity)
-    {
-        throw new NotImplementedException();
-    }
+    public override TagDetailModel MapToDetailModel(TagEntity? entity)
+        => entity is null
+            ? TagDetailModel.Empty
+            : new TagDetailModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Color = Color.FromArgb(entity.Color)
+            };
 
     public override TagEntity MapToEntity(TagDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
-
     public override TagEntity MapToEntity(TagDetailModel model, Guid userGuid)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<TagEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
         => new()
         {
-            Id = entity.Tag.Id,
-            Name = entity.Tag.Name,
-            Color = Color.FromArgb(entity.Tag.Color)
+            Id = model.Id,
+            Name = model.Name,
+            Color = model.Color.ToArgb(),
+            UserId = userGuid
         };
+
+    public TagDetailModel MapToDetailModel(ActivityTagListEntity entity) =>
+        entity.Tag is null
+            ? TagDetailModel.Empty
+            : new TagDetailModel
+            {
+                Id = entity.Tag.Id,
+                Name = entity.Tag.Name,
+                Color = Color.FromArgb(entity.Tag.Color)
+            };
 }
+
+    
