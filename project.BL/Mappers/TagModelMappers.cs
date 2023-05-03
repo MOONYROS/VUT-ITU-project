@@ -27,4 +27,16 @@ public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailMode
     {
         throw new NotImplementedException();
     }
+
+
+    public override TagDetailModel MapToDetailModel(ActivityTagListEntity entity)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public override IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
+    {
+        throw new NotImplementedException();
+    }
 }
