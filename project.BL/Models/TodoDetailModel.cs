@@ -8,7 +8,7 @@ public record TodoDetailModel : ModelBase
 
     public static TodoDetailModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
         Date = default,
         Finished = false
