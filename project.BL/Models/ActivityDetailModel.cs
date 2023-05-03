@@ -5,7 +5,7 @@ namespace project.BL.Models;
 
 public record ActivityDetailModel : ModelBase
 {
-    public required string Name;
+    public required string Name { get; set; }
     public required DateTime DateTimeFrom { get; set; }
     public required DateTime DateTimeTo { get; set; }
     public required Color Color { get; set; }
