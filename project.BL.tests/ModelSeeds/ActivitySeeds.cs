@@ -14,6 +14,7 @@ public static class ActivitySeeds
         DateTimeTo = default,
         Name = $"random activity number {ActivityCounter()}",
         Color = Color.Empty,
+        UserId = Guid.Empty,
     };
 
 }

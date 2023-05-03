@@ -11,6 +11,7 @@ public static class TagSeeds
     {
         Id = Guid.NewGuid(),
         Name = $"Tag number {TagCounter()}",
-        Color = 0
+        Color = 0,
+        UserId = Guid.Empty
     };
 }
