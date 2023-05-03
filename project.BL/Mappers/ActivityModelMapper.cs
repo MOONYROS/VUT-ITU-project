@@ -9,12 +9,28 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     IActivityModelMapper
 {
     private readonly ProjectModelMapper _projectMapper;
-    public ActivityModelMapper(ProjectModelMapper projectMapper)
-        => _projectMapper = projectMapper;
-    public override ActivityListModel MapToListModel(ActivityEntity? entity)
+    private readonly TagModelMapper _tagModelMapper;
+
+    public ActivityModelMapper(ProjectModelMapper projectMapper, TagModelMapper tagModelMapper)
     {
-        throw new NotImplementedException();
+        _projectMapper = projectMapper;
+        _tagModelMapper = tagModelMapper;
     }
+
+    public override ActivityListModel MapToListModel(ActivityEntity? entity)
+        => entity is null ?
+        ActivityListModel.Empty :
+        new ActivityListModel
+        {
+            Name = entity.Name,
+            DateTimeFrom = entity.DateTimeFrom,
+            DateTimeTo = entity.DateTimeTo,
+            Color = Color.FromArgb(entity.Color),
+            Project = _projectMapper.MapToListModel(entity.Project),
+            // Tady potrebujem tag entities, ne activityTag
+            Tags = _tagModelMapper.MapToDetailModel(entity.Tags) 
+        };
+        
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
     {
@@ -26,8 +42,10 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
         throw new NotImplementedException();
     }
 
-    public override ActivityDetailModel MapToDetailModel(ActivityEntity entity)
-        => new()
+    public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
+        => entity is null ?
+        ActivityDetailModel.Empty : 
+        new ActivityDetailModel
         {
             Name = entity.Name,
             DateTimeFrom = entity.DateTimeFrom,
