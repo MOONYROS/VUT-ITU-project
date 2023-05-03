@@ -6,7 +6,7 @@ public record UserListModel : ModelBase
     public string? ImageUrl { get; set; }
     public static UserListModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         UserName = string.Empty
     };
 }

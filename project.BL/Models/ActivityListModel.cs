@@ -13,7 +13,7 @@ public record ActivityListModel : ModelBase
     public ProjectListModel? Project { get; set; }
     public static ActivityListModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
         DateTimeFrom = default,
         DateTimeTo = default,

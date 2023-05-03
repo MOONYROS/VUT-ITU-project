@@ -1,28 +1,59 @@
 ﻿using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace project.BL.Mappers;
 
-public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>
+public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
+    IUserModelMapper
 {
-    public override UserListModel MapToListModel(UserEntity? entity)
+    private readonly IActivityModelMapper _activityModelMapper;
+
+    public UserModelMapper(IActivityModelMapper activityModelMapper)
     {
-        throw new NotImplementedException();
+        _activityModelMapper = activityModelMapper;
     }
+
+    public override UserListModel MapToListModel(UserEntity? entity)
+    => entity is null ?
+        UserListModel.Empty :
+        new UserListModel
+        {
+            Id = entity.Id,
+            UserName = entity.UserName,
+            ImageUrl = entity.ImageUrl
+        };
 
     public override UserEntity MapToEntity(UserDetailModel model)
-    {
-        throw new NotImplementedException();
-    }
+        => new()
+        {
+            Id = model.Id,
+            FullName = model.FullName,
+            UserName = model.UserName,
+            ImageUrl = model.ImageUrl
+        };
 
-    public override IEnumerable<UserListModel> MapToListModel(IEnumerable<UserEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
+    public override UserDetailModel MapToDetailModel(UserEntity? entity)
+        => entity is null ?
+            UserDetailModel.Empty :
+            new UserDetailModel
+            {
+                Id = entity.Id,
+                FullName = entity.FullName,
+                UserName = entity.UserName,
+                ImageUrl = entity.ImageUrl,
+                Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection()
+            };
 
-    public override UserDetailModel MapToDetailModel(UserEntity entity)
-    {
-        throw new NotImplementedException();
-    }
+    public UserListModel MapToListModel(UserProjectListEntity entity) 
+        => entity.User is null 
+            ? UserListModel.Empty 
+            : new UserListModel
+            {
+                Id = entity.UserId,
+                UserName = entity.User.UserName,
+                ImageUrl = entity.User.ImageUrl
+            };
 }

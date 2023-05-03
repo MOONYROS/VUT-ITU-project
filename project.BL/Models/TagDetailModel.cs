@@ -9,8 +9,8 @@ public record TagDetailModel : ModelBase
         
     public static TagDetailModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
-        Color = Color.Black
+        Color = Color.Empty
     };
 }

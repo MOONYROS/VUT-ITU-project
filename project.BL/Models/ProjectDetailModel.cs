@@ -10,7 +10,7 @@ public record ProjectDetailModel : ModelBase
 
     public static ProjectDetailModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
         Description = string.Empty
     };

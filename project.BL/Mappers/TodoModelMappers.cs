@@ -1,4 +1,5 @@
-﻿using project.BL.Mappers.Interfaces;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
 
@@ -6,23 +7,28 @@ namespace project.BL.Mappers;
 
 public class TodoModelMapper : ModelMapperBaseDetailOnly<TodoEntity, TodoDetailModel>
 {
-    public override TodoDetailModel MapToDetailModel(TodoEntity entity)
-    {
-        throw new NotImplementedException();
-    }
+    public override TodoDetailModel MapToDetailModel(TodoEntity? entity)
+        => entity is null
+            ? TodoDetailModel.Empty
+            : new TodoDetailModel
+            {
+                Name = entity.Name,
+                Date = entity.Date,
+                Finished = entity.Finished
+            };
 
     public override TodoEntity MapToEntity(TodoDetailModel model)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public override TodoEntity MapToEntity(TodoDetailModel model, Guid userGuid)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<TodoDetailModel> MapToDetailModel(IEnumerable<TodoEntity> entities)
-    {
-        throw new NotImplementedException();
-    }
+        => new()
+        {
+            Id = model.Id,
+            Name = model.Name,
+            Date = model.Date,
+            Finished = model.Finished,
+            UserId = userGuid
+        };
 }

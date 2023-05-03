@@ -5,7 +5,7 @@ namespace project.BL.Models;
 
 public record ActivityDetailModel : ModelBase
 {
-    public required string Name;
+    public required string Name { get; set; }
     public required DateTime DateTimeFrom { get; set; }
     public required DateTime DateTimeTo { get; set; }
     public required Color Color { get; set; }
@@ -15,7 +15,7 @@ public record ActivityDetailModel : ModelBase
     public required Guid UserId { get; set; }
     public static ActivityDetailModel Empty => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Empty,
         Name = string.Empty,
         DateTimeFrom = default,
         DateTimeTo = default,
