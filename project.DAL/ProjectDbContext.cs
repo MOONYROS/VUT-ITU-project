@@ -34,7 +34,6 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Activities)
             .WithOne(i => i.User)
-            // Project is more like a tag within the activity (not shared between users)
             .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<UserEntity>()
@@ -56,6 +55,11 @@ public class ProjectDbContext : DbContext
             .HasMany(i=>i.Activities)
             .WithOne(i => i.Tag)
             .OnDelete(DeleteBehavior.Restrict); 
+        
+        modelBuilder.Entity<TagEntity>()
+            .HasOne(i => i.User)
+            .WithMany(i => i.Tags)
+            .OnDelete(DeleteBehavior.Restrict);
             
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i=>i.Tags)
@@ -75,11 +79,6 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<TodoEntity>()
             .HasOne(i=>i.User)
             .WithMany(i => i.Todos)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<TagEntity>()
-            .HasOne(i => i.User)
-            .WithMany(i => i.Tags)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
