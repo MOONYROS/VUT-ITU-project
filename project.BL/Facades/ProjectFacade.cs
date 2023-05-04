@@ -16,4 +16,29 @@ public class ProjectFacade :
         : base(unitOfWorkFactory, modelMapper)
     {
     }
+
+    public override Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ProjectDetailModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<IEnumerable<ProjectListModel>> GetAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model, Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

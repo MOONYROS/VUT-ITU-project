@@ -30,98 +30,15 @@ public abstract class
     }
 
     protected virtual string IncludesNavigationPathDetail => string.Empty;
+    public abstract Task DeleteAsync(Guid id);
 
-    public async Task DeleteAsync(Guid id)
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        uow.GetRepository<TEntity, TEntityMapper>().Delete(id);
-        await uow.CommitAsync().ConfigureAwait(false);
-    }
+    public abstract Task<TDetailModel?> GetAsync(Guid id);
 
-    public virtual async Task<TDetailModel?> GetAsync(Guid id)
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+    public abstract Task<IEnumerable<TListModel>> GetAsync();
 
-        IQueryable<TEntity> query = uow.GetRepository<TEntity, TEntityMapper>().Get();
+    public abstract Task<TDetailModel> SaveAsync(TDetailModel model, Guid id);
 
-        if (string.IsNullOrWhiteSpace(IncludesNavigationPathDetail) is false)
-        {
-            query = query.Include(IncludesNavigationPathDetail);
-        }
-
-        TEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
-
-        return entity is null
-            ? null
-            : ModelMapper.MapToDetailModel(entity);
-    }
-
-    public virtual async Task<IEnumerable<TListModel>> GetAsync()
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        List<TEntity> entities = await uow
-            .GetRepository<TEntity, TEntityMapper>()
-            .Get()
-            .ToListAsync();
-
-        return ModelMapper.MapToListModel(entities);
-    }
-
-    public async Task<TDetailModel> SaveAsync(TDetailModel model, Guid id)
-    {
-        TDetailModel result;
-
-        GuardCollectionsAreNotSet(model);
-
-        TEntity entity = ModelMapper.MapToEntity(model, id);
-
-        IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<TEntity> repository = uow.GetRepository<TEntity, TEntityMapper>();
-
-        if (await repository.ExistsAsync(entity))
-        {
-            TEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = ModelMapper.MapToDetailModel(updatedEntity);
-        }
-        else
-        {
-            entity.Id = Guid.NewGuid();
-            TEntity insertedEntity = await repository.InsertAsync(entity);
-            result = ModelMapper.MapToDetailModel(insertedEntity);
-        }
-
-        await uow.CommitAsync();
-
-        return result;
-    }
-
-    public virtual async Task<TDetailModel> SaveAsync(TDetailModel model)
-    {
-        TDetailModel result;
-
-        GuardCollectionsAreNotSet(model);
-
-        TEntity entity = ModelMapper.MapToEntity(model);
-
-        IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<TEntity> repository = uow.GetRepository<TEntity, TEntityMapper>();
-
-        if (await repository.ExistsAsync(entity))
-        {
-            TEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = ModelMapper.MapToDetailModel(updatedEntity);
-        }
-        else
-        {
-            entity.Id = Guid.NewGuid();
-            TEntity insertedEntity = await repository.InsertAsync(entity);
-            result = ModelMapper.MapToDetailModel(insertedEntity);
-        }
-
-        await uow.CommitAsync();
-
-        return result;
-    }
+    public abstract Task<TDetailModel> SaveAsync(TDetailModel model);
 
     public static void GuardCollectionsAreNotSet(TDetailModel model)
     {
@@ -139,6 +56,4 @@ public abstract class
             }
         }
     }
-
-
 }

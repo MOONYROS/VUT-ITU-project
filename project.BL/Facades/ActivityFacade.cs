@@ -1,4 +1,5 @@
-﻿using project.BL.Mappers.Interfaces;
+﻿using project.BL.Facades.Interfaces;
+using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
 using project.DAL.Mappers;
@@ -16,4 +17,28 @@ public class ActivityFacade :
     {
     }
 
+    public override Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActivityDetailModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<IEnumerable<ActivityListModel>> GetAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

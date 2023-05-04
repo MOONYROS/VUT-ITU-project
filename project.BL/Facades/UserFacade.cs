@@ -18,4 +18,29 @@ public class UserFacade :
     }
     protected override string IncludesNavigationPathDetail =>
         $"{nameof(UserEntity.Todos)}";
+
+    public override Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<UserDetailModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<UserDetailModel> SaveAsync(UserDetailModel model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<IEnumerable<UserListModel>> GetAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<UserDetailModel> SaveAsync(UserDetailModel model, Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }
