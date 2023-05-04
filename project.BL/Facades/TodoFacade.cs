@@ -8,12 +8,27 @@ using project.DAL.UnitOfWork;
 namespace project.BL.Facades;
 
 public class TodoFacade :
-    FacadeBase<TodoEntity, TodoListModel, TodoDetailModel, TodoEntityMapper>, ITodoFacade
+    FacadeBaseDetailOnly<TodoEntity, TodoDetailModel, TodoEntityMapper>, ITodoFacade
 {
     public TodoFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         ITodoModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+    }
+
+    public Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TodoDetailModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TodoDetailModel> SaveAsync(TodoDetailModel model)
+    {
+        throw new NotImplementedException();
     }
 }

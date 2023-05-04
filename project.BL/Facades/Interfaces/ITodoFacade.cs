@@ -3,6 +3,6 @@ using project.DAL.Entities;
 
 namespace project.BL.Facades.Interfaces;
 
-public interface ITodoFacade : IFacade<TodoEntity, TodoListModel, TodoDetailModel>
+public interface ITodoFacade : IFacadeDetailOnly<TodoEntity, TodoDetailModel>
 {
 }

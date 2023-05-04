@@ -8,12 +8,27 @@ using project.DAL.UnitOfWork;
 namespace project.BL.Facades;
 
 public class TagFacade :
-    FacadeBase<TagEntity, TagListModel, TagDetailModel, TagEntityMapper>, ITagFacade
+    FacadeBaseDetailOnly<TagEntity, TagDetailModel, TagEntityMapper>, ITagFacade
 {
     public TagFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         ITagModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+    }
+
+    public Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TagDetailModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TagDetailModel> SaveAsync(TagDetailModel model)
+    {
+        throw new NotImplementedException();
     }
 }

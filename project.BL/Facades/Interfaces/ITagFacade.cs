@@ -3,6 +3,6 @@ using project.DAL.Entities;
 
 namespace project.BL.Facades.Interfaces;
 
-public interface ITagFacade : IFacade<TagEntity, TagListModel, TagDetailModel>
+public interface ITagFacade : IFacadeDetailOnly<TagEntity, TagDetailModel>
 {
 }
