@@ -25,9 +25,11 @@ public class DbContextTests : DbContextTestsBase
     [Fact]
     public async Task AddNewTag()
     {
-        var tag = TagSeeds.TagSeed();
+        var user = UserSeeds.UserSeed();
+        var tag = TagSeeds.TagSeed() with { UserId = user.Id };
 
         ProjectDbContextSUT.Tags.Add(tag);
+        ProjectDbContextSUT.Users.Add(user);
         await ProjectDbContextSUT.SaveChangesAsync();
 
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
@@ -308,17 +310,17 @@ public class DbContextTests : DbContextTestsBase
     public async Task AddTwoActivitiesToTwoTags()
     {
         var user = UserSeeds.UserSeed();
-        var tag1 = TagSeeds.TagSeed();
-        var tag2 = TagSeeds.TagSeed();
+        var tag1 = TagSeeds.TagSeed() with { UserId = user.Id };
+        var tag2 = TagSeeds.TagSeed() with { UserId = user.Id };
         
         var activity1 = ActivitySeeds.ActivitySeed() with
         {
-            User = null,
+            User = user,
             UserId = user.Id
         };
         var activity2 = ActivitySeeds.ActivitySeed() with
         {
-            User = null,
+            User = user,
             UserId = user.Id
         };
             
