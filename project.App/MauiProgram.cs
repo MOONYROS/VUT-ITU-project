@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using project.App.Views;
 
 namespace project.App
 {
@@ -13,14 +14,19 @@ namespace project.App
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FASolid");
+                    fonts.AddFont("Free-Regular-400.otf", "FAR");
+                    fonts.AddFont("Free-Solid-900.otf", "FAS");
                 });
 
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var app = builder.Build();
+            Routing.RegisterRoute("main" , typeof(MainPage));
+            Routing.RegisterRoute("main/newUser", typeof(AddUserPage));
+
+            return app;
         }
     }
 }
