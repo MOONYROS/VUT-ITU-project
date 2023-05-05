@@ -5,4 +5,5 @@ namespace project.BL.Facades.Interfaces;
 
 public interface ITodoFacade : IFacadeDetailOnly<TodoEntity, TodoDetailModel>
 {
+    Task<IEnumerable<TodoDetailModel>> GetAsyncU(Guid userId);
 }

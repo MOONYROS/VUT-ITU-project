@@ -1,4 +1,5 @@
-﻿using project.BL.Facades.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -17,18 +18,15 @@ public class TodoFacade :
     {
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<IEnumerable<TodoDetailModel>> GetAsyncU(Guid userId)
     {
-        throw new NotImplementedException();
-    }
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        List<TodoEntity> entities = await uow
+            .GetRepository<TodoEntity, TodoEntityMapper>()
+            .Get()
+            .Where(i => i.UserId == userId)
+            .ToListAsync();
 
-    public Task<TodoDetailModel?> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<TodoDetailModel> SaveAsync(TodoDetailModel model)
-    {
-        throw new NotImplementedException();
+        return ModelMapper.MapToDetailModel(entities);
     }
 }

@@ -1,4 +1,5 @@
-﻿using project.BL.Facades.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -17,18 +18,15 @@ public class TagFacade :
     {
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<IEnumerable<TagDetailModel>> GetAsyncU(Guid userId)
     {
-        throw new NotImplementedException();
-    }
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        List<TagEntity> entities = await uow
+            .GetRepository<TagEntity, TagEntityMapper>()
+            .Get()
+            .Where(i => i.UserId == userId)
+            .ToListAsync();
 
-    public Task<TagDetailModel?> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<TagDetailModel> SaveAsync(TagDetailModel model)
-    {
-        throw new NotImplementedException();
+        return ModelMapper.MapToDetailModel(entities);
     }
 }

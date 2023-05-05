@@ -29,7 +29,6 @@ public abstract class
         ModelMapper = modelMapper;
     }
 
-    protected virtual string IncludesNavigationPathDetail => string.Empty;
     public abstract Task DeleteAsync(Guid id);
 
     public abstract Task<TDetailModel?> GetAsync(Guid id);

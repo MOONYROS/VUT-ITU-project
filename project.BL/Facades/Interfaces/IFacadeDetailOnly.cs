@@ -9,5 +9,5 @@ public interface IFacadeDetailOnly<TEntity, TDetailModel>
 {
     Task DeleteAsync(Guid id);
     Task<TDetailModel?> GetAsync(Guid id);
-    Task<TDetailModel> SaveAsync(TDetailModel model);
+    Task<TDetailModel> SaveAsync(TDetailModel model, Guid userId);
 }

@@ -18,8 +18,6 @@ public class UserFacade :
         : base(unitOfWorkFactory, modelMapper)
     {
     }
-    protected override string IncludesNavigationPathDetail =>
-        $"{nameof(UserEntity.Activities)}";
 
     public override async Task DeleteAsync(Guid id)
     {
@@ -69,7 +67,8 @@ public class UserFacade :
 
         IQueryable<UserEntity> query = uow.GetRepository<UserEntity, UserEntityMapper>().Get();
 
-        query = query.Include(IncludesNavigationPathDetail);
+        query = query.Include($"{nameof(UserEntity.Activities)}.{nameof(ActivityEntity.Project)}");
+        query = query.Include($"{nameof(UserEntity.Activities)}.{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
         UserEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
 

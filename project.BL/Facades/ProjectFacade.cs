@@ -1,8 +1,10 @@
-﻿using project.BL.Facades.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
 using project.DAL.Mappers;
+using project.DAL.Repositories;
 using project.DAL.UnitOfWork;
 
 namespace project.BL.Facades;
@@ -17,28 +19,74 @@ public class ProjectFacade :
     {
     }
 
-    public override Task DeleteAsync(Guid id)
+    public override async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        try
+        {
+            uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Delete(id);
+            await uow.CommitAsync().ConfigureAwait(false);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new InvalidOperationException("Entity deletion failed.", e);
+        }
     }
 
-    public override Task<ProjectDetailModel?> GetAsync(Guid id)
+    public override async Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model)
     {
-        throw new NotImplementedException();
+        ProjectDetailModel result;
+
+        GuardCollectionsAreNotSet(model);
+
+        ProjectEntity entity = ModelMapper.MapToEntity(model);
+
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IRepository<ProjectEntity> repository = uow.GetRepository<ProjectEntity, ProjectEntityMapper>();
+
+        if (await repository.ExistsAsync(entity))
+        {
+            ProjectEntity updatedEntity = await repository.UpdateAsync(entity);
+            result = ModelMapper.MapToDetailModel(updatedEntity);
+        }
+        else
+        {
+            entity.Id = Guid.NewGuid();
+            ProjectEntity insertedEntity = await repository.InsertAsync(entity);
+            result = ModelMapper.MapToDetailModel(entity);
+        }
+
+        await uow.CommitAsync();
+
+        return result;
     }
 
-    public override Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model)
+    public override async Task<ProjectDetailModel?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+
+        IQueryable<ProjectEntity> query = uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get();
+
+        query = query.Include($"{nameof(ProjectEntity.Users)}.{nameof(UserProjectListEntity.User)}");
+
+        ProjectEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+
+        return entity is null
+            ? null
+            : ModelMapper.MapToDetailModel(entity);
     }
 
-    public override Task<IEnumerable<ProjectListModel>> GetAsync()
+    public override async Task<IEnumerable<ProjectListModel>> GetAsync()
     {
-        throw new NotImplementedException();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+
+        List<ProjectEntity> entities = await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
+        return ModelMapper.MapToListModel(entities);
     }
+
 
     public override Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model, Guid id)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }
