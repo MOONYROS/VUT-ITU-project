@@ -53,9 +53,10 @@ public class ActivityFacade :
             : _ModelMapper.MapToDetailModel(entity);
     }
 
-    //guard na prekryvani casu aktivit
     public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
     {
+        //guard na prekryvani casu aktivit
+
         ActivityDetailModel result;
 
         GuardCollectionsAreNotSet(model);
@@ -95,7 +96,7 @@ public class ActivityFacade :
         return _ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> GetAsyncDate(Guid userId, DateTime? from, DateTime? to)
+    public async Task<IEnumerable<ActivityListModel>> GetAsyncDateFilter(Guid userId, DateTime? from, DateTime? to)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => i.UserId == userId);
@@ -125,9 +126,40 @@ public class ActivityFacade :
         return _ModelMapper.MapToListModel(entities);
     }
 
-    public Task<IEnumerable<ActivityListModel>> GetAsyncFilter(Guid userId, FilterBy interval)
+    public async Task<IEnumerable<ActivityListModel>> GetAsyncIntervalFilter(Guid userId, FilterBy interval)
     {
-        throw new NotImplementedException();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => i.UserId == userId);
+
+        DateTime now = DateTime.Now;
+        DateTime filter;
+
+        if (interval == FilterBy.Week)
+        {
+            filter = now.AddYears(-1);
+        }
+        else if (interval == FilterBy.Month)
+        {
+            filter = now.AddMonths(-1);
+        }
+        else if (interval == FilterBy.Year)
+        {
+            filter = now.AddDays(-1);
+        }
+        else//lastmonth
+        {
+            now = now.AddMonths(-1);
+            filter = now.AddMonths(-1);
+        }
+
+        query = query.Where(i => i.DateTimeFrom >= filter && i.DateTimeTo <= now);
+
+        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
+
+        List<ActivityEntity> entities = await query.ToListAsync();
+
+        return _ModelMapper.MapToListModel(entities);
     }
 
     public override Task<IEnumerable<ActivityListModel>> GetAsync()
