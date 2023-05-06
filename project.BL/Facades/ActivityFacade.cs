@@ -95,9 +95,34 @@ public class ActivityFacade :
         return _ModelMapper.MapToListModel(entities);
     }
 
-    public Task<IEnumerable<ActivityListModel>> GetAsyncDate(Guid userId, DateTime from, DateTime to)
+    public async Task<IEnumerable<ActivityListModel>> GetAsyncDate(Guid userId, DateTime? from, DateTime? to)
     {
-        throw new NotImplementedException();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => i.UserId == userId);
+
+        if (from == null && to == null)
+        {
+            throw new NotSupportedException();
+        }
+        else if (from == null) 
+        {
+            query = query.Where(i => i.DateTimeTo <= to);
+        }
+        else if (to == null)
+        {
+            query = query.Where(i => i.DateTimeFrom >= from);
+        }
+        else
+        {
+            query = query.Where(i => i.DateTimeFrom >= from && i.DateTimeTo <= to);
+        }
+
+        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
+
+        List<ActivityEntity> entities = await query.ToListAsync();
+
+        return _ModelMapper.MapToListModel(entities);
     }
 
     public Task<IEnumerable<ActivityListModel>> GetAsyncFilter(Guid userId, FilterBy interval)
