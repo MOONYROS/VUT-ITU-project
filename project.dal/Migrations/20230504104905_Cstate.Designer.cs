@@ -11,8 +11,8 @@ using project.DAL;
 namespace project.DAL.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20230305092923_CurrentState")]
-    partial class CurrentState
+    [Migration("20230504104905_Cstate")]
+    partial class Cstate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,10 +26,13 @@ namespace project.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("DateFrom")
+                    b.Property<int>("Color")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateTimeFrom")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("DateTo")
+                    b.Property<DateTime>("DateTimeTo")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -40,12 +43,6 @@ namespace project.DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("ProjectId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeOnly>("TimeFrom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeOnly>("TimeTo")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
@@ -106,11 +103,19 @@ namespace project.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Color")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tags");
                 });
@@ -188,12 +193,13 @@ namespace project.DAL.Migrations
                 {
                     b.HasOne("project.DAL.Entities.ProjectEntity", "Project")
                         .WithMany("Activities")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("project.DAL.Entities.UserEntity", "User")
                         .WithMany("Activities")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -206,13 +212,13 @@ namespace project.DAL.Migrations
                     b.HasOne("project.DAL.Entities.ActivityEntity", "Activity")
                         .WithMany("Tags")
                         .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("project.DAL.Entities.TagEntity", "Tag")
                         .WithMany("Activities")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Activity");
@@ -220,12 +226,23 @@ namespace project.DAL.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("project.DAL.Entities.TagEntity", b =>
+                {
+                    b.HasOne("project.DAL.Entities.UserEntity", "User")
+                        .WithMany("Tags")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("project.DAL.Entities.TodoEntity", b =>
                 {
                     b.HasOne("project.DAL.Entities.UserEntity", "User")
                         .WithMany("Todos")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -236,13 +253,13 @@ namespace project.DAL.Migrations
                     b.HasOne("project.DAL.Entities.ProjectEntity", "Project")
                         .WithMany("Users")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("project.DAL.Entities.UserEntity", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -272,6 +289,8 @@ namespace project.DAL.Migrations
                     b.Navigation("Activities");
 
                     b.Navigation("Projects");
+
+                    b.Navigation("Tags");
 
                     b.Navigation("Todos");
                 });
