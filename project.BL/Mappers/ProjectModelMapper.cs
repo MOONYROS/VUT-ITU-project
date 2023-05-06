@@ -9,11 +9,6 @@ namespace project.BL.Mappers;
 
 public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>
 {
-    private readonly IUserModelMapper _userModelMapper;
-    public ProjectModelMapper(IUserModelMapper userModelMapper)
-    {
-        _userModelMapper = userModelMapper;
-    }
     public override ProjectListModel MapToListModel(ProjectEntity? entity)
         => entity is null ?
         ProjectListModel.Empty :
@@ -32,13 +27,16 @@ public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListMode
         };
 
     public override ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
-        => entity is null ?
-        ProjectDetailModel.Empty :
-        new ProjectDetailModel
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            Description = entity.Description,
-            Users = _userModelMapper.MapToListModel(entity.Users).ToObservableCollection()
-        };
+    {
+        var userMapper = new UserModelMapper();
+        return entity is null
+            ? ProjectDetailModel.Empty
+            : new ProjectDetailModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                Users = userMapper.MapToListModel(entity.Users).ToObservableCollection()
+            };
+    }
 }

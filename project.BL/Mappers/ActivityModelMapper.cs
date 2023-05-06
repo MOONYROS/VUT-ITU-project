@@ -9,49 +9,48 @@ namespace project.BL.Mappers;
 public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListModel, ActivityDetailModel>,
     IActivityModelMapper
 {
-    private readonly ProjectModelMapper _projectMapper;
-    private readonly ITagModelMapper _tagModelMapper;
-
-    public ActivityModelMapper(ProjectModelMapper projectMapper, ITagModelMapper tagModelMapper)
+    public override ActivityListModel MapToListModel(ActivityEntity? entity)
     {
-        _projectMapper = projectMapper;
-        _tagModelMapper = tagModelMapper;
+        var projectMapper = new ProjectModelMapper();
+        var tagMapper = new TagModelMapper();
+        return entity is null
+            ? ActivityListModel.Empty
+            : new ActivityListModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color),
+                Project = projectMapper.MapToListModel(entity.Project),
+                Tags = tagMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
+            };
     }
 
-    public override ActivityListModel MapToListModel(ActivityEntity? entity)
-        => entity is null ?
-        ActivityListModel.Empty :
-        new ActivityListModel
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            DateTimeFrom = entity.DateTimeFrom,
-            DateTimeTo = entity.DateTimeTo,
-            Color = Color.FromArgb(entity.Color),
-            Project = _projectMapper.MapToListModel(entity.Project),
-            Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
-        };
-    
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
     {
         throw new NotSupportedException();
     }
     
     public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
-        => entity is null ?
-        ActivityDetailModel.Empty : 
-        new ActivityDetailModel
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            DateTimeFrom = entity.DateTimeFrom,
-            DateTimeTo = entity.DateTimeTo,
-            Color = Color.FromArgb(entity.Color),
-            Description = entity.Description,
-            UserId = entity.UserId,
-            Project = _projectMapper.MapToListModel(entity.Project),
-            Tags = _tagModelMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
-        };
+    {
+        var projectMapper = new ProjectModelMapper();
+        var tagMapper = new TagModelMapper();
+        return entity is null
+            ? ActivityDetailModel.Empty
+            : new ActivityDetailModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color),
+                Description = entity.Description,
+                UserId = entity.UserId,
+                Project = projectMapper.MapToListModel(entity.Project),
+                Tags = tagMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
+            };
+    }
 
     public ActivityEntity MapToEntity(ActivityDetailModel activity, Guid userGuid, Guid? projectGuid)
         => new()

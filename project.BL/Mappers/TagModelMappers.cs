@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -42,6 +43,14 @@ public class TagModelMapper : ModelMapperBaseDetailOnly<TagEntity, TagDetailMode
                 Name = entity.Tag.Name,
                 Color = Color.FromArgb(entity.Tag.Color)
             };
+    
+    public IEnumerable<TagDetailModel> MapToDetailModel(IEnumerable<ActivityTagListEntity> entities)
+    {
+        var activityTagListEntities = entities.ToList();
+        return activityTagListEntities.IsNullOrEmpty() ? 
+            Enumerable.Empty<TagDetailModel>() : 
+            activityTagListEntities.Select(MapToDetailModel);
+    }
 }
 
     

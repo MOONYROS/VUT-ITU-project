@@ -3,19 +3,13 @@ using project.BL.Models;
 using project.DAL.Entities;
 using System.Diagnostics;
 using System.Drawing;
+using Microsoft.IdentityModel.Tokens;
 
 namespace project.BL.Mappers;
 
 public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
     IUserModelMapper
 {
-    private readonly IActivityModelMapper _activityModelMapper;
-
-    public UserModelMapper(IActivityModelMapper activityModelMapper)
-    {
-        _activityModelMapper = activityModelMapper;
-    }
-
     public override UserListModel MapToListModel(UserEntity? entity)
     => entity is null ?
         UserListModel.Empty :
@@ -36,16 +30,19 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
         };
 
     public override UserDetailModel MapToDetailModel(UserEntity? entity)
-        => entity is null ?
-            UserDetailModel.Empty :
-            new UserDetailModel
+    {
+        var activityMapper = new ActivityModelMapper();
+        return entity is null
+            ? UserDetailModel.Empty
+            : new UserDetailModel
             {
                 Id = entity.Id,
                 FullName = entity.FullName,
                 UserName = entity.UserName,
                 ImageUrl = entity.ImageUrl,
-                Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection()
+                Activities = activityMapper.MapToListModel(entity.Activities).ToObservableCollection()
             };
+    }
 
     public UserListModel MapToListModel(UserProjectListEntity entity) 
         => entity.User is null 
@@ -56,4 +53,11 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
                 UserName = entity.User.UserName,
                 ImageUrl = entity.User.ImageUrl
             };
+    public IEnumerable<UserListModel> MapToListModel(IEnumerable<UserProjectListEntity> entities)
+    {
+        var projectUserListEntities = entities.ToList();
+        return projectUserListEntities.IsNullOrEmpty() ?
+            Enumerable.Empty<UserListModel>() :
+            projectUserListEntities.Select(MapToListModel);
+    }
 }
