@@ -5,5 +5,5 @@ namespace project.BL.Facades.Interfaces;
 
 public interface ITagFacade : IFacadeDetailOnly<TagEntity, TagDetailModel>
 {
-    Task<IEnumerable<TagDetailModel>> GetAsyncU(Guid userId);
+    Task<IEnumerable<TagDetailModel>> GetAsyncUser(Guid userId);
 }
