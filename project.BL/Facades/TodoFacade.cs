@@ -11,11 +11,13 @@ namespace project.BL.Facades;
 public class TodoFacade :
     FacadeBaseDetailOnly<TodoEntity, TodoDetailModel, TodoEntityMapper>, ITodoFacade
 {
+    private readonly ITodoModelMapper _todoModelMapper;
     public TodoFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         ITodoModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+        _todoModelMapper = modelMapper;
     }
 
     public async Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId)
@@ -27,6 +29,6 @@ public class TodoFacade :
             .Where(i => i.UserId == userId)
             .ToListAsync();
 
-        return ModelMapper.MapToDetailModel(entities);
+        return _todoModelMapper.MapToDetailModel(entities);
     }
 }

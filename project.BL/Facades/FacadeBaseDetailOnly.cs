@@ -13,7 +13,6 @@ public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
     where TDetailModel : class, IModel
     where TEntityMapper : IEntityIDMapper<TEntity>, new()
 {
-
     protected readonly IModelMapperDetailOnly<TEntity, TDetailModel> ModelMapper;
     protected readonly IUnitOfWorkFactory UnitOfWorkFactory;
 

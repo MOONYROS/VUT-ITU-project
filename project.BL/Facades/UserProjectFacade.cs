@@ -11,14 +11,12 @@ namespace project.BL.Facades;
 
 public class UserProjectFacade : IUserProjectFacade
 {
-
-    protected readonly IUnitOfWorkFactory UnitOfWorkFactory;
+    private readonly IUnitOfWorkFactory _unitOfWorkFactory;
     public UserProjectFacade(IUnitOfWorkFactory unitOfWorkFactory)
     {
-        UnitOfWorkFactory = unitOfWorkFactory;
+        _unitOfWorkFactory = unitOfWorkFactory;
     }
-
-
+    
     public async Task SaveAsync(Guid userId, Guid projectId)
     {
         UserProjectListEntity bindingEntity = new()
@@ -28,7 +26,7 @@ public class UserProjectFacade : IUserProjectFacade
             ProjectId = projectId
         };
 
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        await using IUnitOfWork uow = _unitOfWorkFactory.Create();
         IRepository<UserProjectListEntity> repository = uow.GetRepository<UserProjectListEntity, UserProjectListEntityMapper>();
 
         await repository.InsertAsync(bindingEntity);
@@ -38,7 +36,7 @@ public class UserProjectFacade : IUserProjectFacade
 
     public async Task DeleteAsync(Guid userId, Guid projectId)
     {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        await using IUnitOfWork uow = _unitOfWorkFactory.Create();
 
         IQueryable<UserProjectListEntity> query = uow.GetRepository<UserProjectListEntity, UserProjectListEntityMapper>().Get();
 

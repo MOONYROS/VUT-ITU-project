@@ -11,11 +11,13 @@ namespace project.BL.Facades;
 public class TagFacade :
     FacadeBaseDetailOnly<TagEntity, TagDetailModel, TagEntityMapper>, ITagFacade
 {
+    private readonly ITagModelMapper _tagModelMapper;
     public TagFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         ITagModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+        _tagModelMapper = modelMapper;
     }
 
     public async Task<IEnumerable<TagDetailModel>> GetAsyncUser(Guid userId)
@@ -27,6 +29,6 @@ public class TagFacade :
             .Where(i => i.UserId == userId)
             .ToListAsync();
 
-        return ModelMapper.MapToDetailModel(entities);
+        return _tagModelMapper.MapToDetailModel(entities);
     }
 }

@@ -13,13 +13,13 @@ namespace project.BL.Facades;
 public class ActivityFacade :
     FacadeBase<ActivityEntity, ActivityListModel, ActivityDetailModel, ActivityEntityMapper>, IActivityFacade
 {
-    protected readonly IActivityModelMapper _ModelMapper;
+    private readonly IActivityModelMapper _modelMapper;
     public ActivityFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         IActivityModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
-        _ModelMapper = modelMapper;
+        _modelMapper = modelMapper;
     }
 
     public override async Task DeleteAsync(Guid id)
@@ -50,7 +50,7 @@ public class ActivityFacade :
 
         return entity is null
             ? null
-            : _ModelMapper.MapToDetailModel(entity);
+            : _modelMapper.MapToDetailModel(entity);
     }
 
     public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
@@ -61,7 +61,7 @@ public class ActivityFacade :
 
         GuardCollectionsAreNotSet(model);
     
-        ActivityEntity entity = _ModelMapper.MapToEntity(model, userId, projectId);
+        ActivityEntity entity = _modelMapper.MapToEntity(model, userId, projectId);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
@@ -69,13 +69,13 @@ public class ActivityFacade :
         if (await repository.ExistsAsync(entity)) 
         {
             ActivityEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = _ModelMapper.MapToDetailModel(updatedEntity);
+            result = _modelMapper.MapToDetailModel(updatedEntity);
         }
         else
         {
             entity.Id = Guid.NewGuid();
             ActivityEntity insertedEntity = await repository.InsertAsync(entity);
-            result = _ModelMapper.MapToDetailModel(entity);
+            result = _modelMapper.MapToDetailModel(entity);
         }
 
         await uow.CommitAsync();
@@ -93,7 +93,7 @@ public class ActivityFacade :
 
         List<ActivityEntity> entities = await query.ToListAsync();
 
-        return _ModelMapper.MapToListModel(entities);
+        return _modelMapper.MapToListModel(entities);
     }
 
     public async Task<IEnumerable<ActivityListModel>> GetAsyncDateFilter(Guid userId, DateTime? from, DateTime? to)
@@ -123,7 +123,7 @@ public class ActivityFacade :
 
         List<ActivityEntity> entities = await query.ToListAsync();
 
-        return _ModelMapper.MapToListModel(entities);
+        return _modelMapper.MapToListModel(entities);
     }
 
     public async Task<IEnumerable<ActivityListModel>> GetAsyncIntervalFilter(Guid userId, FilterBy interval)
@@ -159,7 +159,7 @@ public class ActivityFacade :
 
         List<ActivityEntity> entities = await query.ToListAsync();
 
-        return _ModelMapper.MapToListModel(entities);
+        return _modelMapper.MapToListModel(entities);
     }
 
     public override Task<IEnumerable<ActivityListModel>> GetAsync()

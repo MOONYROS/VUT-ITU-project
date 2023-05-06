@@ -12,11 +12,13 @@ namespace project.BL.Facades;
 public class UserFacade :
     FacadeBase<UserEntity, UserListModel, UserDetailModel, UserEntityMapper>, IUserFacade
 {
+    private readonly IUserModelMapper _userModelMapper;
     public UserFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         IUserModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+        _userModelMapper = modelMapper;
     }
 
     public override async Task DeleteAsync(Guid id)
@@ -39,7 +41,7 @@ public class UserFacade :
 
         GuardCollectionsAreNotSet(model);
 
-        UserEntity entity = ModelMapper.MapToEntity(model);
+        UserEntity entity = _userModelMapper.MapToEntity(model);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<UserEntity> repository = uow.GetRepository<UserEntity, UserEntityMapper>();
@@ -47,13 +49,13 @@ public class UserFacade :
         if (await repository.ExistsAsync(entity)) 
         {
             UserEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = ModelMapper.MapToDetailModel(updatedEntity);
+            result = _userModelMapper.MapToDetailModel(updatedEntity);
         }
         else
         {
             entity.Id = Guid.NewGuid();
             UserEntity insertedEntity = await repository.InsertAsync(entity);
-            result = ModelMapper.MapToDetailModel(entity);
+            result = _userModelMapper.MapToDetailModel(entity);
         }
 
         await uow.CommitAsync();
@@ -74,7 +76,7 @@ public class UserFacade :
 
         return entity is null
             ? null
-            : ModelMapper.MapToDetailModel(entity);
+            : _userModelMapper.MapToDetailModel(entity);
     }
 
     public override async Task<IEnumerable<UserListModel>> GetAsync()
@@ -82,6 +84,6 @@ public class UserFacade :
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
         List<UserEntity> entities = await uow.GetRepository<UserEntity, UserEntityMapper>().Get().ToListAsync();
-        return ModelMapper.MapToListModel(entities);
+        return _userModelMapper.MapToListModel(entities);
     }
 }

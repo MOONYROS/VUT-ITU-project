@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using project.BL.Facades.Interfaces;
+using project.BL.Mappers;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
 using project.DAL.Entities;
@@ -12,11 +13,13 @@ namespace project.BL.Facades;
 public class ProjectFacade :
     FacadeBase<ProjectEntity, ProjectListModel, ProjectDetailModel, ProjectEntityMapper>, IProjectFacade
 {
+    private readonly IProjectModelMapper _projectModelMapper;
     public ProjectFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         IProjectModelMapper modelMapper)
         : base(unitOfWorkFactory, modelMapper)
     {
+        _projectModelMapper = modelMapper;
     }
 
     public override async Task DeleteAsync(Guid id)
@@ -39,7 +42,7 @@ public class ProjectFacade :
 
         GuardCollectionsAreNotSet(model);
 
-        ProjectEntity entity = ModelMapper.MapToEntity(model);
+        ProjectEntity entity = _projectModelMapper.MapToEntity(model);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ProjectEntity> repository = uow.GetRepository<ProjectEntity, ProjectEntityMapper>();
@@ -47,13 +50,13 @@ public class ProjectFacade :
         if (await repository.ExistsAsync(entity))
         {
             ProjectEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = ModelMapper.MapToDetailModel(updatedEntity);
+            result = _projectModelMapper.MapToDetailModel(updatedEntity);
         }
         else
         {
             entity.Id = Guid.NewGuid();
             ProjectEntity insertedEntity = await repository.InsertAsync(entity);
-            result = ModelMapper.MapToDetailModel(entity);
+            result = _projectModelMapper.MapToDetailModel(entity);
         }
 
         await uow.CommitAsync();
@@ -73,7 +76,7 @@ public class ProjectFacade :
 
         return entity is null
             ? null
-            : ModelMapper.MapToDetailModel(entity);
+            : _projectModelMapper.MapToDetailModel(entity);
     }
 
     public override async Task<IEnumerable<ProjectListModel>> GetAsync()
@@ -81,6 +84,6 @@ public class ProjectFacade :
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
         List<ProjectEntity> entities = await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
-        return ModelMapper.MapToListModel(entities);
+        return _projectModelMapper.MapToListModel(entities);
     }
 }

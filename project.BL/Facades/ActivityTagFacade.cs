@@ -10,10 +10,10 @@ namespace project.BL.Facades;
 
 public class ActivityTagFacade : IActivityTagFacade
 {
-    protected readonly IUnitOfWorkFactory UnitOfWorkFactory;
+    private readonly IUnitOfWorkFactory _unitOfWorkFactory;
     public ActivityTagFacade(IUnitOfWorkFactory unitOfWorkFactory)
     {
-        UnitOfWorkFactory = unitOfWorkFactory;
+        _unitOfWorkFactory = unitOfWorkFactory;
     }
 
     public async Task SaveAsync(Guid activityId, Guid tagId)
@@ -25,7 +25,7 @@ public class ActivityTagFacade : IActivityTagFacade
             ActivityId = activityId
         };
 
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        await using IUnitOfWork uow = _unitOfWorkFactory.Create();
         IRepository<ActivityTagListEntity> repository = uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>();
 
         await repository.InsertAsync(bindingEntity);
@@ -35,7 +35,7 @@ public class ActivityTagFacade : IActivityTagFacade
 
     public async Task DeleteAsync(Guid activityId, Guid tagId)
     {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        await using IUnitOfWork uow = _unitOfWorkFactory.Create();
 
         IQueryable<ActivityTagListEntity> query = uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>().Get();
 
