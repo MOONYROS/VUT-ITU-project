@@ -18,7 +18,7 @@ public class TagFacade :
     {
     }
 
-    public async Task<IEnumerable<TagDetailModel>> GetAsyncU(Guid userId)
+    public async Task<IEnumerable<TagDetailModel>> GetAsyncUser(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<TagEntity> entities = await uow

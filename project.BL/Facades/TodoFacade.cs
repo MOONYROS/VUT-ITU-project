@@ -18,7 +18,7 @@ public class TodoFacade :
     {
     }
 
-    public async Task<IEnumerable<TodoDetailModel>> GetAsyncU(Guid userId)
+    public async Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<TodoEntity> entities = await uow

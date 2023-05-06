@@ -42,7 +42,6 @@ public class ActivityFacade :
 
         IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();
 
-        // query = query.Include($"{nameof(UserEntity.Activities)}.{nameof(ActivityEntity.Project)}");
         query = query.Include($"{nameof(ActivityEntity.Project)}");
         query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
@@ -54,6 +53,7 @@ public class ActivityFacade :
             : _ModelMapper.MapToDetailModel(entity);
     }
 
+    //guard na prekryvani casu aktivit
     public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
     {
         ActivityDetailModel result;
