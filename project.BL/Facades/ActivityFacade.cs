@@ -60,7 +60,15 @@ public class ActivityFacade :
 
     public override async Task<IEnumerable<ActivityListModel>> GetAsync()
     {
-        throw new NotImplementedException();//yet
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();//.Where(i => i.UserId == userId);
+
+        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
+
+        List<ActivityEntity> entities = await query.ToListAsync();
+
+        return _ModelMapper.MapToListModel(entities);
     }
 
     public override async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid id)
