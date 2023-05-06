@@ -17,9 +17,12 @@
         <Grid
             Padding="25,50"
             MinimumWidthRequest="400"
-            RowDefinitions="100,200"
-            VerticalOptions="Start">
-
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
 
             <Label
                 Grid.Row="0"
@@ -27,14 +30,17 @@
                 FontSize="48"
                 HorizontalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"
-                Text="Time scheduler" />
+                Text="Time Scheduler" />
 
             <ImageButton
                 Grid.Row="1"
                 Command="{Binding GoToAddUserCommand}"
                 Style="{StaticResource UserButtonStyle}">
                 <ImageButton.Source>
-                    <FontImageSource FontFamily="FAS" Glyph="{StaticResource User}" />
+                    <FontImageSource
+                        FontFamily="FAS"
+                        Glyph="{StaticResource User}"
+                        Size="56" />
                 </ImageButton.Source>
             </ImageButton>
         </Grid>

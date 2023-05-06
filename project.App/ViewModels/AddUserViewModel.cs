@@ -1,6 +1,6 @@
 ﻿namespace project.App.ViewModels
 {
-    public partial class AddUserViewModel
+    public partial class AddUserViewModel : ViewModelBase
     {
     }
 }
