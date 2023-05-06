@@ -83,10 +83,4 @@ public class ProjectFacade :
         List<ProjectEntity> entities = await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
         return ModelMapper.MapToListModel(entities);
     }
-
-
-    public override Task<ProjectDetailModel> SaveAsync(ProjectDetailModel model, Guid id)
-    {
-        throw new NotSupportedException();
-    }
 }

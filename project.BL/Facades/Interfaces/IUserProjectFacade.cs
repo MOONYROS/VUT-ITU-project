@@ -2,7 +2,8 @@
 
 namespace project.BL.Facades.Interfaces;
 
-public interface IUserProjectFacade : IFacadeBindingEntity<UserProjectListEntity>
+public interface IUserProjectFacade
 {
-    
+    Task SaveAsync(Guid userId, Guid projectId);
+    Task DeleteAsync(Guid userId, Guid projectId);
 }

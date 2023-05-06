@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using project.BL.Enums;
 using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 using project.BL.Models;
@@ -53,31 +54,13 @@ public class ActivityFacade :
             : _ModelMapper.MapToDetailModel(entity);
     }
 
-    public override Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model)
-    {
-        throw new NotSupportedException();
-    }
-
-    public override async Task<IEnumerable<ActivityListModel>> GetAsync()
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();//.Where(i => i.UserId == userId);
-
-        query = query.Include($"{nameof(ActivityEntity.Project)}");
-        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
-
-        List<ActivityEntity> entities = await query.ToListAsync();
-
-        return _ModelMapper.MapToListModel(entities);
-    }
-
-    public override async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid id)
+    public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
     {
         ActivityDetailModel result;
 
         GuardCollectionsAreNotSet(model);
-
-        ActivityEntity entity = _ModelMapper.MapToEntity(model, id, id);
+    
+        ActivityEntity entity = _ModelMapper.MapToEntity(model, userId, projectId);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
@@ -97,5 +80,38 @@ public class ActivityFacade :
         await uow.CommitAsync();
 
         return result;
+    }
+
+    public async Task<IEnumerable<ActivityListModel>> GetAsyncUser(Guid userId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => i.UserId == userId);
+
+        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
+
+        List<ActivityEntity> entities = await query.ToListAsync();
+
+        return _ModelMapper.MapToListModel(entities);
+    }
+
+    public Task<IEnumerable<ActivityListModel>> GetAsyncDate(Guid userId, DateTime from, DateTime to)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<ActivityListModel>> GetAsyncFilter(Guid userId, FilterBy interval)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<IEnumerable<ActivityListModel>> GetAsync()
+    {
+        throw new NotSupportedException();
+    }
+
+    public override Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model)
+    {
+        throw new NotSupportedException();
     }
 }

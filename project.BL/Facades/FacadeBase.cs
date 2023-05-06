@@ -34,9 +34,6 @@ public abstract class
     public abstract Task<TDetailModel?> GetAsync(Guid id);
 
     public abstract Task<IEnumerable<TListModel>> GetAsync();
-
-    public abstract Task<TDetailModel> SaveAsync(TDetailModel model, Guid id);
-
     public abstract Task<TDetailModel> SaveAsync(TDetailModel model);
 
     public static void GuardCollectionsAreNotSet(TDetailModel model)

@@ -84,9 +84,4 @@ public class UserFacade :
         List<UserEntity> entities = await uow.GetRepository<UserEntity, UserEntityMapper>().Get().ToListAsync();
         return ModelMapper.MapToListModel(entities);
     }
-
-    public override Task<UserDetailModel> SaveAsync(UserDetailModel model, Guid id)
-    {
-        throw new NotSupportedException();
-    }
 }
