@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # Rider config directory
 .idea/
+
+# Database file
+database
