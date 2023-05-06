@@ -10,13 +10,19 @@
     <ContentPage.BindingContext>
         <viewmodels:MainViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <x:String x:Key="User">&#xf234;</x:String>
+    </ContentPage.Resources>
     <ScrollView>
         <Grid
             Padding="25,50"
             MinimumWidthRequest="400"
-            RowDefinitions="100,200"
-            VerticalOptions="Start">
-
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
 
             <Label
                 Grid.Row="0"
@@ -24,22 +30,19 @@
                 FontSize="48"
                 HorizontalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"
-                Text="Time scheduler" />
+                Text="Time Scheduler" />
 
-            <Button Grid.Row="1" Style="{StaticResource UserButtonStyle}" />
-            <Image
+            <ImageButton
                 Grid.Row="1"
-                HeightRequest="60"
-                HorizontalOptions="Center">
-                <Image.Source>
+                Command="{Binding GoToAddUserCommand}"
+                Style="{StaticResource UserButtonStyle}">
+                <ImageButton.Source>
                     <FontImageSource
-                        FontFamily="FASolid"
+                        FontFamily="FAS"
                         Glyph="{StaticResource User}"
-                        Size="150"
-                        Color="{StaticResource Platinum}" />
-                </Image.Source>
-            </Image>
-
+                        Size="56" />
+                </ImageButton.Source>
+            </ImageButton>
         </Grid>
     </ScrollView>
 

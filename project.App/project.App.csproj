@@ -49,20 +49,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Fonts\fontawesome-free-6.4.0-desktop\otfs\Font Awesome 6 Free-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\Free-Solid-900.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiFont Include="Resources\Fonts\fontawesome-free-6.4.0-desktop\otfs\Font Awesome 6 Free-Regular-400.otf" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets ="All" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\project.BL\project.BL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\AddUserPage.xaml.cs">
+	    <DependentUpon>AddUserPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\Icons.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AddUserPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
