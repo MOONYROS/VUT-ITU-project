@@ -136,7 +136,7 @@ public class ActivityFacade :
 
         if (interval == FilterBy.Week)
         {
-            filter = now.AddYears(-1);
+            filter = now.AddDays(-7);
         }
         else if (interval == FilterBy.Month)
         {
@@ -144,7 +144,7 @@ public class ActivityFacade :
         }
         else if (interval == FilterBy.Year)
         {
-            filter = now.AddDays(-1);
+            filter = now.AddYears(-1);
         }
         else//lastmonth
         {
