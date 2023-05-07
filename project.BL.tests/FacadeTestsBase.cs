@@ -27,7 +27,7 @@ public class FacadeTestsBase : IAsyncLifetime
         UserEntityMapper = new UserEntityMapper();
         UserProjectListEntityMapper = new UserProjectListEntityMapper();
         
-        DbContextFactory = new DbContextSqLiteTestingFactory("database");
+        DbContextFactory = new DbContextSqLiteTestingFactory(GetType().FullName!);
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
     }
 
