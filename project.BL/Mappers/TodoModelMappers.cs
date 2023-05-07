@@ -13,6 +13,7 @@ public class TodoModelMapper : ModelMapperBaseDetailOnly<TodoEntity, TodoDetailM
             ? TodoDetailModel.Empty
             : new TodoDetailModel
             {
+                Id = entity.Id, 
                 Name = entity.Name,
                 Date = entity.Date,
                 Finished = entity.Finished
