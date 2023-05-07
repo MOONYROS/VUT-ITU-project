@@ -24,7 +24,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Projects)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade); 
             
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Todos)
