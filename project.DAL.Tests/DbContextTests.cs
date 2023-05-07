@@ -389,4 +389,55 @@ public class DbContextTests : DbContextTestsBase
 
         Assert.Null(dbTodo);
     }
+
+    [Fact] public async Task AddUserAndProject_DeleteUser_ProjectPreserved_BindingDeleted()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var project = ProjectSeeds.ProjectSeed();
+        var binding = new UserProjectListEntity
+        {
+            Id = Guid.NewGuid(),
+            ProjectId = project.Id,
+            UserId = user.Id
+        };
+        user.Projects.Add(binding);
+        project.Users.Add(binding);
+
+        // Act
+        ProjectDbContextSUT.Users.Add(user);
+        ProjectDbContextSUT.Projects.Add(project);
+        ProjectDbContextSUT.UPLists.Add(binding);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        ProjectDbContextSUT.Users.Remove(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+        
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        var dbProject = await dbx.Projects.SingleAsync(i => i.Id == project.Id);
+        UserProjectListEntity? dbBinding;
+        try
+        {
+            dbBinding = await dbx.UPLists.SingleAsync(i => i.Id == binding.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbBinding = null;
+        }
+        
+        UserEntity? dbUser;
+        try
+        {
+            dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbUser = null;
+        }
+        
+        // Assert
+        Assert.Null(dbBinding);
+        Assert.Null(dbUser);
+        DeepAssert.Equal(project, dbProject);
+    }
 }
