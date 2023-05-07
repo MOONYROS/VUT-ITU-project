@@ -29,17 +29,17 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Todos)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Activities)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Tags)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<ProjectEntity>()
             .HasMany(i => i.Users)
@@ -59,7 +59,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<TagEntity>()
             .HasOne(i => i.User)
             .WithMany(i => i.Tags)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
             
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i=>i.Tags)
@@ -69,7 +69,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.User)
             .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.Project)
@@ -79,6 +79,6 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<TodoEntity>()
             .HasOne(i=>i.User)
             .WithMany(i => i.Todos)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
