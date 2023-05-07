@@ -15,6 +15,7 @@ public class DbContextSqLiteTestingFactory : IDbContextFactory<ProjectDbContext>
     {
         DbContextOptionsBuilder<ProjectDbContext> builder = new();
         builder.UseSqlite($"Data Source={_databaseName};Cache=Shared");
+        builder.EnableSensitiveDataLogging();
 
         return new ProjectDbContext(builder.Options);
     }

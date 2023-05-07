@@ -361,4 +361,32 @@ public class DbContextTests : DbContextTestsBase
             
         DeepAssert.Equal(activity1, dbActivity1);
     }
+
+    [Fact]
+    public async Task AddUserWithTodo_DeleteUser_TodoIsNull()
+    {
+        var user = UserSeeds.UserSeed();
+        var todo = TodoSeeds.TodoSeed();
+        user.Todos.Add(todo);
+
+        ProjectDbContextSUT.Users.Add(user);
+        ProjectDbContextSUT.Todos.Add(todo);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        ProjectDbContextSUT.Remove(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        TodoEntity? dbTodo;
+        try
+        {
+            dbTodo = await dbx.Todos.SingleAsync(i => i.Id == todo.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbTodo = null;
+        }
+
+        Assert.Null(dbTodo);
+    }
 }
