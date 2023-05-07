@@ -5,7 +5,8 @@ using project.DAL.Entities;
 
 namespace project.BL.Mappers;
 
-public class TodoModelMapper : ModelMapperBaseDetailOnly<TodoEntity, TodoDetailModel>
+public class TodoModelMapper : ModelMapperBaseDetailOnly<TodoEntity, TodoDetailModel>, 
+    ITodoModelMapper
 {
     public override TodoDetailModel MapToDetailModel(TodoEntity? entity)
         => entity is null

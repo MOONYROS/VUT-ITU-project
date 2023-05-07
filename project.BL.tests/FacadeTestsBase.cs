@@ -1,9 +1,9 @@
-﻿using Azure.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using project.DAL.Tests;
 using project.DAL.UnitOfWork;
 using Xunit.Abstractions;
 using project.BL.Mappers;
+using project.BL.Mappers.Interfaces;
 using project.DAL;
 using project.DAL.Mappers;
 
@@ -31,11 +31,11 @@ public class FacadeTestsBase : IAsyncLifetime
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
     }
 
-    protected IDbContextFactory<ProjectDbContext> DbContextFactory { get; }
+    private IDbContextFactory<ProjectDbContext> DbContextFactory { get; }
     protected ActivityModelMapper ActivityModelMapper { get; }
     protected ProjectModelMapper ProjectModelMapper { get; }
     protected TagModelMapper TagModelMapper { get; }
-    protected TodoModelMapper TodoModelMapper { get; }
+    protected ITodoModelMapper TodoModelMapper { get; }
     protected UserModelMapper UserModelMapper { get; }
 
     protected ActivityEntityMapper ActivityEntityMapper { get; }
