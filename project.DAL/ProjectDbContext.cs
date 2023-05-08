@@ -44,7 +44,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<ProjectEntity>()
             .HasMany(i => i.Users)
             .WithOne(i => i.Project)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<ProjectEntity>()
             .HasMany(i => i.Activities)
@@ -54,7 +54,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<TagEntity>()
             .HasMany(i=>i.Activities)
             .WithOne(i => i.Tag)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade); 
         
         modelBuilder.Entity<TagEntity>()
             .HasOne(i => i.User)
@@ -64,7 +64,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i=>i.Tags)
             .WithOne(i => i.Activity)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.User)
