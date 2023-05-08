@@ -389,6 +389,41 @@ public class DbContextTests : DbContextTestsBase
 
         Assert.Null(dbTodo);
     }
+    
+    [Fact]
+    public async Task AddUserAndTodo_DeleteTodo_UserPersists()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var todo = TodoSeeds.TodoSeed() with
+        {
+            UserId = user.Id
+        };
+        user.Todos.Add(todo);
+        
+        // Act
+        ProjectDbContextSUT.Users.Add(user);
+        ProjectDbContextSUT.Todos.Add(todo);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        ProjectDbContextSUT.Remove(todo);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+
+        UserEntity? dbUser;
+        try
+        {
+            dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbUser = null;
+        }
+
+        // Assert
+        Assert.NotNull(dbUser);
+    }
 
     [Fact] 
     public async Task AddUserAndProject_DeleteUser_ProjectPreserved_BindingDeleted()
@@ -495,7 +530,7 @@ public class DbContextTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task AddActivityAndTag_DeleteActivity_TagPreserved()
+    public async Task AddActivityAndTag_DeleteActivity_TagPreserved_BindingDeleted()
     {
         // Arrange 
         var user = UserSeeds.UserSeed();
@@ -558,7 +593,7 @@ public class DbContextTests : DbContextTestsBase
     }
     
     [Fact]
-    public async Task AddActivityAndTag_DeleteTag_ActivityPreserved()
+    public async Task AddActivityAndTag_DeleteTag_ActivityPreserved_BindingDeleted()
     {
         // Arrange 
         var user = UserSeeds.UserSeed();
@@ -617,5 +652,139 @@ public class DbContextTests : DbContextTestsBase
         Assert.Null(dbTag);
         Assert.Null(dbAT);
         DeepAssert.Equal(activity, dbActivity);
+    }
+
+    [Fact]
+    public async Task AddUserAndTag_DeleteUser_TagIsNull()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var tag = TagSeeds.TagSeed() with
+        {
+            UserId = user.Id
+        };
+        
+        // Act
+        ProjectDbContextSUT.Tags.Add(tag);
+        ProjectDbContextSUT.Users.Add(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        ProjectDbContextSUT.Remove(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        TagEntity? dbTag;
+        try
+        {
+            dbTag = await dbx.Tags.SingleAsync(i => i.Id == tag.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbTag = null;
+        }
+        
+        // Assert
+        Assert.Null(dbTag);
+    }
+
+    [Fact]
+    public async Task AddUserAndTag_DeleteTag_UserPersists()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var tag = TagSeeds.TagSeed() with
+        {
+            UserId = user.Id
+        };
+
+        // Act
+        ProjectDbContextSUT.Tags.Add(tag);
+        ProjectDbContextSUT.Users.Add(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+        
+        ProjectDbContextSUT.Remove(tag);
+        await ProjectDbContextSUT.SaveChangesAsync();
+        
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        UserEntity? dbUser;
+        try
+        {
+            dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbUser = null;
+        }
+        
+        // Assert
+        Assert.NotNull(dbUser);
+        DeepAssert.Equal(user, dbUser);
+    }
+
+    [Fact]
+    public async Task AddUserAndActivity_DeleteUser_ActivityIsNull()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity = ActivitySeeds.ActivitySeed() with
+        {
+            UserId = user.Id
+        };
+        
+        // Act
+        ProjectDbContextSUT.Activities.Add(activity);
+        ProjectDbContextSUT.Users.Add(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        ProjectDbContextSUT.Remove(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        ActivityEntity? dbActivity;
+        try
+        {
+            dbActivity = await dbx.Activities.SingleAsync(i => i.Id == activity.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbActivity = null;
+        }
+        
+        // Assert
+        Assert.Null(dbActivity);
+    }
+    
+    [Fact]
+    public async Task AddUserAndActivity_DeleteActivity_UserPersists()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity = ActivitySeeds.ActivitySeed() with
+        {
+            UserId = user.Id
+        };
+
+        // Act
+        ProjectDbContextSUT.Activities.Add(activity);
+        ProjectDbContextSUT.Users.Add(user);
+        await ProjectDbContextSUT.SaveChangesAsync();
+        
+        ProjectDbContextSUT.Remove(activity);
+        await ProjectDbContextSUT.SaveChangesAsync();
+        
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        UserEntity? dbUser;
+        try
+        {
+            dbUser = await dbx.Users.SingleAsync(i => i.Id == user.Id);
+        }
+        catch (InvalidOperationException)
+        {
+            dbUser = null;
+        }
+        
+        // Assert
+        Assert.NotNull(dbUser);
+        DeepAssert.Equal(user, dbUser);
     }
 }
