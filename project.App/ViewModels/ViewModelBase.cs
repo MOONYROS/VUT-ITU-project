@@ -9,6 +9,4 @@ public abstract class ViewModelBase : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-    protected virtual Task LoadDataAsync()
-        => Task.CompletedTask;
 }
