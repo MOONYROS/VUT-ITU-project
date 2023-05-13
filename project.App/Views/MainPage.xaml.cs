@@ -1,10 +1,9 @@
-﻿namespace project.App
+﻿namespace project.App.Views;
+
+public partial class MainPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
