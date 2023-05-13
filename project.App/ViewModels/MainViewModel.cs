@@ -2,6 +2,7 @@
 
 namespace project.App.ViewModels
 {
+
     public partial class MainViewModel : ViewModelBase
     {
         [RelayCommand]
