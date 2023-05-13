@@ -25,6 +25,8 @@ namespace project.App
             var app = builder.Build();
             Routing.RegisterRoute("main" , typeof(MainPage));
             Routing.RegisterRoute("main/newUser", typeof(AddUserPage));
+            Routing.RegisterRoute("main/activities", typeof(ActivitiesPage));
+
 
             return app;
         }

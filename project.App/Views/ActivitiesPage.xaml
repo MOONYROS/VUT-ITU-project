@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="project.App.Views.ActivitiesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+    Title="ActivitiesPage"
+    BackgroundColor="{StaticResource SilverLakeBlue}"
+    Shell.NavBarIsVisible="false">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ActivitiesViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <x:String x:Key="Burger">&#xf805;</x:String>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                FontSize="48"
+                HorizontalOptions="Center"
+                Text="Activities"
+                VerticalOptions="Center" />
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource OxfordBlue}">
+                <ImageButton Style="{StaticResource BurgerButton}">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="FAS"
+                            Glyph="{StaticResource Burger}"
+                            Size="56" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </VerticalStackLayout>
+            <ScrollView
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal">
+                <Grid ColumnSpacing="0" MinimumWidthRequest="1000">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="MO" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="TU" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="WE" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="TH" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="4"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="FR" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="5"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="SA" />
+                    </Frame>
+                    <Frame
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="6"
+                        Style="{StaticResource GridRow}">
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="SU" />
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

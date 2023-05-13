@@ -41,12 +41,14 @@ namespace project.App.ViewModels
 
 
         [RelayCommand]
-        private async Task GoToAddUser()
+        private void GoToAddUser()
         {
-            //Shell.Current.GoToAsync("main/newUser");
-            var User = UserSeed();
-            var idk = await _userFacade.SaveAsync(User);
-
+            Shell.Current.GoToAsync("main/newUser");
+        }
+        [RelayCommand]
+        private void GoToActivities()
+        {
+            Shell.Current.GoToAsync("main/activities");
         }
     }
 }
