@@ -10,12 +10,9 @@
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
 
-<<<<<<< HEAD
     <ContentPage.Resources>
         <x:String x:Key="Burger">&#xf805;</x:String>
     </ContentPage.Resources>
-=======
->>>>>>> origin/Frontend
 
     <ScrollView>
         <Grid>
@@ -24,10 +21,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-<<<<<<< HEAD
-                <ColumnDefinition Width="100" />
-=======
->>>>>>> origin/Frontend
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label
@@ -131,8 +124,4 @@
             </ScrollView>
         </Grid>
     </ScrollView>
-<<<<<<< HEAD
 </views:ContentPageBase>
-=======
-</ContentPage>
->>>>>>> origin/Frontend

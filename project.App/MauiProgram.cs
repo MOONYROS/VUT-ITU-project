@@ -32,7 +32,7 @@ namespace project.App
 
             var app = builder.Build();
             Routing.RegisterRoute("main" , typeof(MainView));
-            Routing.RegisterRoute("main/newUser", typeof(AddUserPage)); 
+            Routing.RegisterRoute("main/newUser", typeof(AddUserView)); 
             Routing.RegisterRoute("main/activities", typeof(ActivitiesView));
             return app;
         }
