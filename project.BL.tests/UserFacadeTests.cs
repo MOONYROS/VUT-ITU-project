@@ -44,6 +44,7 @@ public class UserFacadeTests : FacadeTestsBase
         FixIds(userModel,userFromDb);
         DeepAssert.Equal(userModel, userModelUpdated);
         DeepAssert.Equal(userModel, userFromDb);
+        DeepAssert.Equal(userModelUpdated, userFromDb);
     }
 
     [Fact]
@@ -102,6 +103,16 @@ public class UserFacadeTests : FacadeTestsBase
     }
 
     [Fact]
+    public async Task DeleteNonExistingUser_Exception()
+    {
+        // Arrange
+        var userModel = UserSeeds.UserSeed();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _userFacade.DeleteAsync(userModel.Id));
+    }
+
+
+    [Fact]
     public async Task InsertMoreUsers_DeleteCorrect()
     {
         // Arrange
@@ -124,7 +135,76 @@ public class UserFacadeTests : FacadeTestsBase
         // Assert
         Assert.Null(shouldBeNull);
     }
-    
+
+
+    [Fact]
+    public async Task UpdateUser_Correct()
+    {
+        // Arrange
+        var userModel = UserSeeds.UserSeed();
+
+        // Act
+        var insertedModel = await _userFacade.SaveAsync(userModel);
+        var dbModel = await _userFacade.GetAsync(insertedModel.Id);
+
+        Assert.NotNull(dbModel);
+        
+        dbModel.FullName = "Ales Bejr";
+        await _userFacade.SaveAsync(dbModel);
+
+        var dbModelUpdated = await _userFacade.GetAsync(insertedModel.Id);
+
+        DeepAssert.Equal(dbModel, dbModelUpdated);
+    }
+
+
+    [Fact]
+    public async Task GetListModels_Correct()
+    {
+        // Arrange
+        var user1 = UserSeeds.UserSeed();
+        var user2 = UserSeeds.UserSeed();
+        var user3 = UserSeeds.UserSeed();
+
+        // Act
+        var user1Updated = await _userFacade.SaveAsync(user1);
+        var user2Updated = await _userFacade.SaveAsync(user2);
+        var user3Updated = await _userFacade.SaveAsync(user3);
+
+        var UserList = await _userFacade.GetAsync();
+
+        var user1List = new UserListModel()
+        {
+            Id = user1Updated.Id,
+            UserName = user1Updated.UserName
+        };
+
+        var user2List = new UserListModel()
+        {
+            Id = user2Updated.Id,
+            UserName = user2Updated.UserName
+        };
+
+        var user3List = new UserListModel()
+        {
+            Id = user3Updated.Id,
+            UserName = user3Updated.UserName
+        };
+
+        var userListNotInDb = new UserListModel()
+        {
+            Id = Guid.NewGuid(),
+            UserName = "Ales Bejr"
+        };
+
+        Assert.Contains(user1List, UserList);
+        Assert.Contains(user2List, UserList);
+        Assert.Contains(user3List, UserList);
+
+        Assert.DoesNotContain(userListNotInDb, UserList);
+    }
+
+
     private static void FixIds(UserDetailModel expectedModel, UserDetailModel returnedModel)
     {
         returnedModel.Id = expectedModel.Id;
