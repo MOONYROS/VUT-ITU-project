@@ -32,7 +32,7 @@ public class TodoFacadeTests : FacadeTestsBase
         // Assert
         Assert.NotNull(returnedTodo);
         FixIds(todo, returnedTodo);
-        Assert.Equal(todo, returnedTodo);
+        DeepAssert.Equal(todo, returnedTodo);
     }
 
     [Fact]
@@ -111,6 +111,11 @@ public class TodoFacadeTests : FacadeTestsBase
         
         // Assert
         DeepAssert.Equal(todos, returnedTodos);
+
+        // Another way
+        Assert.Contains(retTodo1, returnedTodoList);
+        Assert.Contains(retTodo2, returnedTodoList);
+        Assert.Contains(retTodo3, returnedTodoList);
     }
 
     [Fact]
@@ -226,6 +231,7 @@ public class TodoFacadeTests : FacadeTestsBase
 
         var UpdatedDbTodo = await _todoFacade.GetAsync(DbTodo.Id);
 
+        // Assert
         DeepAssert.Equal(UpdatedDbTodo, DbTodo);
     }
 
