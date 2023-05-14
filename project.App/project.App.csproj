@@ -28,6 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>en-US</DefaultLanguage>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -53,9 +54,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="Fody" Version="6.7.0" PrivateAssets="all">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="Scrutor" Version="4.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -63,8 +72,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\AddUserPage.xaml.cs">
-	    <DependentUpon>AddUserPage.xaml</DependentUpon>
+	  <Compile Update="Views\ActivitiesView.xaml.cs">
+	    <DependentUpon>ActivitiesView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AddUserView.xaml.cs">
+	    <DependentUpon>AddUserView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\ContentPageBase.xaml.cs">
+	    <DependentUpon>ContentPageBase.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\MainView.xaml.cs">
+	    <DependentUpon>MainView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -72,10 +90,13 @@
 	  <MauiXaml Update="Resources\Styles\Icons.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ActivitiesPage.xaml">
+	  <MauiXaml Update="Views\ActivitiesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AddUserPage.xaml">
+	  <MauiXaml Update="Views\AddUserView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ContentPageBase.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="project.App.Views.AddUserPage"
+<views:ContentPageBase
+    x:Class="project.App.Views.AddUserView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
+	xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+	xmlns:views="clr-namespace:project.App.Views"
     Title="AddUser"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
@@ -48,4 +51,4 @@
                 WidthRequest="100" />
         </Grid>
     </VerticalStackLayout>
-</ContentPage>
+</views:ContentPageBase>

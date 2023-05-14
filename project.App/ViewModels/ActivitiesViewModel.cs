@@ -1,6 +1,11 @@
-﻿namespace project.App.ViewModels
+﻿using project.App.Services.Interfaces;
+
+namespace project.App.ViewModels
 {
-    internal class ActivitiesViewModel
+    public class ActivitiesViewModel : ViewModelBase
     {
+        public ActivitiesViewModel(IMessengerService messengerService) : base(messengerService)
+        {
+        }
     }
 }

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="project.App.Views.ActivitiesPage"
+<views:ContentPageBase
+    x:Class="project.App.Views.ActivitiesView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+    xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
+	xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+	xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesPage"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
-
-    <ContentPage.BindingContext>
-        <viewmodels:ActivitiesViewModel />
-    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <x:String x:Key="Burger">&#xf805;</x:String>
@@ -141,4 +139,4 @@
             </ScrollView>
         </Grid>
     </ScrollView>
-</ContentPage>
+</views:ContentPageBase>

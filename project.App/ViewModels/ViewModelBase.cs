@@ -1,12 +1,29 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using project.App.Services.Interfaces;
+using project.App.ViewModels;
 
-public abstract class ViewModelBase : INotifyPropertyChanged
+public abstract class ViewModelBase : ObservableRecipient, IViewModel
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+	private bool isRefreshRequired;
+	protected readonly IMessengerService messengerService;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected ViewModelBase(IMessengerService messengerService)
+        : base(messengerService.Messenger)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        this.messengerService = messengerService;
+        IsActive = true;
     }
+
+    public async Task OnAppearingAsync()
+	{
+		if (isRefreshRequired)
+		{
+			await LoadDataAsync();
+
+			isRefreshRequired = false;
+		}
+	}
+
+	protected virtual Task LoadDataAsync()
+		=> Task.CompletedTask;
 }
