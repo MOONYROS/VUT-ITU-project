@@ -8,7 +8,7 @@ public static class TagSeeds
     private static int _counter = 0;
     private static int TagCounter() => ++_counter;
 
-    public static TagDetailModel TagDetailSeed() => new()
+    public static TagDetailModel TagSeed() => new()
     {
         Id = Guid.NewGuid(),
         Name = $"Tag number {TagCounter()}",
