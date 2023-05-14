@@ -7,7 +7,8 @@ using System.Diagnostics;
 
 namespace project.BL.Mappers;
 
-public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>
+public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>,
+    IProjectModelMapper
 {
     public override ProjectListModel MapToListModel(ProjectEntity? entity)
         => entity is null ?
