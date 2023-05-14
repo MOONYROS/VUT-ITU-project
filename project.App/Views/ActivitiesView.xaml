@@ -10,9 +10,12 @@
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
 
+<<<<<<< HEAD
     <ContentPage.Resources>
         <x:String x:Key="Burger">&#xf805;</x:String>
     </ContentPage.Resources>
+=======
+>>>>>>> origin/Frontend
 
     <ScrollView>
         <Grid>
@@ -21,34 +24,23 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+<<<<<<< HEAD
                 <ColumnDefinition Width="100" />
+=======
+>>>>>>> origin/Frontend
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 FontSize="48"
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
 
-            <VerticalStackLayout
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="0"
-                BackgroundColor="{StaticResource OxfordBlue}">
-                <ImageButton Style="{StaticResource BurgerButton}">
-                    <ImageButton.Source>
-                        <FontImageSource
-                            FontFamily="FAS"
-                            Glyph="{StaticResource Burger}"
-                            Size="56" />
-                    </ImageButton.Source>
-                </ImageButton>
-            </VerticalStackLayout>
             <ScrollView
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
                 <Grid ColumnSpacing="0" MinimumWidthRequest="1000">
@@ -139,4 +131,8 @@
             </ScrollView>
         </Grid>
     </ScrollView>
+<<<<<<< HEAD
 </views:ContentPageBase>
+=======
+</ContentPage>
+>>>>>>> origin/Frontend

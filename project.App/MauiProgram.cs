@@ -27,11 +27,12 @@ namespace project.App
                 .AddBLServices()
                 .AddAppServices();
 #if DEBUG
-            builder.Logging.AddDebug();
+		builder.Logging.AddDebug();
 #endif
+
             var app = builder.Build();
-            Routing.RegisterRoute("main", typeof(MainView));
-            Routing.RegisterRoute("main/newUser", typeof(AddUserView));
+            Routing.RegisterRoute("main" , typeof(MainView));
+            Routing.RegisterRoute("main/newUser", typeof(AddUserPage)); 
             Routing.RegisterRoute("main/activities", typeof(ActivitiesView));
             return app;
         }
