@@ -12,10 +12,6 @@
         <viewmodels:ActivitiesViewModel />
     </ContentPage.BindingContext>
 
-    <ContentPage.Resources>
-        <x:String x:Key="Burger">&#xf805;</x:String>
-    </ContentPage.Resources>
-
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -23,34 +19,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 FontSize="48"
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
 
-            <VerticalStackLayout
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="0"
-                BackgroundColor="{StaticResource OxfordBlue}">
-                <ImageButton Style="{StaticResource BurgerButton}">
-                    <ImageButton.Source>
-                        <FontImageSource
-                            FontFamily="FAS"
-                            Glyph="{StaticResource Burger}"
-                            Size="56" />
-                    </ImageButton.Source>
-                </ImageButton>
-            </VerticalStackLayout>
             <ScrollView
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
                 <Grid ColumnSpacing="0" MinimumWidthRequest="1000">
@@ -64,12 +45,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="150" />
+                        <RowDefinition Height="90" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="0"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -79,7 +59,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="1"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -89,7 +68,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="2"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -99,7 +77,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="3"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -109,7 +86,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="4"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -119,7 +95,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="5"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -129,7 +104,6 @@
                     </Frame>
                     <Frame
                         Grid.Row="0"
-                        Grid.RowSpan="2"
                         Grid.Column="6"
                         Style="{StaticResource GridRow}">
                         <Label
@@ -137,8 +111,10 @@
                             HorizontalOptions="Center"
                             Text="SU" />
                     </Frame>
+
                 </Grid>
             </ScrollView>
         </Grid>
     </ScrollView>
 </ContentPage>
+

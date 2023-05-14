@@ -25,4 +25,11 @@
         <Setter Property="BorderColor" Value="{StaticResource OxfordBlue}" />
     </Style>
 
+    <Style x:Key="FlyoutItem" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource Platinum}" />
+    </Style>
+
 </ResourceDictionary>
