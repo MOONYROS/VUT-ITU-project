@@ -205,6 +205,15 @@ public class UserFacadeTests : FacadeTestsBase
     }
 
 
+    [Fact]
+    public async Task GetListModels_Empty()
+    {
+        var UserList = await _userFacade.GetAsync();
+
+        Assert.Empty(UserList);
+    }
+
+
     private static void FixIds(UserDetailModel expectedModel, UserDetailModel returnedModel)
     {
         returnedModel.Id = expectedModel.Id;
