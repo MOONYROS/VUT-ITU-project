@@ -21,34 +21,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 FontSize="48"
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
 
-            <VerticalStackLayout
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="0"
-                BackgroundColor="{StaticResource OxfordBlue}">
-                <ImageButton Style="{StaticResource BurgerButton}">
-                    <ImageButton.Source>
-                        <FontImageSource
-                            FontFamily="FAS"
-                            Glyph="{StaticResource Burger}"
-                            Size="56" />
-                    </ImageButton.Source>
-                </ImageButton>
-            </VerticalStackLayout>
             <ScrollView
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
                 <Grid ColumnSpacing="0" MinimumWidthRequest="1000">

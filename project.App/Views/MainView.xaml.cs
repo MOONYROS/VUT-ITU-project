@@ -1,4 +1,4 @@
-﻿using project.App.ViewModels;
+using project.App.ViewModels;
 
 namespace project.App.Views;
 
