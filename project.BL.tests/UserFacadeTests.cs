@@ -173,19 +173,19 @@ public class UserFacadeTests : FacadeTestsBase
 
         var UserList = await _userFacade.GetAsync();
 
-        var user1List = new UserListModel()
+        var user1Listmodel = new UserListModel()
         {
             Id = user1Updated.Id,
             UserName = user1Updated.UserName
         };
 
-        var user2List = new UserListModel()
+        var user2Listmodel = new UserListModel()
         {
             Id = user2Updated.Id,
             UserName = user2Updated.UserName
         };
 
-        var user3List = new UserListModel()
+        var user3Listmodel = new UserListModel()
         {
             Id = user3Updated.Id,
             UserName = user3Updated.UserName
@@ -197,9 +197,9 @@ public class UserFacadeTests : FacadeTestsBase
             UserName = "Ales Bejr"
         };
 
-        Assert.Contains(user1List, UserList);
-        Assert.Contains(user2List, UserList);
-        Assert.Contains(user3List, UserList);
+        Assert.Contains(user1Listmodel, UserList);
+        Assert.Contains(user2Listmodel, UserList);
+        Assert.Contains(user3Listmodel, UserList);
 
         Assert.DoesNotContain(userListNotInDb, UserList);
     }
