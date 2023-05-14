@@ -8,6 +8,7 @@ public record DALOptions
 public record SqliteOptions
 {
     public bool Enabled { get; init; }
+    public bool idontknow { get; set; }
 
     public string DatabaseName { get; init; } = null!;
 
