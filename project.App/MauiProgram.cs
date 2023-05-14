@@ -23,9 +23,9 @@ namespace project.App
 #endif
 
             var app = builder.Build();
-            Routing.RegisterRoute("main" , typeof(MainPage));
-            Routing.RegisterRoute("main/newUser", typeof(AddUserPage));
-
+            Routing.RegisterRoute("main" , typeof(MainView));
+            Routing.RegisterRoute("main/newUser", typeof(AddUserPage)); 
+            Routing.RegisterRoute("main/activities", typeof(ActivitiesView));
             return app;
         }
     }

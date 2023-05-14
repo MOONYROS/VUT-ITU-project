@@ -10,5 +10,10 @@ namespace project.App.ViewModels
         {
             Shell.Current.GoToAsync("main/newUser");
         }
+        [RelayCommand]
+        private void GoToActivities()
+        {
+            Shell.Current.GoToAsync("main/activities");
+        }
     }
 }
