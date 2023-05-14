@@ -48,7 +48,8 @@
                 FontAttributes="Bold"
                 HeightRequest="100"
                 Text="ADD"
-                WidthRequest="100" />
+                WidthRequest="100"
+                Command="{Binding GoToAddUser}" />
         </Grid>
     </VerticalStackLayout>
 </views:ContentPageBase>

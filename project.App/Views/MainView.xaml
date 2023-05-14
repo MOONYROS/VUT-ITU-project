@@ -8,7 +8,8 @@
 		xmlns:views="clr-namespace:project.App.Views"
 		Title="Time scheduler"
 		BackgroundColor="{StaticResource SilverLakeBlue}"
-		Shell.NavBarIsVisible="false">
+		Shell.NavBarIsVisible="false"
+		x:DataType="viewmodels:ActivitiesViewModel">
 
 	<ContentPage.Resources>
 		<x:String x:Key="AddUser">&#xf234;</x:String>

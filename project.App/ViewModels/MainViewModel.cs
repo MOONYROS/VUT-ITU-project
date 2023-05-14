@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using project.BL.Models;
 using project.App.Services.Interfaces;
+using project.BL.Facades;
+using project.BL.Facades.Interfaces;
 
 namespace project.App.ViewModels
 {
@@ -8,9 +10,9 @@ namespace project.App.ViewModels
     {
         public Guid Id { get; set; }
 
+        
         public MainViewModel(IMessengerService messengerService) : base(messengerService)
         {
-
         }
         public IEnumerable<UserListModel> Users { get; set; } = null!;
 
@@ -20,7 +22,7 @@ namespace project.App.ViewModels
             FullName = "Random name",
             UserName = "UserName"
         };
-        
+
         [RelayCommand]
         private void GoToAddUser()
         {
