@@ -19,7 +19,7 @@
 
     <Style x:Key="FlyoutItem" TargetType="Button">
         <Setter Property="HeightRequest" Value="45" />
-        <Setter Property="Margin" Value="10 5" />
+        <Setter Property="Margin" Value="10, 5" />
     </Style>
 
 </ResourceDictionary>

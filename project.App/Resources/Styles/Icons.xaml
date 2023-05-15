@@ -4,5 +4,7 @@
 
     <x:String x:Key="AddUser">&#xf234;</x:String>
     <x:String x:Key="User">&#xf007;</x:String>
+    <x:String x:Key="LeftArrow">&#xf060;</x:String>
+    <x:String x:Key="RightArrow">&#xf061;</x:String>
 
 </ResourceDictionary>

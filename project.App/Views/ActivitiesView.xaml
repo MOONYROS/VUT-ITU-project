@@ -10,27 +10,55 @@
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
 
+
+
     <ScrollView Orientation="Horizontal">
 
-        <Grid>
+        <Grid Padding="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
+                Grid.ColumnSpan="3"
                 FontSize="48"
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
-
-            <CollectionView
+            <ImageButton
                 Grid.Row="1"
                 Grid.Column="0"
+                BackgroundColor="{StaticResource OxfordBlue}"
+                HeightRequest="100">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="FAS"
+                        Glyph="{StaticResource LeftArrow}"
+                        Size="56" />
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton
+                Grid.Row="1"
+                Grid.Column="2"
+                BackgroundColor="{StaticResource OxfordBlue}"
+                HeightRequest="100">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="FAS"
+                        Glyph="{StaticResource RightArrow}"
+                        Size="56" />
+                </ImageButton.Source>
+            </ImageButton>
+            <CollectionView
+                Grid.Row="1"
+                Grid.Column="1"
                 HeightRequest="110"
                 HorizontalOptions="Center"
                 ItemsLayout="HorizontalList"
