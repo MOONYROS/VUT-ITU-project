@@ -9,7 +9,8 @@
     Title="AddUser"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false"
-    x:DataType="viewmodels:AddUserViewModel">
+    x:DataType="viewmodels:AddUserViewModel"
+    >
 
     <VerticalStackLayout
         Padding="25,50"
@@ -23,11 +24,13 @@
             VerticalOptions="Center" />
 
         <Label Padding="0,20,0,0" Text="FULLNAME" />
-        <Entry Placeholder="Holden Ford" />
+        <Entry Placeholder="Holden Ford" 
+               Text="{Binding User.FullName}"/>
         <Label Padding="0,20,0,0" Text="USERNAME" />
-        <Entry Placeholder="MindHunter" />
-        <Label Padding="0,20,0,0" Text="IMAGE" />
-        <Entry />
+        <Entry Placeholder="MindHunter" 
+               Text="{Binding User.UserName}"/>
+        <Label Padding="0,20,0,0" Text="IMAGE"/>
+        <Entry Text="{Binding User.ImageUrl}"/>
 
         <Grid
             Margin="0,20,0,0"

@@ -34,7 +34,8 @@
 				SemanticProperties.HeadingLevel="Level1"
 				Text="Time Scheduler" />
 
-			<CollectionView Grid.Row="1" VerticalOptions="FillAndExpand">
+			<CollectionView Grid.Row="1" VerticalOptions="FillAndExpand"
+                            ItemsSource="{Binding Users}">
 				<CollectionView.ItemsLayout>
 					<GridItemsLayout Orientation="Horizontal" />
 				</CollectionView.ItemsLayout>
@@ -50,7 +51,7 @@
 									<ImageButton.Source>
 										<FontImageSource
 											FontFamily="FAS"
-											Glyph="{StaticResource AddUser}"
+											Glyph="{StaticResource User}"
 											Size="56" />
 									</ImageButton.Source>
 								</ImageButton>
