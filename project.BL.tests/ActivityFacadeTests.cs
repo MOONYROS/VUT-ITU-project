@@ -118,8 +118,21 @@ public class ActivityFacadeTests : FacadeTestsBase
         Assert.NotNull(DbProject);
     }
 
-    //DeleteProjectInActivity() // az bude setnull v dbcontextu
-    //to samy s vice aktivitama
+    // az bude setnull v dbcontextu
+    /*
+    [Fact]
+    public async Task DeleteProjectInActivity()
+    {
+
+    }
+
+    /*
+    [Fact]
+    public async Task DeleteProjectInMoreActivities()
+    {
+
+    }
+    */
 
     [Fact]
     public async Task DeleteAcitivty()
@@ -269,6 +282,22 @@ public class ActivityFacadeTests : FacadeTestsBase
         Assert.True(activityList.Any());
         Assert.True(activityList.Count() == 1);
         DeepAssert.Equal(_activityListModel, activityList.First());
+    }
+
+
+    [Fact]
+    public async Task GetList_Empty()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+
+        // Assert
+        var activityList = await _activityFacade.GetAsyncUser(returnedUser.Id);
+        Assert.NotNull(activityList);
+        Assert.True(activityList.IsNullOrEmpty());
     }
 
 
@@ -532,14 +561,14 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         /*
         [Fact]
-        public async Task ()
+        public async Task DateFilter()
         {
 
         }
 
         /*
         [Fact]
-        public async Task()
+        public async InteralFilter()
         {
 
         }
