@@ -79,7 +79,7 @@ public class ActivityFacade :
                 ((i.DateTimeFrom >= ActivityFrom) && (i.DateTimeFrom <= ActivityTo)) || ((i.DateTimeTo >= ActivityFrom) && (i.DateTimeTo <= ActivityTo))
                 ));
         
-        if (await uow.GetRepository<ActivityEntity, ActivityEntityMapper>().ExistsAsync(entity))
+        if (await repository.ExistsAsync(entity))
         {
             query = query.Where(i => i.Id != entity.Id);
         }
