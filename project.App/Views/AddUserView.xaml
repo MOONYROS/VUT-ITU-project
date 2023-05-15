@@ -8,7 +8,8 @@
 	xmlns:views="clr-namespace:project.App.Views"
     Title="AddUser"
     BackgroundColor="{StaticResource SilverLakeBlue}"
-    Shell.NavBarIsVisible="false">
+    Shell.NavBarIsVisible="false"
+    x:DataType="viewmodels:AddUserViewModel">
 
     <VerticalStackLayout
         Padding="25,50"
@@ -49,7 +50,7 @@
                 HeightRequest="100"
                 Text="ADD"
                 WidthRequest="100"
-                Command="{Binding GoToAddUser}" />
+                Command="{Binding SaveUserCommand}" />
         </Grid>
     </VerticalStackLayout>
 </views:ContentPageBase>

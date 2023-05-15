@@ -9,7 +9,7 @@
 		Title="Time scheduler"
 		BackgroundColor="{StaticResource SilverLakeBlue}"
 		Shell.NavBarIsVisible="false"
-		x:DataType="viewmodels:ActivitiesViewModel">
+		x:DataType="viewmodels:MainViewModel">
 
 	<ContentPage.Resources>
 		<x:String x:Key="AddUser">&#xf234;</x:String>
