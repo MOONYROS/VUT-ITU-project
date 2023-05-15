@@ -4,13 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
-	xmlns:viewmodels="clr-namespace:project.App.ViewModels"
-	xmlns:views="clr-namespace:project.App.Views"
+    xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+    xmlns:views="clr-namespace:project.App.Views"
     Title="AddUser"
-    BackgroundColor="{StaticResource SilverLakeBlue}"
-    Shell.NavBarIsVisible="false"
     x:DataType="viewmodels:AddUserViewModel"
-    >
+    BackgroundColor="{StaticResource SilverLakeBlue}"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="false">
 
     <VerticalStackLayout
         Padding="25,50"
@@ -24,13 +24,11 @@
             VerticalOptions="Center" />
 
         <Label Padding="0,20,0,0" Text="FULLNAME" />
-        <Entry Placeholder="Holden Ford" 
-               Text="{Binding User.FullName}"/>
+        <Entry Placeholder="Holden Ford" Text="{Binding User.FullName}" />
         <Label Padding="0,20,0,0" Text="USERNAME" />
-        <Entry Placeholder="MindHunter" 
-               Text="{Binding User.UserName}"/>
-        <Label Padding="0,20,0,0" Text="IMAGE"/>
-        <Entry Text="{Binding User.ImageUrl}"/>
+        <Entry Placeholder="MindHunter" Text="{Binding User.UserName}" />
+        <Label Padding="0,20,0,0" Text="IMAGE" />
+        <Entry Text="{Binding User.ImageUrl}" />
 
         <Grid
             Margin="0,20,0,0"
@@ -49,11 +47,11 @@
                 BackgroundColor="{StaticResource YlmNmBlue}"
                 BorderColor="{StaticResource OxfordBlue}"
                 BorderWidth="3"
+                Command="{Binding SaveUserCommand}"
                 FontAttributes="Bold"
                 HeightRequest="100"
                 Text="ADD"
-                WidthRequest="100"
-                Command="{Binding SaveUserCommand}" />
+                WidthRequest="100" />
         </Grid>
     </VerticalStackLayout>
 </views:ContentPageBase>

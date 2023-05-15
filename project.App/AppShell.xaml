@@ -3,7 +3,9 @@
     x:Class="project.App.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    x:DataType="viewmodels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout">
 
     <Shell.FlyoutHeader>
@@ -17,9 +19,12 @@
     </Shell.FlyoutHeader>
     <Shell.FlyoutContent>
         <VerticalStackLayout Padding="15" BackgroundColor="{StaticResource YlmNmBlue}">
-            <Label Style="{StaticResource FlyoutItem}" Text="Activities" />
-            <Label Style="{StaticResource FlyoutItem}" Text="Projects" />
-            <Label Style="{StaticResource FlyoutItem}" Text="TODO" />
+            <Button
+                Command="{Binding GoToActivitiesListCommand}"
+                Style="{StaticResource FlyoutItem}"
+                Text="Activities" />
+            <Button Style="{StaticResource FlyoutItem}" Text="Projects" />
+            <Button Style="{StaticResource FlyoutItem}" Text="TODO" />
         </VerticalStackLayout>
     </Shell.FlyoutContent>
     <Shell.FlyoutFooter>

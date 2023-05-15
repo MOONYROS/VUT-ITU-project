@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:ContentPageBase
     x:Class="project.App.Views.MainView"
-    x:Name="MainViewRoot"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    x:Name="MainViewRoot"
     Title="Time scheduler"
     x:DataType="viewmodels:MainViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
+    Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="false">
 
     <ContentPage.Resources>
@@ -54,8 +55,7 @@
                         HeightRequest="250"
                         WidthRequest="200">
                         <VerticalStackLayout>
-                            <ImageButton Style="{StaticResource UserButtonStyle}"
-                                         Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}">
+                            <ImageButton Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}" Style="{StaticResource UserButtonStyle}">
                                 <ImageButton.Source>
                                     <FontImageSource
                                         FontFamily="FAS"

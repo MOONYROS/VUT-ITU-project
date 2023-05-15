@@ -90,6 +90,9 @@
 		<MauiXaml Update="Resources\Styles\Icons.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\ActivitiesListView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\ActivitiesView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
