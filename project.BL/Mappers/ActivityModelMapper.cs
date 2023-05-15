@@ -13,7 +13,20 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     {
         var projectMapper = new ProjectModelMapper();
         var tagMapper = new TagModelMapper();
-        return entity is null
+        if (entity != null && entity.Project == null)
+        {
+            return new ActivityListModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color),
+                Project = null,
+                Tags = tagMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
+            };
+        }
+            return entity is null
             ? ActivityListModel.Empty
             : new ActivityListModel
             {
@@ -36,6 +49,21 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     {
         var projectMapper = new ProjectModelMapper();
         var tagMapper = new TagModelMapper();
+        if (entity != null && entity.Project == null)
+        {
+            return new ActivityDetailModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DateTimeFrom = entity.DateTimeFrom,
+                DateTimeTo = entity.DateTimeTo,
+                Color = Color.FromArgb(entity.Color),
+                Description = entity.Description,
+                UserId = entity.UserId,
+                Project = null,
+                Tags = tagMapper.MapToDetailModel(entity.Tags).ToObservableCollection()
+            };
+        }
         return entity is null
             ? ActivityDetailModel.Empty
             : new ActivityDetailModel
