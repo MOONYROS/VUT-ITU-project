@@ -1,27 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using project.BL.Models;
 using project.App.Services.Interfaces;
-using project.BL.Facades;
 using project.BL.Facades.Interfaces;
+using CommunityToolkit.Mvvm.Messaging;
+using project.App.Messages;
+using System.Collections.ObjectModel;
 
 namespace project.App.ViewModels
 {
-    public partial class MainViewModel : ViewModelBase
+    public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
     {
+        private IUserFacade _userFacade { get; init; }
         public Guid Id { get; set; }
-
+        public ObservableCollection<UserListModel> Users { get; set; } 
         
-        public MainViewModel(IMessengerService messengerService) : base(messengerService)
+        public MainViewModel(
+            IMessengerService messengerService,
+            IUserFacade userFacade
+            ) : base(messengerService)
         {
+            _userFacade = userFacade;
         }
-        public IEnumerable<UserListModel> Users { get; set; } = null!;
-
-        public static UserDetailModel UserSeed() => new()
-        {
-            Id = Guid.NewGuid(),
-            FullName = "Random name",
-            UserName = "UserName"
-        };
 
         [RelayCommand]
         private async void GoToAddUser()
@@ -32,6 +31,17 @@ namespace project.App.ViewModels
         private async void GoToActivities()
         {
             await Shell.Current.GoToAsync("main/activities");
+        }
+
+        protected override async Task LoadDataAsync()
+        {
+            IEnumerable<UserListModel> tmpUsers = await _userFacade.GetAsync();
+            Users = tmpUsers.ToObservableCollection();
+        }
+
+        public async void Receive(UserAddMessage message)
+        {
+            await LoadDataAsync();
         }
     }
 }
