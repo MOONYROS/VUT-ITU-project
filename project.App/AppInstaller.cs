@@ -14,6 +14,7 @@ public static class AppInstaller
 
         services.AddSingleton<IMessenger>(idk => StrongReferenceMessenger.Default);
         services.AddSingleton<IMessengerService, MessengerService>();
+        services.AddSingleton<INavigationService, NavigationService>();
 
         services.Scan(selector => selector
             .FromAssemblyOf<App>()
