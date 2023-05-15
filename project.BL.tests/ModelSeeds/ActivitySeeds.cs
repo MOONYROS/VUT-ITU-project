@@ -7,7 +7,7 @@ public static class ActivitySeeds
 {
     private static int _counter = 0;
     private static int ActivityCounter() => ++_counter; 
-    public static ActivityDetailModel ActivityDetailSeed() => new()
+    public static ActivityDetailModel ActivitySeed() => new()
     {
         Id = Guid.NewGuid(),
         DateTimeFrom = default,
