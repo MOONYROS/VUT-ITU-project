@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Xunit.Abstractions;
 using project.DAL.Tests;
 using project.BL.Facades.Interfaces;
+using System.Drawing;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace project.BL.tests;
 public class TagFacadeTests : FacadeTestsBase
@@ -205,6 +207,27 @@ public class TagFacadeTests : FacadeTestsBase
 
         // Assert
         DeepAssert.Equal(DbTag, UpdatedDbTag);
+    }
+
+
+    [Fact]
+    public async Task TagColor_Works()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var tag = TagSeeds.TagSeed();
+
+        tag.Color = Color.FromArgb(Color.Fuchsia.ToArgb());//deez colors are shaiet
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedTag = await _tagFacade.SaveAsync(tag, returnedUser.Id);
+
+        var DbTag = await _tagFacade.GetAsync(returnedTag.Id);
+        Assert.NotNull(DbTag);
+
+        // Assert
+        Assert.Equal(DbTag.Color, tag.Color);
     }
 
 }
