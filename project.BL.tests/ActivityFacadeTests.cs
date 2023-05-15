@@ -281,6 +281,15 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity2 = ActivitySeeds.ActivitySeed();
         var activity3 = ActivitySeeds.ActivitySeed();
 
+        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
+        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+
+        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 20:30");
+        activity2.DateTimeTo = DateTime.Parse("15/5/2021 22:00");
+
+        activity3.DateTimeFrom = DateTime.Parse("16/5/2021 20:30");
+        activity3.DateTimeTo = DateTime.Parse("16/5/2021 22:00");
+
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
