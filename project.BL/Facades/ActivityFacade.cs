@@ -7,6 +7,7 @@ using project.DAL.Entities;
 using project.DAL.Mappers;
 using project.DAL.Repositories;
 using project.DAL.UnitOfWork;
+using System.Diagnostics;
 
 namespace project.BL.Facades;
 
@@ -55,8 +56,6 @@ public class ActivityFacade :
 
     public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
     {
-        //guard na prekryvani casu aktivit
-
         ActivityDetailModel result;
 
         GuardCollectionsAreNotSet(model);
@@ -65,6 +64,32 @@ public class ActivityFacade :
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+        // guard for overlapping activities of an user
+        DateTime ActivityFrom = entity.DateTimeFrom;
+        DateTime ActivityTo = entity.DateTimeTo;
+
+        IQueryable<ActivityEntity> query = repository
+            .Get()
+            .Where
+                (i =>
+                (i.UserId == entity.UserId) && 
+                (
+                ((i.DateTimeFrom <= ActivityFrom) && (i.DateTimeTo >= ActivityFrom)) || ((i.DateTimeFrom <= ActivityTo) && (i.DateTimeTo >= ActivityTo)) || 
+                ((i.DateTimeFrom >= ActivityFrom) && (i.DateTimeFrom <= ActivityTo)) || ((i.DateTimeTo >= ActivityFrom) && (i.DateTimeTo <= ActivityTo))
+                ));
+        
+        if (await uow.GetRepository<ActivityEntity, ActivityEntityMapper>().ExistsAsync(entity))
+        {
+            query = query.Where(i => i.Id != entity.Id);
+        }
+
+        List<ActivityEntity> OverlappingActivites = await query.ToListAsync();
+
+        if (OverlappingActivites.Count > 0)
+        {
+            throw new OverlappingException();
+        }
 
         if (await repository.ExistsAsync(entity)) 
         {
@@ -171,4 +196,5 @@ public class ActivityFacade :
     {
         throw new NotSupportedException();
     }
+
 }
