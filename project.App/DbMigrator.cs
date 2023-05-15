@@ -23,7 +23,11 @@ public class SqliteDbMigrator : IDbMigrator
     {
         await using ProjectDbContext dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        await dbContext.Database.EnsureDeletedAsync(cancellationToken);
+        // Just for development, will be deleted
+        if (true)
+        {
+            await dbContext.Database.EnsureDeletedAsync(cancellationToken);
+        }
         await dbContext.Database.EnsureCreatedAsync(cancellationToken);
     }
 }

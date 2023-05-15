@@ -26,11 +26,15 @@ namespace project.App
                 .AddDALServices(builder.Configuration)
                 .AddBLServices()
                 .AddAppServices();
+
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
             var app = builder.Build();
+
+            app.Services.GetRequiredService<IDbMigrator>().Migrate();
+
             Routing.RegisterRoute("main" , typeof(MainView));
             Routing.RegisterRoute("main/newUser", typeof(AddUserView)); 
             Routing.RegisterRoute("main/activities", typeof(ActivitiesView));
