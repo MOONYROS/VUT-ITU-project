@@ -4,57 +4,63 @@ using CommunityToolkit.Maui;
 using project.BL;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using project.App.Services.Interfaces;
 
-namespace project.App
+namespace project.App;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
+        var builder = MauiApp.CreateBuilder();
+        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
         {
-            var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>().ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("Free-Regular-400.otf", "FAR");
-                fonts.AddFont("Free-Solid-900.otf", "FAS");
-            }).UseMauiCommunityToolkit();
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            fonts.AddFont("Free-Regular-400.otf", "FAR");
+            fonts.AddFont("Free-Solid-900.otf", "FAS");
+        }).UseMauiCommunityToolkit();
 
-            ConfigureAppSettings(builder);
+        ConfigureAppSettings(builder);
 
-            builder.Services
-                .AddDALServices(builder.Configuration)
-                .AddBLServices()
-                .AddAppServices();
+        builder.Services
+            .AddDALServices(builder.Configuration)
+            .AddBLServices()
+            .AddAppServices();
 
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            app.Services.GetRequiredService<IDbMigrator>().Migrate();
+        app.Services.GetRequiredService<IDbMigrator>().Migrate();
+        RegisterRouting(app.Services.GetRequiredService<INavigationService>());
 
-            Routing.RegisterRoute("main" , typeof(MainView));
-            Routing.RegisterRoute("main/newUser", typeof(AddUserView)); 
-            Routing.RegisterRoute("main/activities", typeof(ActivitiesView));
-            return app;
+        return app;
+    }
+
+    private static void ConfigureAppSettings(MauiAppBuilder builder)
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var assembly = Assembly.GetExecutingAssembly();
+        const string appSettingsFilePath = "project.App.appSettings.json";
+        using var appSettingsStream = assembly.GetManifestResourceStream(appSettingsFilePath);
+        if (appSettingsStream is not null)
+        {
+            configurationBuilder.AddJsonStream(appSettingsStream);
         }
 
-        private static void ConfigureAppSettings(MauiAppBuilder builder)
+        var configuration = configurationBuilder.Build();
+        builder.Configuration.AddConfiguration(configuration);
+    }
+
+    private static void RegisterRouting(INavigationService navigationService)
+    {
+        foreach (var route in navigationService.Routes)
         {
-            var configurationBuilder = new ConfigurationBuilder();
-
-            var assembly = Assembly.GetExecutingAssembly();
-            const string appSettingsFilePath = "project.App.appSettings.json";
-            using var appSettingsStream = assembly.GetManifestResourceStream(appSettingsFilePath);
-            if (appSettingsStream is not null)
-            {
-                configurationBuilder.AddJsonStream(appSettingsStream);
-            }
-
-            var configuration = configurationBuilder.Build();
-            builder.Configuration.AddConfiguration(configuration);
+            Routing.RegisterRoute(route.Route, route.ViewType);
         }
     }
 }
