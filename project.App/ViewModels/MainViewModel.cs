@@ -24,14 +24,14 @@ namespace project.App.ViewModels
         };
 
         [RelayCommand]
-        private void GoToAddUser()
+        private async void GoToAddUser()
         {
-            Shell.Current.GoToAsync("main/newUser");
+            await Shell.Current.GoToAsync("main/newUser");
         }
         [RelayCommand]
-        private void GoToActivities()
+        private async void GoToActivities()
         {
-            Shell.Current.GoToAsync("main/activities");
+            await Shell.Current.GoToAsync("main/activities");
         }
     }
 }
