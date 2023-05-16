@@ -4,7 +4,7 @@ namespace project.App.Views;
 
 public partial class ActivitiesListView
 {
-	public ActivitiesListView(ActivitiesViewModel viewModel) : base(viewModel)
+	public ActivitiesListView(ActivitiesListViewModel viewModel) : base(viewModel)
 	{
 		InitializeComponent();
 	}
