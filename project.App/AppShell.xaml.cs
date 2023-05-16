@@ -17,4 +17,10 @@ public partial class AppShell : Shell
     {
         await _navigationService.GoToAsync("main/activities/userActivities");
     }
+    
+    [RelayCommand]
+    private async void GoToTodoList()
+    {
+        await _navigationService.GoToAsync("main/activities/userTodos");
+    }
 }

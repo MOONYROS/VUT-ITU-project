@@ -57,7 +57,18 @@
                 Grid.Column="0"
                 BackgroundColor="{StaticResource OxfordBlue}"
                 HeightRequest="100"
-                WidthRequest="100" />
+                WidthRequest="100">
+                <Image.Source>
+                    <Binding Path="User.ImageUrl">
+                        <Binding.TargetNullValue>
+                            <FontImageSource
+                                FontFamily="FAS"
+                                Glyph="{StaticResource User}"
+                                Size="100" />
+                        </Binding.TargetNullValue>
+                    </Binding>
+                </Image.Source>
+            </Image>
             <Button
                 Grid.Column="1"
                 BackgroundColor="{StaticResource YlmNmBlue}"
