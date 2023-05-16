@@ -27,10 +27,11 @@
                 VerticalOptions="Center" />
             <VerticalStackLayout Spacing="2">
                 <Button Text="Activities" 
-                            Command="{Binding GoToActivitiesListCommand}"/>
-                <Button Text="Project" />
+                        Command="{Binding GoToActivitiesListCommand}"/>
+                <Button Text="Projects"
+                        Command="{Binding GoToProjectListCommand}"/>
                 <Button Text="TODO" 
-                            Command="{Binding GoToTodoListCommand}"/>
+                        Command="{Binding GoToTodoListCommand}"/>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>
