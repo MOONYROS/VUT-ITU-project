@@ -23,8 +23,13 @@
                 Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesListCommand}"
                 Style="{StaticResource FlyoutItem}"
                 Text="Activities" />
-            <Button Style="{StaticResource FlyoutItem}" Text="Projects" />
-            <Button Style="{StaticResource FlyoutItem}" Text="TODO" />
+            <Button
+                Style="{StaticResource FlyoutItem}"
+                Text="Projects" />
+            <Button 
+                Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToTodoListCommand}"
+                Style="{StaticResource FlyoutItem}"
+                Text="TODO" />
         </VerticalStackLayout>
     </Shell.FlyoutContent>
     <Shell.FlyoutFooter>
