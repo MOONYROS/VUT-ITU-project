@@ -6,7 +6,7 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesListView"
-    x:DataType="viewmodels:ActivityListViewModel"
+    x:DataType="viewmodels:ActivitiesListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="False">
     <ScrollView>
@@ -46,7 +46,7 @@
                 Grid.Column="0"
                 EmptyView="No activities to disply"
                 HorizontalOptions="Center"
-                ItemsSource="{Binding Path=Activities}"
+                ItemsSource="{Binding Activities}"
                 MinimumWidthRequest="460">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
