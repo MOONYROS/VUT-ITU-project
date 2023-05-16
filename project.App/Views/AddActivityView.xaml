@@ -44,7 +44,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         HorizontalOptions="End">
-                        <DatePicker Date="{Binding activityDetailModel.DateTimeFrom}" />
+                        <DatePicker Date="{Binding activityDetailModel.DateTimeFrom}" MinimumDate="01/01/2023" />
                         <TimePicker Time="{Binding TimeFrom}" />
                     </HorizontalStackLayout>
                     <Label
@@ -54,7 +54,7 @@
                         Text="To:"
                         VerticalOptions="Center" />
                     <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
-                        <DatePicker Date="{Binding activityDetailModel.DateTimeTo}" />
+                        <DatePicker Date="{Binding activityDetailModel.DateTimeTo}" MinimumDate="01/01/2023" />
                         <TimePicker Time="{Binding TimeTo}" />
                     </HorizontalStackLayout>
                 </Grid>
