@@ -37,7 +37,7 @@
                         Margin="0,0,10,0"
                         Text="Choose a filter:"
                         VerticalOptions="Center" />
-                    <Picker MinimumWidthRequest="150" VerticalOptions="Center">
+                    <Picker MinimumWidthRequest="150" VerticalOptions="Center" SelectedIndex="{Binding SortType}" >
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>None</x:String>
@@ -47,7 +47,6 @@
                                 <x:String>Last Year</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
-                        <Picker.SelectedIndex>0</Picker.SelectedIndex>
                     </Picker>
                 </HorizontalStackLayout>
             </Frame>

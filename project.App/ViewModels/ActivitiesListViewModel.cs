@@ -16,6 +16,7 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     private readonly INavigationService _navigationService;
     public ObservableCollection<ActivityListModel> Activities { get; set; } = null;
     public Guid UserId { get; set; }
+    public string SortType { get; set; }
 
     public ActivitiesListViewModel(
         IMessengerService messengerService,
@@ -39,6 +40,37 @@ public partial class ActivitiesListViewModel : ViewModelBase,
         await _navigationService.GoToAsync<AddActivityViewModel>(
                 new Dictionary<string, object?> { [nameof(AddActivityViewModel.UserId)] = UserId });
     }
+
+    [RelayCommand]
+
+    private async void SortActivities()
+    {
+        IEnumerable<ActivityListModel> act; 
+        switch (SortType)
+        {
+            case "None":
+                act = await _activityFacade.GetAsyncUser(UserId);
+                break;
+            case "Last Week":
+                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddDays(-7), DateTime.Today);   
+                break;
+            case "Last Month":
+                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddMonths(-1), DateTime.Today);
+                break;
+            case "Previous Month":
+                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddMonths(-2), DateTime.Today);
+                break;
+            case "Last Year": 
+                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddYears(-1), DateTime.Today);
+                break;
+            default: 
+                act = await _activityFacade.GetAsyncUser(UserId);
+                break;
+        }
+        
+        Activities = act.ToObservableCollection();
+    }
+
 
     public async void Receive(ActivityDeleteMessage message)
     {
