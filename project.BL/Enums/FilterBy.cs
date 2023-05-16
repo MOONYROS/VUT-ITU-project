@@ -2,5 +2,5 @@
 
 public enum FilterBy
 {
-    Week, Month, LastMonth, Year
+    Week, Month, PreviousMonth, Year
 }
