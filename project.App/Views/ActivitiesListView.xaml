@@ -31,14 +31,22 @@
                 HorizontalOptions="Start"
                 WidthRequest="460">
                 <HorizontalStackLayout>
-                    <CheckBox VerticalOptions="Center" />
-                    <Label Text="Last Week" VerticalOptions="Center" />
-                    <CheckBox VerticalOptions="Center" />
-                    <Label Text="Last Month" VerticalOptions="Center" />
-                    <CheckBox VerticalOptions="Center" />
-                    <Label Text="Previous Month" VerticalOptions="Center" />
-                    <CheckBox VerticalOptions="Center" />
-                    <Label Text="Last Year" VerticalOptions="Center" />
+                    <Label Text="Choose a filter:"
+                           VerticalOptions="Center"
+                           Margin="0,0,10,0"/>
+                    <Picker MinimumWidthRequest="150"
+                            VerticalOptions="Center">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>None</x:String>
+                                <x:String>Last Week</x:String>
+                                <x:String>Last Month</x:String>
+                                <x:String>Previous Month</x:String>
+                                <x:String>Last Year</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                        <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                    </Picker>
                 </HorizontalStackLayout>
             </Frame>
             <CollectionView
