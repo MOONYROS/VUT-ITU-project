@@ -1,10 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:project.App.Views"
-             x:Class="project.App.Views.TodoListView">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+<views:ContentPageBase
+    x:Class="project.App.Views.TodoListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:project.App.ViewModels"
+    xmlns:views="clr-namespace:project.App.Views"
+    Title="TodoListView"
+    x:DataType="viewmodels:TodoListViewModel"
+    BackgroundColor="{StaticResource SilverLakeBlue}"
+    Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <Grid
+            Padding="15"
+            ColumnDefinitions="*"
+            RowDefinitions="100,100,*">
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                FontSize="48"
+                HorizontalOptions="Center"
+                MinimumHeightRequest="200"
+                Text="Todos"
+                VerticalOptions="Center"/>
+            
+            <CollectionView
+                Grid.Row="2"
+                Grid.Column="0"
+                EmptyView="No todos yet"
+                HorizontalOptions="Center"
+                MinimumWidthRequest="460">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <HorizontalStackLayout>
+                                <Button Text="TodoName"/>
+                                <Label Text="Date"/>
+                                <Label Text="Finished"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
 </views:ContentPageBase>
