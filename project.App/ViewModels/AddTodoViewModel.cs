@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 namespace project.App.ViewModels;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
-public class AddTodoViewModel : ViewModelBase
+public partial class AddTodoViewModel : ViewModelBase
 {
     private readonly ITodoFacade _todoFacade;
     public Guid UserId { get; set; }
