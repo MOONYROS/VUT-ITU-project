@@ -42,4 +42,10 @@ public partial class ActivitiesViewModel : ViewModelBase
     {
         await _navigationService.GoToAsync("main/activities/userTodos");
     }
+    
+    [RelayCommand]
+    private async void GoToProjectList()
+    {
+        await _navigationService.GoToAsync("main/activities/userProject");
+    }
 }
