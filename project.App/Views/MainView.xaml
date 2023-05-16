@@ -55,12 +55,20 @@
                             HeightRequest="265"
                             WidthRequest="200">
                             <VerticalStackLayout>
-                                <ImageButton Margin="5" Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}" Style="{StaticResource UserButtonStyle}">
+                                <ImageButton
+                                    Margin="5"
+                                    Aspect="Fill"
+                                    Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}"
+                                    Style="{StaticResource UserButtonStyle}">
                                     <ImageButton.Source>
-                                        <FontImageSource
-                                            FontFamily="FAS"
-                                            Glyph="{StaticResource User}"
-                                            Size="56" />
+                                        <Binding Path="ImageUrl">
+                                            <Binding.TargetNullValue>
+                                                <FontImageSource
+                                                    FontFamily="FAS"
+                                                    Glyph="{StaticResource User}"
+                                                    Size="56" />
+                                            </Binding.TargetNullValue>
+                                        </Binding>
                                     </ImageButton.Source>
                                 </ImageButton>
                                 <Label
