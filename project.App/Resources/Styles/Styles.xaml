@@ -28,4 +28,13 @@
     <Style x:Key="ValidEntry" TargetType="Entry">
         <Setter Property="TextColor" Value="Green" />
     </Style>
+    <Style x:Key="NavigationButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource OxfordBlue}" />
+        <Setter Property="TextColor" Value="{StaticResource Platinum}" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="HeightRequest" Value="70" />
+        <Setter Property="WidthRequest" Value="150" />
+        <Setter Property="FontSize" Value="20" />
+
+    </Style>
 </ResourceDictionary>
