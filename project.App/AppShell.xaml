@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
-    x:DataType="viewmodels:AppShellViewModel"
+    x:Name="AppShellRoot"
     Shell.FlyoutBehavior="Flyout">
 
     <Shell.FlyoutHeader>
@@ -20,7 +20,7 @@
     <Shell.FlyoutContent>
         <VerticalStackLayout Padding="15" BackgroundColor="{StaticResource YlmNmBlue}">
             <Button
-                Command="{Binding GoToActivitiesListCommand}"
+                Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesListCommand}"
                 Style="{StaticResource FlyoutItem}"
                 Text="Activities" />
             <Button Style="{StaticResource FlyoutItem}" Text="Projects" />
@@ -49,5 +49,9 @@
         Title="Home"
         ContentTemplate="{DataTemplate views:MainView}"
         Route="MainView" />
+    <ShellContent
+        Title="UserActivities"
+        ContentTemplate="{DataTemplate views:ActivitiesListView}"
+        Route="main/activities/userActivities" />
 
 </Shell>
