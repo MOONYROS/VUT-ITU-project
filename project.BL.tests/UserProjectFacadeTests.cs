@@ -128,7 +128,7 @@ public class UserProjectFacadeTests : FacadeTestsBase
 
         // Assert bound
         Assert.True(DbProject.Users.Any());
-        Assert.Equal(3, DbProject.Users.Count());
+        Assert.Equal(3, DbProject.Users.Count);
 
         Assert.Contains(_userListModel1, DbProject.Users);
         Assert.Contains(_userListModel2, DbProject.Users);
@@ -284,7 +284,7 @@ public class UserProjectFacadeTests : FacadeTestsBase
         Assert.True(DbProject2.Users.Any());
         Assert.True(DbProject3.Users.Any());
 
-        Assert.Equal(3, DbProject1.Users.Count());
+        Assert.Equal(3, DbProject1.Users.Count);
         Assert.Single(DbProject2.Users);
         Assert.Single(DbProject3.Users);
 
@@ -309,5 +309,108 @@ public class UserProjectFacadeTests : FacadeTestsBase
         Assert.DoesNotContain(_userListModelNotBonded, DbProject1.Users);
         Assert.DoesNotContain(_userListModelNotBonded, DbProject2.Users);
         Assert.DoesNotContain(_userListModelNotBonded, DbProject3.Users);
+    }
+
+
+    [Fact]
+    public async Task DeleteProject()
+    {
+        // Arrange
+        var userModel = UserSeeds.UserSeed();
+        var projectModel = ProjectSeeds.ProjectSeed();
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(userModel);
+        var returnedProject = await _projectFacade.SaveAsync(projectModel);
+
+        var DbUser = await _userFacade.GetAsync(returnedUser.Id);
+        var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
+
+        Assert.NotNull(DbUser);
+        Assert.NotNull(DbProject);
+
+        var _userListModel = new UserListModel()
+        {
+            Id = DbUser.Id,
+            UserName = DbUser.UserName
+        };
+
+        // Assert not bound
+        Assert.True(DbProject.Users.IsNullOrEmpty());
+
+        // Bind
+        await _userProjectFacade.SaveAsync(DbUser.Id, DbProject.Id);
+
+        // Update
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+        Assert.NotNull(DbProject);
+
+        // Assert bound
+        Assert.True(DbProject.Users.Any());
+        DeepAssert.Equal(DbProject.Users.First(), _userListModel);
+
+        // Delete project
+        await _projectFacade.DeleteAsync(DbProject.Id);
+
+        //Update
+        DbUser = await _userFacade.GetAsync(DbUser.Id);
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+
+        // Assert
+        Assert.Null(DbProject);
+        Assert.NotNull(DbUser);
+    }
+
+
+    [Fact]
+    public async Task DeleteUser()
+    {
+        // Arrange
+        var userModel = UserSeeds.UserSeed();
+        var projectModel = ProjectSeeds.ProjectSeed();
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(userModel);
+        var returnedProject = await _projectFacade.SaveAsync(projectModel);
+
+        var DbUser = await _userFacade.GetAsync(returnedUser.Id);
+        var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
+
+        Assert.NotNull(DbUser);
+        Assert.NotNull(DbProject);
+
+        var _userListModel = new UserListModel()
+        {
+            Id = DbUser.Id,
+            UserName = DbUser.UserName
+        };
+
+        // Assert not bound
+        Assert.True(DbProject.Users.IsNullOrEmpty());
+
+        // Bind
+        await _userProjectFacade.SaveAsync(DbUser.Id, DbProject.Id);
+
+        // Update
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+        Assert.NotNull(DbProject);
+
+        // Assert bound
+        Assert.True(DbProject.Users.Any());
+        DeepAssert.Equal(DbProject.Users.First(), _userListModel);
+
+        // Delete user
+        await _userFacade.DeleteAsync(DbUser.Id);
+
+        //Update
+        DbUser = await _userFacade.GetAsync(DbUser.Id);
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+
+        // Assert
+        Assert.NotNull(DbProject);
+        Assert.Null(DbUser);
+
+        Assert.NotNull(DbProject.Users);
+        Assert.False(DbProject.Users.Any());
     }
 }
