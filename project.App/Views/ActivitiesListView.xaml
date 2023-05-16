@@ -37,7 +37,10 @@
                         Margin="0,0,10,0"
                         Text="Choose a filter:"
                         VerticalOptions="Center" />
-                    <Picker MinimumWidthRequest="150" VerticalOptions="Center" SelectedIndex="{Binding SortType}" >
+                    <Picker
+                        SelectedIndex="{Binding SortType}"
+                        VerticalOptions="Center"
+                        WidthRequest="150">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>None</x:String>
@@ -48,6 +51,12 @@
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
+                    <Button
+                        Margin="95,0,0,0"
+                        Command="{Binding SortActivitiesCommand}"
+                        HeightRequest="80"
+                        Text="Apply"
+                        WidthRequest="80" />
                 </HorizontalStackLayout>
             </Frame>
             <CollectionView
