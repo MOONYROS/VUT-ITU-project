@@ -5,17 +5,18 @@ using project.BL.Models;
 
 namespace project.App.ViewModels;
 
-internal class ProjectDetailViewModel : ViewModelBase
+public class ProjectDetailViewModel : ViewModelBase
 {
     private readonly IUserFacade _userFacade;
     private readonly IProjectFacade _projectFacade;
 
-        public ProjectDetailViewModel(IMessengerService messengerService,
-           IUserFacade userFacade,
-           IProjectFacade projectFacade) : base(messengerService)
-        {
-            _userFacade = userFacade;
-            _projectFacade = projectFacade;
-        }
+    public ProjectDetailViewModel(IMessengerService messengerService,
+       IUserFacade userFacade,
+       IProjectFacade projectFacade) : base(messengerService)
+    {
+        _userFacade = userFacade;
+        _projectFacade = projectFacade;
     }
+
+    
 }
