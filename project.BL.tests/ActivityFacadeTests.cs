@@ -311,7 +311,6 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity3 = ActivitySeeds.ActivitySeed();
 
         activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeFrom = DateTime
         activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
 
         activity2.DateTimeFrom = DateTime.Parse("15/5/2021 20:30");
