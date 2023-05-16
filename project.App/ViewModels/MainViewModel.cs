@@ -32,9 +32,10 @@ namespace project.App.ViewModels
         }
 
         [RelayCommand]
-        private async void GoToActivities()
+        private async void GoToActivities(Guid Id)
         {
-            await _navigationService.GoToAsync("main/activities");
+            await _navigationService.GoToAsync<ActivitiesViewModel>(
+                new Dictionary<string, object?> { [nameof(ActivitiesViewModel.UserId)] = Id });
         }
 
         protected override async Task LoadDataAsync()

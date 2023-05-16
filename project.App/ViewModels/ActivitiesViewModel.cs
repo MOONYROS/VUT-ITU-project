@@ -3,11 +3,13 @@ using project.App.Services.Interfaces;
 
 namespace project.App.ViewModels;
 
+[QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class ActivitiesViewModel : ViewModelBase
 {
     private INavigationService _navigationService;
     public IEnumerable<DateTime> Week { get; set; }
     public DateTime Today { get; set; }
+    public Guid UserId { get; set; }   
 
     public ActivitiesViewModel(IMessengerService messengerService,
         INavigationService navigationService)
@@ -31,7 +33,8 @@ public partial class ActivitiesViewModel : ViewModelBase
     [RelayCommand]
     private async void GoToActivitiesList()
     {
-        await _navigationService.GoToAsync("main/activities/userActivities");
+        await _navigationService.GoToAsync<ActivitiesListViewModel>(
+                new Dictionary<string, object?> { [nameof(ActivitiesListViewModel.UserId)] = UserId });
     }
 
     [RelayCommand]
