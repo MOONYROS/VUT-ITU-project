@@ -24,11 +24,15 @@
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
-            <VerticalStackLayout Spacing="2">
-                <Button Text="Activities" />
-                <Button Text="Project" />
-                <Button Text="TODO" />
-            </VerticalStackLayout>
+            <HorizontalStackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                Spacing="2"
+                VerticalOptions="Start">
+                <Button Style="{StaticResource NavigationButton}" Text="Activities" />
+                <Button Style="{StaticResource NavigationButton}" Text="Project" />
+                <Button Style="{StaticResource NavigationButton}" Text="TODO" />
+            </HorizontalStackLayout>
             <ImageButton
                 Grid.Row="1"
                 Grid.Column="0"
