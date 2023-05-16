@@ -17,77 +17,78 @@
         <x:String x:Key="AddUser">&#xf234;</x:String>
         <x:String x:Key="User">&#xf007;</x:String>
     </ContentPage.Resources>
+    <ScrollView Orientation="Horizontal">
+        <Grid
+            Padding="25,50"
+            MinimumWidthRequest="400"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="250" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="220" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                FontAttributes="Bold"
+                FontSize="48"
+                HorizontalOptions="Center"
+                SemanticProperties.HeadingLevel="Level1"
+                Text="Time Scheduler" />
+            <CollectionView
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                HorizontalScrollBarVisibility="Always"
+                ItemsSource="{Binding Users}"
+                MinimumHeightRequest="300">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
 
-    <Grid
-        Padding="25,50"
-        MinimumWidthRequest="400"
-        VerticalOptions="Fill">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="250" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="220" />
-        </Grid.RowDefinitions>
-        <Label
-            Grid.Row="0"
-            FontAttributes="Bold"
-            FontSize="48"
-            HorizontalOptions="Center"
-            SemanticProperties.HeadingLevel="Level1"
-            Text="Time Scheduler" />
-        <CollectionView
-            Grid.Row="2"
-            HorizontalOptions="Center"
-            HorizontalScrollBarVisibility="Always"
-            ItemsSource="{Binding Users}"
-            MinimumHeightRequest="300">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal" />
-            </CollectionView.ItemsLayout>
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:UserListModel">
-                    <Frame
-                        Margin="10,5"
-                        Padding="0"
-                        BackgroundColor="Transparent"
-                        HeightRequest="250"
-                        WidthRequest="200">
-                        <VerticalStackLayout>
-                            <ImageButton Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}" Style="{StaticResource UserButtonStyle}">
-                                <ImageButton.Source>
-                                    <FontImageSource
-                                        FontFamily="FAS"
-                                        Glyph="{StaticResource User}"
-                                        Size="56" />
-                                </ImageButton.Source>
-                            </ImageButton>
-                            <Label
-                                FontSize="18"
-                                HorizontalOptions="Center"
-                                Text="{Binding UserName}" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <HorizontalStackLayout
-            Grid.Row="4"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
-            <ImageButton
-                Command="{Binding GoToAddUserCommand}"
-                Style="{StaticResource UserButtonStyle}"
-                VerticalOptions="Start">
-                <ImageButton.Source>
-                    <FontImageSource
-                        FontFamily="FAS"
-                        Glyph="{StaticResource AddUser}"
-                        Size="56" />
-                </ImageButton.Source>
-            </ImageButton>
-        </HorizontalStackLayout>
-    </Grid>
-
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:UserListModel">
+                        <Frame
+                            Margin="10,5"
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            HeightRequest="265"
+                            WidthRequest="200">
+                            <VerticalStackLayout>
+                                <ImageButton Margin="5" Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}" Style="{StaticResource UserButtonStyle}">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                            FontFamily="FAS"
+                                            Glyph="{StaticResource User}"
+                                            Size="56" />
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                <Label
+                                    FontSize="20"
+                                    HeightRequest="26"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding UserName}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <HorizontalStackLayout
+                Grid.Row="4"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <ImageButton
+                    Command="{Binding GoToAddUserCommand}"
+                    Style="{StaticResource UserButtonStyle}"
+                    VerticalOptions="Start">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="FAS"
+                            Glyph="{StaticResource AddUser}"
+                            Size="56" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Grid>
+    </ScrollView>
 </views:ContentPageBase>
