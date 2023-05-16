@@ -3,9 +3,9 @@
     x:Class="project.App.Views.ActivitiesListView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
-    xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     Title="ActivitiesListView"
     x:DataType="viewmodels:ActivitiesListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
@@ -14,6 +14,7 @@
         <Grid
             Padding="15"
             ColumnDefinitions="*, *"
+            ColumnSpacing="10"
             RowDefinitions="100,100,*">
             <Label
                 Grid.Row="0"
@@ -29,7 +30,7 @@
                 Grid.Column="0"
                 BackgroundColor="Transparent"
                 BorderColor="{StaticResource OxfordBlue}"
-                HorizontalOptions="Start"
+                HorizontalOptions="End"
                 WidthRequest="460">
                 <HorizontalStackLayout>
                     <Label
@@ -53,31 +54,59 @@
             <CollectionView
                 Grid.Row="2"
                 Grid.Column="0"
-                HorizontalOptions="Center"
+                HorizontalOptions="End"
                 ItemsSource="{Binding Activities}"
                 MinimumWidthRequest="460">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ActivityDetailModel">
-                        <Frame>
+                        <Frame
+                            Margin="0,10"
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="{StaticResource OxfordBlue}"
+                            HeightRequest="120"
+                            HorizontalOptions="Start">
                             <VerticalStackLayout>
-                                <Button />
-                                <HorizontalStackLayout>
-                                    <Label Text="From" />
-                                    <Label Text="{Binding DateTimeFrom}" />
-                                    <Label Text="To" />
-                                    <Label Text="{Binding DateTimeTo}" />
-                                </HorizontalStackLayout>
+                                <Button
+                                    BackgroundColor="{Binding Color}"
+                                    FontSize="18"
+                                    Text="{Binding Name}" />
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout Padding="5">
+                                        <Label
+                                            FontSize="16"
+                                            Text="From: "
+                                            TextColor="{StaticResource Platinum}" />
+                                        <Label
+                                            FontSize="16"
+                                            Text="{Binding DateTimeFrom}"
+                                            TextColor="{StaticResource Platinum}" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Padding="5">
+                                        <Label
+                                            FontSize="16"
+                                            Text="To: "
+                                            TextColor="{StaticResource Platinum}" />
+                                        <Label
+                                            FontSize="16"
+                                            Text="{Binding DateTimeTo}"
+                                            TextColor="{StaticResource Platinum}" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.EmptyView>
                     <ContentView>
-                        <StackLayout Margin="20">
+                        <StackLayout Margin="0, 10">
+                            <Frame>
                             <Label
+                                HorizontalOptions="Center"
                                 FontSize="18"
                                 Text="No activities to display"
                                 TextColor="Red" />
+                            </Frame>
                         </StackLayout>
                     </ContentView>
                 </CollectionView.EmptyView>
@@ -87,9 +116,9 @@
                 Grid.Row="1"
                 Grid.RowSpan="2"
                 Grid.Column="1"
-                HorizontalOptions="Center"
+                HorizontalOptions="Start"
                 Spacing="20"
-                VerticalOptions="Center">
+                VerticalOptions="Start">
                 <Button
                     Command="{Binding GoToAddActivityCommand}"
                     FontSize="20"
