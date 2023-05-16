@@ -69,12 +69,12 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.User)
             .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ActivityEntity>()
             .HasOne(i => i.Project)
             .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<TodoEntity>()
             .HasOne(i=>i.User)
