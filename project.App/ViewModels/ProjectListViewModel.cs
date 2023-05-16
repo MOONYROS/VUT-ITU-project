@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using project.App.Services.Interfaces;
 
-namespace project.App.ViewModels
+namespace project.App.ViewModels;
+
+public class ProjectListViewModel:ViewModelBase
 {
-    internal class ProjectListViewModel
+    public ProjectListViewModel(IMessengerService messengerService) : base(messengerService)
     {
     }
 }
