@@ -32,12 +32,12 @@
                 HorizontalOptions="Start"
                 WidthRequest="460">
                 <HorizontalStackLayout>
-                    <Label Text="Choose a filter:"
-                           VerticalOptions="Center"
-                           Margin="0,0,10,0"/>
-                    <Picker MinimumWidthRequest="150"
-                            VerticalOptions="Center">
-                        <Picker.ItemsSource SelectedIndex="">
+                    <Label
+                        Margin="0,0,10,0"
+                        Text="Choose a filter:"
+                        VerticalOptions="Center" />
+                    <Picker MinimumWidthRequest="150" VerticalOptions="Center">
+                        <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>None</x:String>
                                 <x:String>Last Week</x:String>
@@ -53,7 +53,6 @@
             <CollectionView
                 Grid.Row="2"
                 Grid.Column="0"
-                EmptyView="No activities to display"
                 HorizontalOptions="Center"
                 ItemsSource="{Binding Activities}"
                 MinimumWidthRequest="460">
@@ -72,6 +71,16 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout Margin="20">
+                            <Label
+                                FontSize="18"
+                                Text="No activities to display"
+                                TextColor="Red" />
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
             </CollectionView>
 
             <VerticalStackLayout
