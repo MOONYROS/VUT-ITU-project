@@ -44,7 +44,7 @@
             <CollectionView
                 Grid.Row="2"
                 Grid.Column="0"
-                EmptyView="No activities to disply"
+                EmptyView="No activities to display"
                 HorizontalOptions="Center"
                 ItemsSource="{Binding Activities}"
                 MinimumWidthRequest="460">
@@ -71,6 +71,7 @@
                 Spacing="20"
                 VerticalOptions="Center">
                 <Button
+                    Command="{Binding GoToAddActivityCommand}"
                     FontSize="20"
                     HeightRequest="100"
                     Text="ADD"

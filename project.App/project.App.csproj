@@ -96,6 +96,9 @@
 		<MauiXaml Update="Views\ActivitiesView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\AddActivityView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\AddUserView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

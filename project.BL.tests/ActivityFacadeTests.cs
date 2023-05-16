@@ -160,11 +160,13 @@ public class ActivityFacadeTests : FacadeTestsBase
         var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
         var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var projectListModel = new ProjectListModel()
         {
             Id = DbProject.Id,
             Name = DbProject.Name
         };
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         // Assert
         Assert.NotNull(DbActivity1);
@@ -402,9 +404,15 @@ public class ActivityFacadeTests : FacadeTestsBase
         }
 
         Assert.Equal(3, activityList.Count());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity1.Id, Guids);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity2.Id, Guids);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity3.Id, Guids);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
     
@@ -455,12 +463,20 @@ public class ActivityFacadeTests : FacadeTestsBase
         }
 
         Assert.Equal(2, activityList1.Count());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity1.Id, Guids1);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity2.Id, Guids1);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         Assert.Equal(2, activityList2.Count());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity3.Id, Guids2);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         Assert.Contains(DbActivity4.Id, Guids2);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
     
 
@@ -602,7 +618,9 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         DbActivity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 30, 00);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         DbActivity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 30, 00);
 
         await _activityFacade.SaveAsync(DbActivity1, returnedUser.Id, null);
@@ -629,7 +647,9 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         DbActivity1.DateTimeTo = new DateTime(2021, 05, 15, 21, 00 ,00);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(DbActivity1, returnedUser.Id, null));
     }

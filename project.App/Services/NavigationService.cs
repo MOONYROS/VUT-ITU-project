@@ -12,7 +12,9 @@ public class NavigationService : INavigationService
         new("main" , typeof(MainView), typeof(MainViewModel)),
         new("main/newUser", typeof(AddUserView), typeof(AddUserViewModel)),
         new("main/activities", typeof(ActivitiesView), typeof(ActivitiesViewModel)),
-        new("main/activities/userActivities", typeof(ActivitiesListView), typeof(ActivitiesListViewModel))
+        new("main/activities/userActivities", typeof(ActivitiesListView), typeof(ActivitiesListViewModel)),
+        new("main/activities/userActivities/addActivity", typeof(AddActivityView), typeof(AddActivityViewModel))
+
     };
 
     public async Task GoToAsync<TViewModel>()
@@ -21,7 +23,9 @@ public class NavigationService : INavigationService
         var route = GetRouteByViewModel<TViewModel>();
         await Shell.Current.GoToAsync(route);
     }
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
     public async Task GoToAsync<TViewModel>(IDictionary<string, object?> parameters)
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         where TViewModel : IViewModel
     {
         var route = GetRouteByViewModel<TViewModel>();
@@ -31,7 +35,9 @@ public class NavigationService : INavigationService
     public async Task GoToAsync(string route)
         => await Shell.Current.GoToAsync(route);
 
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
     public async Task GoToAsync(string route, IDictionary<string, object?> parameters)
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         => await Shell.Current.GoToAsync(route, parameters);
 
     public bool SendBackButtonPressed()

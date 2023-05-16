@@ -36,7 +36,8 @@ namespace project.App.ViewModels
         [RelayCommand]
         private async void GoToAddActivity()
         {
-            await _navigationService.GoToAsync("/main/activities/userActivities/addActivity");
+            Console.WriteLine("Debug");
+            await _navigationService.GoToAsync("main/activities/userActivities/addActivity");
         }
     }
 }
