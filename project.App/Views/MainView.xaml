@@ -59,6 +59,7 @@
                                     Margin="5"
                                     Aspect="Fill"
                                     Command="{Binding Source={x:Reference MainViewRoot}, Path=BindingContext.GoToActivitiesCommand}"
+                                    CommandParameter="{Binding Id}"
                                     Style="{StaticResource UserButtonStyle}">
                                     <ImageButton.Source>
                                         <Binding Path="ImageUrl">
