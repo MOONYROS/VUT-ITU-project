@@ -3,6 +3,7 @@
     x:Class="project.App.Views.AddUserView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
@@ -24,9 +25,24 @@
             VerticalOptions="Center" />
 
         <Label Padding="0,20,0,0" Text="FULLNAME" />
-        <Entry Placeholder="Holden Ford" Text="{Binding User.FullName}" />
+        <Entry
+            MaxLength="30"
+            Placeholder="Holden Ford"
+            Text="{Binding User.FullName}" />
         <Label Padding="0,20,0,0" Text="USERNAME" />
-        <Entry Placeholder="MindHunter" Text="{Binding User.UserName}" />
+        <Entry
+            MaxLength="15"
+            Placeholder="MindHunter"
+            Text="{Binding User.UserName}">
+            <Entry.Behaviors>
+                <behaviors:TextValidationBehavior
+                    Flags="ValidateOnValueChanged"
+                    InvalidStyle="{StaticResource InvalidEntry}"
+                    MaximumLength="15"
+                    MinimumLength="4"
+                    ValidStyle="{StaticResource ValidEntry}" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Padding="0,20,0,0" Text="IMAGE" />
         <Entry Text="{Binding User.ImageUrl}" />
 
