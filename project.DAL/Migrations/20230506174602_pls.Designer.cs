@@ -12,7 +12,9 @@ namespace project.DAL.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
     [Migration("20230506174602_pls")]
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     partial class pls
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="project.App.Views.AddActivityView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:project.App.ViewModels"
+    xmlns:views="clr-namespace:project.App.Views"
+    Title="AddActivityView"
+    x:DataType="viewmodel:AddActivityViewModel">
+    <VerticalStackLayout>
+        <Label
+            HorizontalOptions="Center"
+            Text="New Activity"
+            VerticalOptions="Center" />
+        <Entry Placeholder="Activity Name" />
+        <HorizontalStackLayout>
+            <Label Text="From" />
+            <TimePicker Time="12:00" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="To" />
+            <TimePicker Time="13:00" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</views:ContentPageBase>

@@ -6,11 +6,82 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesListView"
-    x:DataType="viewmodels:ActivitiesListViewModel">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    x:DataType="viewmodels:ActivitiesListViewModel"
+    BackgroundColor="{StaticResource SilverLakeBlue}"
+    Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <Grid
+            Padding="15"
+            ColumnDefinitions="*, *"
+            RowDefinitions="100,100,*">
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                FontSize="48"
+                HorizontalOptions="Center"
+                MinimumWidthRequest="200"
+                Text="Activities"
+                VerticalOptions="Center" />
+            <Frame
+                Grid.Row="1"
+                Grid.Column="0"
+                BackgroundColor="Transparent"
+                BorderColor="{StaticResource OxfordBlue}"
+                HorizontalOptions="Start"
+                WidthRequest="460">
+                <HorizontalStackLayout>
+                    <CheckBox VerticalOptions="Center" />
+                    <Label Text="Last Week" VerticalOptions="Center" />
+                    <CheckBox VerticalOptions="Center" />
+                    <Label Text="Last Month" VerticalOptions="Center" />
+                    <CheckBox VerticalOptions="Center" />
+                    <Label Text="Previous Month" VerticalOptions="Center" />
+                    <CheckBox VerticalOptions="Center" />
+                    <Label Text="Last Year" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+            <CollectionView
+                Grid.Row="2"
+                Grid.Column="0"
+                EmptyView="No activities to display"
+                HorizontalOptions="Center"
+                ItemsSource="{Binding Activities}"
+                MinimumWidthRequest="460">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <VerticalStackLayout>
+                                <Button />
+                                <HorizontalStackLayout>
+                                    <Label Text="From" />
+                                    <Label Text="To" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Spacing="20"
+                VerticalOptions="Center">
+                <Button
+                    Command="{Binding GoToAddActivityCommand}"
+                    FontSize="20"
+                    HeightRequest="100"
+                    Text="ADD"
+                    WidthRequest="150" />
+                <Button
+                    FontSize="20"
+                    HeightRequest="100"
+                    Text="EDIT"
+                    WidthRequest="150" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </views:ContentPageBase>
