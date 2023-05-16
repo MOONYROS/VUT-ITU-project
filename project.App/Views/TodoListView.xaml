@@ -14,18 +14,25 @@
         <Grid
             Padding="15"
             ColumnDefinitions="*"
-            RowDefinitions="100,100,*">
+            RowDefinitions="100,100,*,*">
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
                 FontSize="48"
                 HorizontalOptions="Center"
+                VerticalOptions="Center"
                 MinimumHeightRequest="200"
-                Text="Todos"
-                VerticalOptions="Center"/>
+                Text="Todos"/>
+            
+            <Button
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Add Todo"/>
             
             <CollectionView
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 EmptyView="No todos yet"
                 HorizontalOptions="Center"
@@ -34,9 +41,12 @@
                     <DataTemplate>
                         <Frame>
                             <HorizontalStackLayout>
-                                <Button Text="TodoName"/>
+                                <Button 
+                                    MinimumWidthRequest="100"
+                                    Text="TodoName"/>
                                 <Label Text="Date"/>
                                 <Label Text="Finished"/>
+                                <Button Text="Remove"/>
                             </HorizontalStackLayout>
                         </Frame>
                     </DataTemplate>
