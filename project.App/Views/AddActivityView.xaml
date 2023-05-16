@@ -12,14 +12,26 @@
             HorizontalOptions="Center"
             Text="New Activity"
             VerticalOptions="Center" />
-        <Entry Placeholder="Activity Name" />
+        <Entry Placeholder="Activity Name"
+               Text ="{Binding activityDetailModel.Name}"/>
         <HorizontalStackLayout>
             <Label Text="From" />
-            <TimePicker Time="12:00" />
+            <DatePicker Date="{Binding activityDetailModel.DateTimeFrom}" />
+            <TimePicker Time="{Binding TimeFrom}"/>
         </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Label Text="To" />
-            <TimePicker Time="13:00" />
+            <DatePicker Date="{Binding activityDetailModel.DateTimeTo}" />
+            <TimePicker Time="{Binding TimeTo}"/>
         </HorizontalStackLayout>
+        <Button
+                BackgroundColor="{StaticResource YlmNmBlue}"
+                BorderColor="{StaticResource OxfordBlue}"
+                BorderWidth="3"
+                Command="{Binding SaveActivityCommand}"
+                FontAttributes="Bold"
+                HeightRequest="100"
+                Text="ADD"
+                WidthRequest="100" />
     </VerticalStackLayout>
 </views:ContentPageBase>
