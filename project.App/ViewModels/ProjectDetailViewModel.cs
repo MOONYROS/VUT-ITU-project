@@ -3,12 +3,12 @@ using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
 
-namespace project.App.ViewModels
+namespace project.App.ViewModels;
+
+internal class ProjectDetailViewModel : ViewModelBase
 {
-    internal class ProjectDetailViewModel : ViewModelBase
-    {
-        private readonly IUserFacade _userFacade;
-        private readonly IProjectFacade _projectFacade;
+    private readonly IUserFacade _userFacade;
+    private readonly IProjectFacade _projectFacade;
 
         public ProjectDetailViewModel(IMessengerService messengerService,
            IUserFacade userFacade,
