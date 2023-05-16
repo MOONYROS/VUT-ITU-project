@@ -11,31 +11,35 @@ namespace project.App.ViewModels
     public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
     {
         private IUserFacade _userFacade { get; init; }
+        private INavigationService _navigationService { get; init; }
         public Guid Id { get; set; }
         public ObservableCollection<UserListModel> Users { get; set; } 
         
         public MainViewModel(
             IMessengerService messengerService,
-            IUserFacade userFacade
+            IUserFacade userFacade,
+            INavigationService navigationService
             ) : base(messengerService)
         {
             _userFacade = userFacade;
+            _navigationService = navigationService;
         }
 
         [RelayCommand]
         private async void GoToAddUser()
         {
-            await Shell.Current.GoToAsync("main/newUser");
+            await _navigationService.GoToAsync("main/newUser");
         }
+
         [RelayCommand]
         private async void GoToActivities()
         {
-            await Shell.Current.GoToAsync("main/activities");
+            await _navigationService.GoToAsync("main/activities");
         }
 
         protected override async Task LoadDataAsync()
         {
-            IEnumerable<UserListModel> tmpUsers = await _userFacade.GetAsync();
+            var tmpUsers = await _userFacade.GetAsync();
             Users = tmpUsers.ToObservableCollection();
         }
 
