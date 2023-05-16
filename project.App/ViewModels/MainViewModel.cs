@@ -6,47 +6,46 @@ using CommunityToolkit.Mvvm.Messaging;
 using project.App.Messages;
 using System.Collections.ObjectModel;
 
-namespace project.App.ViewModels
+namespace project.App.ViewModels;
+
+public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
 {
-    public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
+    private IUserFacade _userFacade { get; init; }
+    private INavigationService _navigationService { get; init; }
+    public Guid Id { get; set; }
+    public ObservableCollection<UserListModel> Users { get; set; } 
+    
+    public MainViewModel(
+        IMessengerService messengerService,
+        IUserFacade userFacade,
+        INavigationService navigationService
+        ) : base(messengerService)
     {
-        private IUserFacade _userFacade { get; init; }
-        private INavigationService _navigationService { get; init; }
-        public Guid Id { get; set; }
-        public ObservableCollection<UserListModel> Users { get; set; } 
-        
-        public MainViewModel(
-            IMessengerService messengerService,
-            IUserFacade userFacade,
-            INavigationService navigationService
-            ) : base(messengerService)
-        {
-            _userFacade = userFacade;
-            _navigationService = navigationService;
-        }
+        _userFacade = userFacade;
+        _navigationService = navigationService;
+    }
 
-        [RelayCommand]
-        private async void GoToAddUser()
-        {
-            await _navigationService.GoToAsync("main/newUser");
-        }
+    [RelayCommand]
+    private async void GoToAddUser()
+    {
+        await _navigationService.GoToAsync("main/newUser");
+    }
 
-        [RelayCommand]
-        private async void GoToActivities(Guid Id)
-        {
-            await _navigationService.GoToAsync<ActivitiesViewModel>(
-                new Dictionary<string, object?> { [nameof(ActivitiesViewModel.UserId)] = Id });
-        }
+    [RelayCommand]
+    private async void GoToActivities(Guid Id)
+    {
+        await _navigationService.GoToAsync<ActivitiesViewModel>(
+            new Dictionary<string, object?> { [nameof(ActivitiesViewModel.UserId)] = Id });
+    }
 
-        protected override async Task LoadDataAsync()
-        {
-            var tmpUsers = await _userFacade.GetAsync();
-            Users = tmpUsers.ToObservableCollection();
-        }
+    protected override async Task LoadDataAsync()
+    {
+        var tmpUsers = await _userFacade.GetAsync();
+        Users = tmpUsers.ToObservableCollection();
+    }
 
-        public async void Receive(UserAddMessage message)
-        {
-            await LoadDataAsync();
-        }
+    public async void Receive(UserAddMessage message)
+    {
+        await LoadDataAsync();
     }
 }
