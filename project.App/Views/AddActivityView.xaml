@@ -63,7 +63,7 @@
                 <Picker
                     x:Name="Picker"
                     Title="Select Color"
-                    SelectedIndex="{Binding activityDetailModel.Color}">
+                    SelectedIndex="{Binding ColorIndex}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Red</x:String>

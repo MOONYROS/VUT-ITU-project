@@ -8,7 +8,8 @@
     xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesPage"
     BackgroundColor="{StaticResource SilverLakeBlue}"
-    Shell.NavBarIsVisible="false">
+    Shell.NavBarIsVisible="false"
+    x:DataType="viewmodels:ActivitiesViewModel">
 
     <ScrollView Orientation="Horizontal">
 
@@ -25,63 +26,12 @@
                 Text="Activities"
                 VerticalOptions="Center" />
             <VerticalStackLayout Spacing="2">
-                <Button Text="Activities" />
+                <Button Text="Activities" 
+                            Command="{Binding GoToActivitiesListCommand}"/>
                 <Button Text="Project" />
-                <Button Text="TODO" />
+                <Button Text="TODO" 
+                            Command="{Binding GoToTodoListCommand}"/>
             </VerticalStackLayout>
-            <ImageButton
-                Grid.Row="1"
-                Grid.Column="0"
-                BackgroundColor="{StaticResource OxfordBlue}"
-                HeightRequest="100">
-                <ImageButton.Source>
-                    <FontImageSource
-                        FontFamily="FAS"
-                        Glyph="{StaticResource LeftArrow}"
-                        Size="56" />
-                </ImageButton.Source>
-            </ImageButton>
-            <ImageButton
-                Grid.Row="1"
-                Grid.Column="2"
-                BackgroundColor="{StaticResource OxfordBlue}"
-                HeightRequest="100">
-                <ImageButton.Source>
-                    <FontImageSource
-                        FontFamily="FAS"
-                        Glyph="{StaticResource RightArrow}"
-                        Size="56" />
-                </ImageButton.Source>
-            </ImageButton>
-            <CollectionView
-                Grid.Row="1"
-                Grid.Column="1"
-                HeightRequest="110"
-                HorizontalOptions="Center"
-                ItemsLayout="HorizontalList"
-                ItemsSource="{Binding Week}"
-                VerticalOptions="Start">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame
-                            MinimumWidthRequest="220"
-                            Style="{StaticResource GridRow}"
-                            VerticalOptions="Start">
-                            <VerticalStackLayout VerticalOptions="Center">
-                                <Label
-                                    FontSize="24"
-                                    HorizontalOptions="Center"
-                                    Text="{Binding DayOfWeek}" />
-                                <HorizontalStackLayout HorizontalOptions="Center">
-                                    <Label Text="{Binding Day}" />
-                                    <Label Text="/" />
-                                    <Label Text="{Binding Month}" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
         </Grid>
     </ScrollView>
 </views:ContentPageBase>

@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using project.App.Messages;
 using project.App.Services.Interfaces;
-using project.BL.Facades;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
+using System.Drawing;
 
 namespace project.App.ViewModels
 {
@@ -11,6 +11,7 @@ namespace project.App.ViewModels
     {
         private readonly IActivityFacade _activityFacade;
         private readonly INavigationService _navigationService;
+        public int ColorIndex { get; set; } = 0;
 
         public TimeSpan TimeFrom { get; set; }
         public TimeSpan TimeTo { get; set; }
@@ -29,9 +30,16 @@ namespace project.App.ViewModels
         {
             activityDetailModel.DateTimeFrom = activityDetailModel.DateTimeFrom + TimeFrom;
             activityDetailModel.DateTimeTo = activityDetailModel.DateTimeTo + TimeTo;
+            activityDetailModel.Color = IndexToColor(ColorIndex);
             await _activityFacade.SaveAsync(activityDetailModel, user, null);
             messengerService.Send(new ActivityAddMessage());
             activityDetailModel = ActivityDetailModel.Empty;
         }
+        private System.Drawing.Color IndexToColor(int index)
+        {
+            return System.Drawing.Color.Gray;
+        }
     }
+
+    
 }

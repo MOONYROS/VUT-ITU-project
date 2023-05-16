@@ -11,16 +11,4 @@ public partial class AppShell : Shell
         _navigationService = navigationService;
         InitializeComponent();
     }
-
-    [RelayCommand]
-    private async void GoToActivitiesList()
-    {
-        await _navigationService.GoToAsync("main/activities/userActivities");
-    }
-    
-    [RelayCommand]
-    private async void GoToTodoList()
-    {
-        await _navigationService.GoToAsync("main/activities/userTodos");
-    }
 }
