@@ -3,13 +3,14 @@ using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
 using project.App.Messages;
+using System.Collections.ObjectModel;
 
 namespace project.App.ViewModels;
     public partial class ActivityListViewModel : ViewModelBase
     {
         private readonly IActivityFacade _activityFacade;
         private readonly INavigationService _navigationService;
-        public IEnumerable<ActivityListModel> Activities { get; set; } = null;
+        public ObservableCollection<ActivityListModel> Activities { get; set; } = null;
 
         public ActivityListViewModel(IMessengerService messengerService,
             IActivityFacade activityFacade,
@@ -21,9 +22,8 @@ namespace project.App.ViewModels;
 
         protected override async Task LoadDataAsync()
         {
-            await base.LoadDataAsync();
-
-            Activities = await _activityFacade.GetAsync();
+            var act = await _activityFacade.GetAsync();
+            Activities = act.ToObservableCollection();
         }
         public async void Receive(ActivityDeleteMessage message)
         {

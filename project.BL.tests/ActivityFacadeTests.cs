@@ -135,6 +135,67 @@ public class ActivityFacadeTests : FacadeTestsBase
     */
 
     [Fact]
+    public async Task OneProject_MoreActivities()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var project = ProjectSeeds.ProjectSeed();
+
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
+
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedProject = await _projectFacade.SaveAsync(project);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, returnedProject.Id);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, returnedProject.Id);
+
+        var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
+        var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
+        var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
+
+        var projectListModel = new ProjectListModel()
+        {
+            Id = DbProject.Id,
+            Name = DbProject.Name
+        };
+
+        // Assert
+        Assert.NotNull(DbActivity1);
+        Assert.NotNull(DbActivity1.Project);
+        Assert.Equal(DbProject.Id, DbActivity1.Project.Id);
+        DeepAssert.Equal(DbActivity1.Project, projectListModel);
+
+        Assert.NotNull(DbActivity2);
+        Assert.NotNull(DbActivity2.Project);
+        Assert.Equal(DbProject.Id, DbActivity2.Project.Id);
+        DeepAssert.Equal(DbActivity2.Project, projectListModel);
+
+
+        // Remove project from one activity
+        await _activityFacade.SaveAsync(DbActivity1, returnedUser.Id, null);
+
+        // Update
+        DbActivity1 = await _activityFacade.GetAsync(DbActivity1.Id);
+
+        // Assert
+        Assert.NotNull(DbActivity1);
+        Assert.Null(DbActivity1.Project);
+
+        Assert.NotNull(DbActivity2);
+        Assert.NotNull(DbActivity2.Project);
+        Assert.Equal(DbProject.Id, DbActivity2.Project.Id);
+        DeepAssert.Equal(DbActivity2.Project, projectListModel);
+    }
+
+
+    [Fact]
     public async Task DeleteAcitivty()
     {
         // Arrange
@@ -346,20 +407,62 @@ public class ActivityFacadeTests : FacadeTestsBase
         Assert.Contains(DbActivity3.Id, Guids);
     }
 
-    /*
+    
     [Fact]
     public async Task MoreUsers_MoreActivities()
     {
+        // Arrange
+        var user1 = UserSeeds.UserSeed();
+        var user2 = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
 
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
+
+        // Act
+        var returnedUser1 = await _userFacade.SaveAsync(user1);
+        var returnedUser2 = await _userFacade.SaveAsync(user2);
+        var usr1Act1 = await _activityFacade.SaveAsync(activity1, returnedUser1.Id, null);
+        var usr1Act2 = await _activityFacade.SaveAsync(activity2, returnedUser1.Id, null);
+        var usr2Act1 = await _activityFacade.SaveAsync(activity1, returnedUser2.Id, null);
+        var usr2Act2 = await _activityFacade.SaveAsync(activity2, returnedUser2.Id, null);
+
+        var DbActivity1 = await _activityFacade.GetAsync(usr1Act1.Id);
+        var DbActivity2 = await _activityFacade.GetAsync(usr1Act2.Id);
+        var DbActivity3 = await _activityFacade.GetAsync(usr2Act1.Id);
+        var DbActivity4 = await _activityFacade.GetAsync(usr2Act2.Id);
+
+
+        var activityList1 = await _activityFacade.GetAsyncUser(returnedUser1.Id);
+        var activityList2 = await _activityFacade.GetAsyncUser(returnedUser2.Id);
+
+        Assert.True(activityList1.Any());
+        Assert.True(activityList2.Any());
+
+        List<Guid> Guids1 = new List<Guid>();
+        List<Guid> Guids2 = new List<Guid>();
+        foreach (var activity in activityList1)
+        {
+            Guids1.Add(activity.Id);
+        }
+        foreach (var activity in activityList2)
+        {
+            Guids2.Add(activity.Id);
+        }
+
+        Assert.Equal(2, activityList1.Count());
+        Assert.Contains(DbActivity1.Id, Guids1);
+        Assert.Contains(DbActivity2.Id, Guids1);
+
+        Assert.Equal(2, activityList2.Count());
+        Assert.Contains(DbActivity3.Id, Guids2);
+        Assert.Contains(DbActivity4.Id, Guids2);
     }
-
-    /*
-    [Fact]
-    public async Task OneProject_MoreActivities()
-    {
-
-    }
-    */
+    
 
     [Fact]
     public async Task Overlapping_Activites_Exception_1()

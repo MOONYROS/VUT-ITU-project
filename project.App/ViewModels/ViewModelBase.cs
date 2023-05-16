@@ -4,7 +4,7 @@ using project.App.ViewModels;
 
 public abstract class ViewModelBase : ObservableRecipient, IViewModel
 {
-	private bool isRefreshRequired;
+	private bool isRefreshRequired = true;
 	protected readonly IMessengerService messengerService;
 
     protected ViewModelBase(IMessengerService messengerService)
