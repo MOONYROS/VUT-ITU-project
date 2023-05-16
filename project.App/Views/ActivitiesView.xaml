@@ -10,20 +10,12 @@
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
 
-
-
     <ScrollView Orientation="Horizontal">
 
-        <Grid Padding="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
-            </Grid.ColumnDefinitions>
+        <Grid
+            Padding="5"
+            ColumnDefinitions="100,*,100"
+            RowDefinitions="150,*">
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
@@ -32,6 +24,11 @@
                 HorizontalOptions="Center"
                 Text="Activities"
                 VerticalOptions="Center" />
+            <VerticalStackLayout Spacing="2">
+                <Button Text="Activities" />
+                <Button Text="Project" />
+                <Button Text="TODO" />
+            </VerticalStackLayout>
             <ImageButton
                 Grid.Row="1"
                 Grid.Column="0"

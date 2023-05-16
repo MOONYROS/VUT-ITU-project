@@ -6,7 +6,7 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     x:Name="AppShellRoot"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Disabled">
 
     <Shell.FlyoutHeader>
         <VerticalStackLayout Padding="10" BackgroundColor="{StaticResource OxfordBlue}">
@@ -23,10 +23,8 @@
                 Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesListCommand}"
                 Style="{StaticResource FlyoutItem}"
                 Text="Activities" />
+            <Button Style="{StaticResource FlyoutItem}" Text="Projects" />
             <Button
-                Style="{StaticResource FlyoutItem}"
-                Text="Projects" />
-            <Button 
                 Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToTodoListCommand}"
                 Style="{StaticResource FlyoutItem}"
                 Text="TODO" />
