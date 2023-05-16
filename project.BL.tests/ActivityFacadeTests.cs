@@ -310,14 +310,14 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity2 = ActivitySeeds.ActivitySeed();
         var activity3 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 20:30");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 22:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 22, 00, 00);
 
-        activity3.DateTimeFrom = DateTime.Parse("16/5/2021 20:30");
-        activity3.DateTimeTo = DateTime.Parse("16/5/2021 22:00");
+        activity3.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity3.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
@@ -378,11 +378,8 @@ public class ActivityFacadeTests : FacadeTestsBase
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
 
-        //activity2.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        //activity2.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
         activity2.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
         activity2.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
 
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(activity2, returnedUser.Id, null));
@@ -397,17 +394,16 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
-
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 17:00");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 19:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 17, 00, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 19, 00, 00);
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(activity2, returnedUser.Id, null));
     }
@@ -421,17 +417,16 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
-
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 19:00");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 21:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 19, 00, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 21, 00, 00);
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(activity2, returnedUser.Id, null));
     }
@@ -445,8 +440,8 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
@@ -454,8 +449,8 @@ public class ActivityFacadeTests : FacadeTestsBase
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
 
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 18:30");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 19:30");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 18, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 19, 30, 00);
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(activity2, returnedUser.Id, null));
     }
@@ -469,17 +464,16 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
-
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 17:30");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 20:30");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 17, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 20, 30, 00);
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(activity2, returnedUser.Id, null));
     }
@@ -493,11 +487,11 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 21:00");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 22:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 21, 00, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 22, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
@@ -505,9 +499,8 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
-
-        DbActivity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:30");
-        DbActivity1.DateTimeTo = DateTime.Parse("15/5/2021 20:30");
+        DbActivity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 30, 00);
+        DbActivity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 30, 00);
 
         await _activityFacade.SaveAsync(DbActivity1, returnedUser.Id, null);
     }
@@ -521,11 +514,11 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 20:30");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 22:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 22, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
         var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
@@ -533,7 +526,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
 
-        DbActivity1.DateTimeTo = DateTime.Parse("15/5/2021 21:00");
+        DbActivity1.DateTimeTo = new DateTime(2021, 05, 15, 21, 00 ,00);
 
         await Assert.ThrowsAsync<OverlappingException>(async () => await _activityFacade.SaveAsync(DbActivity1, returnedUser.Id, null));
     }
@@ -548,11 +541,11 @@ public class ActivityFacadeTests : FacadeTestsBase
         var activity1 = ActivitySeeds.ActivitySeed();
         var activity2 = ActivitySeeds.ActivitySeed();
 
-        activity1.DateTimeFrom = DateTime.Parse("15/5/2021 18:00");
-        activity1.DateTimeTo = DateTime.Parse("15/5/2021 20:00");
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
 
-        activity2.DateTimeFrom = DateTime.Parse("15/5/2021 19:00");
-        activity2.DateTimeTo = DateTime.Parse("15/5/2021 21:00");
+        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 19, 00, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 15, 21, 00, 00);
 
 
         // Act
