@@ -22,8 +22,8 @@
                 FontSize="48"
                 HorizontalOptions="Center"
                 MinimumWidthRequest="200"
-                Text="Activities"
-                VerticalOptions="Center" />
+                VerticalOptions="Center"
+                Text="Activities"/>
             <Frame
                 Grid.Row="1"
                 Grid.Column="0"
