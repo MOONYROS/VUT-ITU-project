@@ -4,6 +4,7 @@ using project.BL.Facades.Interfaces;
 using project.BL.Models;
 using project.BL.tests.ModelSeeds;
 using project.DAL.Tests;
+using project.BL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -658,34 +659,617 @@ public class ActivityFacadeTests : FacadeTestsBase
         var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser2.Id, null);
     }
 
-        /*
-        [Fact]
-        public async Task DateFilter()
-        {
 
-        }
+    [Fact]
+    public async Task DateFilter_NotSupported()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
 
-        /*
-        [Fact]
-        public async InteralFilter()
-        {
+        var returnedUser = await _userFacade.SaveAsync(user);
 
-        }
-
-        /*
-        [Fact]
-        public async Task()
-        {
-
-        }
-
-        /*
-        [Fact]
-        public async Task()
-        {
-
-        }
-
-        */
+        await Assert.ThrowsAsync<NotSupportedException>(async () => await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, null));
     }
+
+
+    [Fact]
+    public async Task DateFilter_from()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+
+        // Asserts
+        var from = new DateTime(2021, 05, 17, 00, 00, 00);
+        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        Assert.False(list.Any());
+
+
+        from = new DateTime(2021, 05, 16, 00, 00, 00);
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+        Assert.Equal(returnedActivity2.Id, list.First().Id);
+
+
+        from = new DateTime(2021, 05, 15, 00, 00, 00);
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task DateFilter_to()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var to = new DateTime(2021, 05, 15, 00, 00, 00);
+        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        Assert.False(list.Any());
+
+
+        to = new DateTime(2021, 05, 16, 00, 00, 00);
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+        Assert.Equal(returnedActivity1.Id, list.First().Id);
+
+
+        to = new DateTime(2021, 05, 17, 00, 00, 00);
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task DateFilter_from_to()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var activity3 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
+
+        activity3.DateTimeFrom = new DateTime(2021, 05, 17, 20, 30, 00);
+        activity3.DateTimeTo = new DateTime(2021, 05, 17, 22, 00, 00);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+        var returnedActivity3 = await _activityFacade.SaveAsync(activity3, returnedUser.Id, null);
+
+        // Asserts
+        var from = new DateTime(2021, 05, 16, 00, 00, 00);
+        var to = new DateTime(2021, 05, 17, 00, 00, 00);
+        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+        Assert.Equal(returnedActivity2.Id, list.First().Id);
+
+
+        from = new DateTime(2021, 05, 15, 00, 00, 00);
+        to = new DateTime(2021, 05, 18, 00, 00, 00);
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 3);
+    }
+
+
+    [Fact]
+    public async Task DateFilter_NoActivities()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+
+        var from = new DateTime(2021, 05, 16, 00, 00, 00);
+        var to = new DateTime(2021, 05, 17, 00, 00, 00);
+
+        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        Assert.NotNull(list);
+        Assert.True(list.IsNullOrEmpty());
+
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        Assert.NotNull(list);
+        Assert.True(list.IsNullOrEmpty());
+
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        Assert.NotNull(list);
+        Assert.True(list.IsNullOrEmpty());
+    }
+
+
+    [Fact]
+    public async Task DateFilter_From_MoreUsers()
+    {
+        // Arrange
+        var user1 = UserSeeds.UserSeed();
+        var user2 = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+
+        var returnedUser1 = await _userFacade.SaveAsync(user1);
+        var returnedUser2 = await _userFacade.SaveAsync(user2);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser1.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity1, returnedUser2.Id, null);
+
+
+        // Asserts
+        var from = new DateTime(2021, 05, 15, 00, 00, 00);
+        var list = await _activityFacade.GetAsyncDateFilter(returnedUser1.Id, from, null);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+
+        list = await _activityFacade.GetAsyncDateFilter(returnedUser2.Id, from, null);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Week_0()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = new DateTime(2023, 04, 15, 18, 00, 00);
+        activity1.DateTimeTo = new DateTime(2023, 04, 15, 20, 00, 00);
+
+        activity2.DateTimeFrom = new DateTime(2023, 04, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2023, 04, 16, 22, 00, 00);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Week);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Week_1()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-1);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = new DateTime(2023, 04, 16, 20, 30, 00);
+        activity2.DateTimeTo = new DateTime(2023, 04, 16, 22, 00, 00);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Week);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+        Assert.Equal(list.First().Id, returnedActivity1.Id);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Week_2()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-1);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-3);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Week);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Month_0()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-60);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Month);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Month_1()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-10);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddMonths(-2);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Month);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Month_2()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-10);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-11);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Month);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_PreviousMonth_0()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-70);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-10);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.PreviousMonth);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_PreviousMonth_1()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var activity3 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-10);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddMonths(-2);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        activity3.DateTimeFrom = DateTime.Today.AddDays(-40);
+        activity3.DateTimeTo = activity3.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+        var returnedActivity3 = await _activityFacade.SaveAsync(activity3, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.PreviousMonth);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_PreviousMonth_2()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-40);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-50);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.PreviousMonth);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Year_0()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var activity3 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddMonths(-15);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-400);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        activity3.DateTimeFrom = DateTime.Today.AddYears(-2);
+        activity3.DateTimeTo = activity3.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+        var returnedActivity3 = await _activityFacade.SaveAsync(activity3, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Year);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Year_1()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-10);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddMonths(-16);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Year);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 1);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Year_2()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-40);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddMonths(-3);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, null);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Year);
+        Assert.True(list.Any());
+        Assert.True(list.Count() == 2);
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_NoActivities()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Week);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Month);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.PreviousMonth);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Year);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_Future()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity = ActivitySeeds.ActivitySeed();
+
+        activity.DateTimeFrom = DateTime.Today.AddDays(3);
+        activity.DateTimeTo = activity.DateTimeFrom.AddHours(1);
+
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity, returnedUser.Id, null);
+
+        // Asserts
+        var list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Week);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Month);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.PreviousMonth);
+        Assert.False(list.Any());
+
+        list = await _activityFacade.GetAsyncIntervalFilter(returnedUser.Id, FilterBy.Year);
+        Assert.False(list.Any());
+    }
+
+
+    [Fact]
+    public async Task IntervalFilter_From_MoreUsers()
+    {
+        // Arrange
+        var user1 = UserSeeds.UserSeed();
+        var user2 = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var activity3 = ActivitySeeds.ActivitySeed();
+        var activity4 = ActivitySeeds.ActivitySeed();
+        var activity5 = ActivitySeeds.ActivitySeed();
+        var activity6 = ActivitySeeds.ActivitySeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-1);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-14);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        activity3.DateTimeFrom = DateTime.Today.AddDays(-40);
+        activity3.DateTimeTo = activity3.DateTimeFrom.AddHours(1);
+
+        activity4.DateTimeFrom = DateTime.Today.AddMonths(-3);
+        activity4.DateTimeTo = activity4.DateTimeFrom.AddHours(1);
+
+        activity5.DateTimeFrom = DateTime.Today.AddMonths(-20);
+        activity5.DateTimeTo = activity5.DateTimeFrom.AddHours(1);
+
+        activity6.DateTimeFrom = DateTime.Today.AddDays(2);
+        activity6.DateTimeTo = activity6.DateTimeFrom.AddHours(1);
+
+        var returnedUser1 = await _userFacade.SaveAsync(user1);
+        var returnedUser2 = await _userFacade.SaveAsync(user2);
+
+        var User1Act1 = await _activityFacade.SaveAsync(activity1, returnedUser1.Id, null);
+        var User1Act2 = await _activityFacade.SaveAsync(activity3, returnedUser1.Id, null);
+        var User1Act3 = await _activityFacade.SaveAsync(activity5, returnedUser1.Id, null);
+        var User1Act4 = await _activityFacade.SaveAsync(activity6, returnedUser1.Id, null);
+
+        var User2Act1 = await _activityFacade.SaveAsync(activity2, returnedUser2.Id, null);
+        var User2Act2 = await _activityFacade.SaveAsync(activity4, returnedUser2.Id, null);
+        var User2Act3 = await _activityFacade.SaveAsync(activity5, returnedUser2.Id, null);
+        var User2Act4 = await _activityFacade.SaveAsync(activity6, returnedUser2.Id, null);
+
+
+
+        // Asserts
+        var U1list = await _activityFacade.GetAsyncIntervalFilter(returnedUser1.Id, FilterBy.Week);
+        var U2list = await _activityFacade.GetAsyncIntervalFilter(returnedUser2.Id, FilterBy.Week);
+        Assert.True(U1list.Any());
+        Assert.True(U1list.Count() == 1);
+        Assert.False(U2list.Any());
+
+        U1list = await _activityFacade.GetAsyncIntervalFilter(returnedUser1.Id, FilterBy.Month);
+        U2list = await _activityFacade.GetAsyncIntervalFilter(returnedUser2.Id, FilterBy.Month);
+        Assert.True(U1list.Any());
+        Assert.True(U1list.Count() == 1);
+        Assert.True(U2list.Any());
+        Assert.True(U2list.Count() == 1);
+
+        U1list = await _activityFacade.GetAsyncIntervalFilter(returnedUser1.Id, FilterBy.PreviousMonth);
+        U2list = await _activityFacade.GetAsyncIntervalFilter(returnedUser2.Id, FilterBy.PreviousMonth);
+        Assert.True(U1list.Any());
+        Assert.True(U1list.Count() == 1);
+        Assert.False(U2list.Any());
+
+        U1list = await _activityFacade.GetAsyncIntervalFilter(returnedUser1.Id, FilterBy.Year);
+        U2list = await _activityFacade.GetAsyncIntervalFilter(returnedUser2.Id, FilterBy.Year);
+        Assert.True(U1list.Any());
+        Assert.True(U1list.Count() == 2);
+        Assert.True(U2list.Any());
+        Assert.True(U2list.Count() == 2);
+    }
+}
 
