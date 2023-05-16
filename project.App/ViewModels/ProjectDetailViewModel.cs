@@ -17,7 +17,5 @@ namespace project.App.ViewModels
             _userFacade = userFacade;
             _projectFacade = projectFacade;
         }
-
-        
     }
 }
