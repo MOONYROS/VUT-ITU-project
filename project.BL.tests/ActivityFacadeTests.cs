@@ -119,21 +119,133 @@ public class ActivityFacadeTests : FacadeTestsBase
         Assert.NotNull(DbProject);
     }
 
-    // az bude setnull v dbcontextu
-    /*
+
     [Fact]
     public async Task DeleteProjectInActivity()
     {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity = ActivitySeeds.ActivitySeed();
+        var project = ProjectSeeds.ProjectSeed();
 
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedProject = await _projectFacade.SaveAsync(project);
+        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id, returnedProject.Id);
+
+        var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+        var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
+        Assert.NotNull(DbProject);
+        Assert.NotNull(DbActivity);
+        Assert.NotNull(DbActivity.Project);
+        Assert.Equal(DbProject.Id, DbActivity.Project.Id);
+
+        await _projectFacade.DeleteAsync(DbProject.Id);
+
+        DbActivity = await _activityFacade.GetAsync(DbActivity.Id);
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+        Assert.Null(DbProject);
+        Assert.NotNull(DbActivity);
+        Assert.Null(DbActivity.Project);
     }
 
-    /*
+
     [Fact]
     public async Task DeleteProjectInMoreActivities()
     {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var project = ProjectSeeds.ProjectSeed();
 
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-2);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-4);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedProject = await _projectFacade.SaveAsync(project);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, returnedProject.Id);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, returnedProject.Id);
+
+        var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
+        var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
+        var DbProject = await _projectFacade.GetAsync(returnedProject.Id);
+        Assert.NotNull(DbProject);
+        Assert.NotNull(DbActivity1);
+        Assert.NotNull(DbActivity2);
+        Assert.NotNull(DbActivity1.Project);
+        Assert.NotNull(DbActivity2.Project);
+        Assert.Equal(DbProject.Id, DbActivity1.Project.Id);
+        Assert.Equal(DbProject.Id, DbActivity2.Project.Id);
+
+        await _projectFacade.DeleteAsync(DbProject.Id);
+
+        DbActivity1 = await _activityFacade.GetAsync(DbActivity1.Id);
+        DbActivity2 = await _activityFacade.GetAsync(DbActivity2.Id);
+        DbProject = await _projectFacade.GetAsync(DbProject.Id);
+        Assert.Null(DbProject);
+        Assert.NotNull(DbActivity1);
+        Assert.NotNull(DbActivity2);
+        Assert.Null(DbActivity1.Project);
+        Assert.Null(DbActivity2.Project);
     }
-    */
+
+
+    [Fact]
+    public async Task DeleteOneOfTwoProjects_MoreActivities()
+    {
+        // Arrange
+        var user = UserSeeds.UserSeed();
+        var activity1 = ActivitySeeds.ActivitySeed();
+        var activity2 = ActivitySeeds.ActivitySeed();
+        var project1 = ProjectSeeds.ProjectSeed();
+        var project2 = ProjectSeeds.ProjectSeed();
+
+        activity1.DateTimeFrom = DateTime.Today.AddDays(-2);
+        activity1.DateTimeTo = activity1.DateTimeFrom.AddHours(1);
+
+        activity2.DateTimeFrom = DateTime.Today.AddDays(-4);
+        activity2.DateTimeTo = activity2.DateTimeFrom.AddHours(1);
+
+        // Act
+        var returnedUser = await _userFacade.SaveAsync(user);
+        var returnedProject1 = await _projectFacade.SaveAsync(project1);
+        var returnedProject2 = await _projectFacade.SaveAsync(project2);
+        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id, returnedProject1.Id);
+        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id, returnedProject2.Id);
+
+        var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
+        var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
+        var DbProject1 = await _projectFacade.GetAsync(returnedProject1.Id);
+        var DbProject2 = await _projectFacade.GetAsync(returnedProject2.Id);
+        Assert.NotNull(DbProject1);
+        Assert.NotNull(DbProject2);
+        Assert.NotNull(DbActivity1);
+        Assert.NotNull(DbActivity2);
+        Assert.NotNull(DbActivity1.Project);
+        Assert.NotNull(DbActivity2.Project);
+        Assert.Equal(DbProject1.Id, DbActivity1.Project.Id);
+        Assert.Equal(DbProject2.Id, DbActivity2.Project.Id);
+
+        await _projectFacade.DeleteAsync(DbProject1.Id);
+
+        DbActivity1 = await _activityFacade.GetAsync(DbActivity1.Id);
+        DbActivity2 = await _activityFacade.GetAsync(DbActivity2.Id);
+        DbProject1 = await _projectFacade.GetAsync(DbProject1.Id);
+        DbProject2 = await _projectFacade.GetAsync(DbProject2.Id);
+        Assert.Null(DbProject1);
+        Assert.NotNull(DbProject2);
+        Assert.NotNull(DbActivity1);
+        Assert.NotNull(DbActivity2);
+        Assert.Null(DbActivity1.Project);
+        Assert.NotNull(DbActivity2.Project);
+        Assert.Equal(DbProject2.Id, DbActivity2.Project.Id);
+    }
+
 
     [Fact]
     public async Task OneProject_MoreActivities()
