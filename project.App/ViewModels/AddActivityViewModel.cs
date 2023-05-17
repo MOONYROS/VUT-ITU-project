@@ -19,7 +19,7 @@ public partial class AddActivityViewModel : ViewModelBase
 
     public TimeSpan TimeFrom { get; set; }
     public TimeSpan TimeTo { get; set; }
-    public ActivityDetailModel activityDetailModel { get; set; } = ActivityDetailModel.Empty;
+    public ActivityDetailModel ActivityDetailModel { get; set; } = ActivityDetailModel.Empty;
     public AddActivityViewModel(
         IMessengerService messengerService,
         IActivityFacade activityFacade,
@@ -35,21 +35,32 @@ public partial class AddActivityViewModel : ViewModelBase
     [RelayCommand]
     public async Task SaveActivityAsync()
     {
-        if (TimeFrom < TimeTo && activityDetailModel.Name != string.Empty)
+        ActivityDetailModel.DateTimeFrom += TimeFrom;
+        ActivityDetailModel.DateTimeTo += TimeTo;
+        if (ActivityDetailModel.Name == string.Empty)
         {
-            activityDetailModel.DateTimeFrom = activityDetailModel.DateTimeFrom + TimeFrom;
-            activityDetailModel.DateTimeTo = activityDetailModel.DateTimeTo + TimeTo;
-            activityDetailModel.Color = IndexToColor(ColorIndex);
+            await _alertService.DisplayAsync("Hupsik Dupsik", "Please enter activity name");
+        }
+        else if (ActivityDetailModel.DateTimeFrom > ActivityDetailModel.DateTimeTo)
+        {
+            await _alertService.DisplayAsync("Hupsik Dupsik", "Activity ends before it starts");
+        }
+        else
+        {
+            
+            ActivityDetailModel.Color = IndexToColor(ColorIndex);
             try
             {
-                await _activityFacade.SaveAsync(activityDetailModel, UserId, null);
+                await _activityFacade.SaveAsync(ActivityDetailModel, UserId, null);
             }
             catch (OverlappingException)
             {
                 await _alertService.DisplayAsync("Hupsik Dupsik", "Activites are overlapping");
             }
             messengerService.Send(new ActivityAddMessage());
-            activityDetailModel = ActivityDetailModel.Empty;
+            ActivityDetailModel = ActivityDetailModel.Empty;
+            await _navigationService.GoToAsync<ActivitiesListViewModel>(
+                new Dictionary<string, object?> { [nameof(ActivitiesListViewModel.UserId)] = UserId });
         }
     }
     private System.Drawing.Color IndexToColor(int index)

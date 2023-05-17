@@ -1,12 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using project.App.Messages;
 using project.App.Services.Interfaces;
-using project.BL.Facades;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices.JavaScript;
 
 namespace project.App.ViewModels;
 
@@ -19,6 +15,7 @@ public partial class AddTodoViewModel : ViewModelBase
     public Guid UserId { get; set; }
 
     public DateTime Time { get; set; }
+    public DateTime Today { get; set; } = DateTime.Today;
     public TodoDetailModel Todo { get; set; } = TodoDetailModel.Empty;
 
     public AddTodoViewModel(
@@ -36,20 +33,12 @@ public partial class AddTodoViewModel : ViewModelBase
     [RelayCommand]
     public async Task SaveTodoAsync()
     {
-        if (Todo.Date < DateOnly.FromDateTime(DateTime.Now))
-        {
-            await _alertService.DisplayAsync("Hupsik Dupsik", "too late m8th");
-        }
-        else
-        {
-            Todo.Finished = false;
-            Todo.Date = DateOnly.FromDateTime(Time);
-            await _todoFacade.SaveAsync(Todo, UserId);
-            messengerService.Send(new TodoAddMessage());
-            await _navigationService.GoToAsync<TodoListViewModel>(
-                new Dictionary<string, object?> { [nameof(AddTodoViewModel.UserId)] = UserId });
-        }
-        
+        Todo.Date = DateOnly.FromDateTime(Time);
+        Todo.Finished = false;
+        await _todoFacade.SaveAsync(Todo, UserId);
+        messengerService.Send(new TodoAddMessage());
+        await _navigationService.GoToAsync<TodoListViewModel>(
+            new Dictionary<string, object?> { [nameof(AddTodoViewModel.UserId)] = UserId });
     }
 
     public async void Receive(TodoAddMessage message)
