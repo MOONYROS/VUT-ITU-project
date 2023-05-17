@@ -6,9 +6,9 @@
     xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    x:Name="ActivitiesListViewRoot"
     Title="ActivitiesListView"
     x:DataType="viewmodels:ActivitiesListViewModel"
-    x:Name="ActivitiesListViewRoot"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="False">
     <ScrollView>
@@ -135,11 +135,6 @@
                     FontSize="20"
                     HeightRequest="100"
                     Text="ADD"
-                    WidthRequest="150" />
-                <Button
-                    FontSize="20"
-                    HeightRequest="100"
-                    Text="EDIT"
                     WidthRequest="150" />
             </VerticalStackLayout>
         </Grid>
