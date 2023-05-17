@@ -10,14 +10,18 @@ public partial class AddUserViewModel : ViewModelBase
 {
     private readonly IUserFacade _userFacade;
     private readonly INavigationService _navigationService;
+    private readonly IAlertService _alertService;
     public UserDetailModel User { get; set; } = UserDetailModel.Empty;
-    public AddUserViewModel(IMessengerService messengerService, 
+    public AddUserViewModel(
+        IMessengerService messengerService, 
         IUserFacade userFacade,
-        INavigationService navigationService
-        ) : base(messengerService)
+        INavigationService navigationService, 
+        IAlertService alertService)
+        : base(messengerService)
     {
         _userFacade = userFacade;
         _navigationService = navigationService;
+        _alertService = alertService;
     }
 
     [RelayCommand]
@@ -28,6 +32,10 @@ public partial class AddUserViewModel : ViewModelBase
             await _userFacade.SaveAsync(User);
             messengerService.Send(new UserAddMessage());
             _navigationService.SendBackButtonPressed();
+        }
+        else
+        {
+            await _alertService.DisplayAsync("Hupsik Dupsik", "Username must have length between 4 and 15");
         }
     }
 }
