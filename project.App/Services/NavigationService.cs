@@ -16,7 +16,8 @@ public class NavigationService : INavigationService
         new("main/activities/userActivities/addActivity", typeof(AddActivityView), typeof(AddActivityViewModel)),
         new("main/activities/userTodos", typeof(TodoListView), typeof(TodoListViewModel)),
         new("main/activities/userTodos/addTodo", typeof(AddTodoView), typeof(AddTodoViewModel)),
-        new("main/activities/userProject", typeof(ProjectListView), typeof(ProjectListViewModel))
+        new("main/activities/userProject", typeof(ProjectListView), typeof(ProjectListViewModel)),
+        new("main/activities/userProject/addProject", typeof(AddProjectView), typeof(AddProjectViewModel))
     };
 
     public async Task GoToAsync<TViewModel>()
