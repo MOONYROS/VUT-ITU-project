@@ -39,7 +39,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         HorizontalOptions="End">
-                        <DatePicker Date="{Binding Time}" MinimumDate="01/01/2023" />
+                        <DatePicker Date="{Binding Time}" MinimumDate="{Binding Today}" />
                     </HorizontalStackLayout>
                 </Grid>
             </StackLayout>
