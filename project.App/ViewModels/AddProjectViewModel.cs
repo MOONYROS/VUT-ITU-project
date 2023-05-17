@@ -11,14 +11,18 @@ namespace project.App.ViewModels;
 public partial class AddProjectViewModel : ViewModelBase
 {
     private readonly IProjectFacade _projectFacade;
+    private readonly INavigationService _navigationService;
 
     public Guid UserId { get; set; }
     public ProjectDetailModel Project { get; set; } = ProjectDetailModel.Empty;
-    public AddProjectViewModel(IMessengerService messengerService,
+    public AddProjectViewModel(
+        IMessengerService messengerService,
        IUserFacade userFacade,
-       IProjectFacade projectFacade) : base(messengerService)
+       IProjectFacade projectFacade,
+       INavigationService navigationService) : base(messengerService)
     {
         _projectFacade = projectFacade;
+        _navigationService = navigationService;
     }
 
     [RelayCommand]
@@ -26,6 +30,8 @@ public partial class AddProjectViewModel : ViewModelBase
     {
         await _projectFacade.SaveAsync(Project);
         messengerService.Send(new ProjectAddMessage());
+        await _navigationService.GoToAsync<ProjectListViewModel>(
+            new Dictionary<string, object?> { [nameof(ProjectListViewModel.UserId)] = UserId });
     }
     public async void Receive(ProjectAddMessage message)
     {
