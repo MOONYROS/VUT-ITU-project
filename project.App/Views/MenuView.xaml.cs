@@ -2,9 +2,9 @@ using project.App.ViewModels;
 
 namespace project.App.Views;
 
-public partial class ActivitiesView
+public partial class MenuView
 {
-    public ActivitiesView(ActivitiesViewModel viewModel)
+    public MenuView(MenuViewModel viewModel)
         : base(viewModel)
     {
         InitializeComponent();

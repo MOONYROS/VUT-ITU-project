@@ -11,7 +11,7 @@ public class NavigationService : INavigationService
     { 
         new("main" , typeof(MainView), typeof(MainViewModel)),
         new("main/newUser", typeof(AddUserView), typeof(AddUserViewModel)),
-        new("main/activities", typeof(ActivitiesView), typeof(ActivitiesViewModel)),
+        new("main/activities", typeof(MenuView), typeof(MenuViewModel)),
         new("main/activities/userActivities", typeof(ActivitiesListView), typeof(ActivitiesListViewModel)),
         new("main/activities/userActivities/activityDetail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
         new("main/activities/userActivities/addActivity", typeof(AddActivityView), typeof(AddActivityViewModel)),

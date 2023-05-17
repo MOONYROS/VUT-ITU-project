@@ -13,4 +13,15 @@ public class AlertService : IAlertService
             await displayAlert;
         }
     }
+
+    public async Task<bool> DisplayYesOrNo(string title, string message)
+    {
+        var displayAlert = Application.Current?.MainPage?.DisplayAlert(title, message, "Yes", "No");
+        if (displayAlert is not null)
+        {
+            bool answer = await displayAlert;
+            return answer;
+        }
+        return false;
+    }
 }

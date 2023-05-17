@@ -8,7 +8,9 @@ using System.Collections.ObjectModel;
 
 namespace project.App.ViewModels;
 
-public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
+public partial class MainViewModel : ViewModelBase, 
+    IRecipient<UserAddMessage>,
+    IRecipient<UserDeleteMessage>
 {
     private IUserFacade _userFacade { get; init; }
     private INavigationService _navigationService { get; init; }
@@ -34,8 +36,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
     [RelayCommand]
     private async void GoToActivities(Guid Id)
     {
-        await _navigationService.GoToAsync<ActivitiesViewModel>(
-            new Dictionary<string, object?> { [nameof(ActivitiesViewModel.UserId)] = Id });
+        await _navigationService.GoToAsync<MenuViewModel>(
+            new Dictionary<string, object?> { [nameof(MenuViewModel.UserId)] = Id });
     }
 
     protected override async Task LoadDataAsync()
@@ -45,6 +47,11 @@ public partial class MainViewModel : ViewModelBase, IRecipient<UserAddMessage>
     }
 
     public async void Receive(UserAddMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(UserDeleteMessage message)
     {
         await LoadDataAsync();
     }

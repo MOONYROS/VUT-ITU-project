@@ -1,19 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using project.App.Services.Interfaces;
+using project.App.Views;
+using project.BL.Facades;
+using project.BL.Facades.Interfaces;
 
 namespace project.App.ViewModels;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
-public partial class ActivitiesViewModel : ViewModelBase
+public partial class MenuViewModel : ViewModelBase
 {
-    private INavigationService _navigationService;
+    private readonly INavigationService _navigationService;
+    private readonly IAlertService _alertService;
+    private readonly IUserFacade _userFacade;
     public Guid UserId { get; set; }
 
-    public ActivitiesViewModel(IMessengerService messengerService,
-        INavigationService navigationService)
+    public MenuViewModel(
+        IMessengerService messengerService,
+        INavigationService navigationService,
+        IAlertService alertService, 
+        IUserFacade userFacade)
         :base(messengerService)
     {
         _navigationService = navigationService;
+        _alertService = alertService;
+        _userFacade = userFacade;
     }
 
     [RelayCommand]
@@ -35,5 +45,16 @@ public partial class ActivitiesViewModel : ViewModelBase
     {
         await _navigationService.GoToAsync<ProjectListViewModel>(
                 new Dictionary<string, object?> { [nameof(ProjectListViewModel.UserId)] = UserId });
+    }
+
+    [RelayCommand]
+    private async void DeleteUser()
+    {
+        bool answer =  await _alertService.DisplayYesOrNo("Hupsik Dupsik?", "Do you really want to delete user?");
+        if (answer == true)
+        {
+            await _userFacade.DeleteAsync(UserId);
+            await _navigationService.GoToAsync<MainViewModel>();
+        }
     }
 }

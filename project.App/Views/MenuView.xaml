@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:ContentPageBase
-    x:Class="project.App.Views.ActivitiesView"
+    x:Class="project.App.Views.MenuView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesPage"
-    x:DataType="viewmodels:ActivitiesViewModel"
+    x:DataType="viewmodels:MenuViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="false">
 
@@ -19,7 +19,6 @@
             Spacing="5"
             VerticalOptions="Center">
             <Label FontSize="48" Text="Hello" />
-            <Label FontSize="48" Text="+Name" />
         </HorizontalStackLayout>
         <HorizontalStackLayout HorizontalOptions="Center">
             <Button
@@ -37,6 +36,7 @@
             <Button
                 BackgroundColor="{StaticResource Madder-Red}"
                 Style="{StaticResource NavigationButton}"
+                Command="{Binding DeleteUserCommand}"
                 Text="DELETE" />
         </HorizontalStackLayout>
     </VerticalStackLayout>

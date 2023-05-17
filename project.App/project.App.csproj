@@ -72,7 +72,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Views\ActivitiesView.xaml.cs">
+		<Compile Update="Views\MenuView.xaml.cs">
 			<DependentUpon>ActivitiesView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\AddUserView.xaml.cs">
@@ -93,7 +93,7 @@
 		<MauiXaml Update="Views\ActivitiesListView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ActivitiesView.xaml">
+		<MauiXaml Update="Views\MenuView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\ActivityDetailView.xaml">
