@@ -46,7 +46,8 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     public async void GoToActivityDetailView(Guid activityId)
     {
        await _navigationService.GoToAsync<ActivityDetailViewModel>(
-            new Dictionary<string, object?> { [nameof(ActivityDetailViewModel.ActivityId)] = activityId });
+            new Dictionary<string, object?> { [nameof(ActivityDetailViewModel.ActivityId)] = activityId,
+                                              [nameof(ActivityDetailViewModel.UserId)]     = UserId});
     }
 
     [RelayCommand]

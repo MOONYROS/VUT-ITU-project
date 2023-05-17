@@ -9,6 +9,7 @@ using project.BL.Models;
 namespace project.App.ViewModels;
 
 [QueryProperty(nameof(ActivityId), nameof(ActivityId))]
+[QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class ActivityDetailViewModel : ViewModelBase
 {
     private readonly IActivityFacade _activityFacade;
@@ -32,6 +33,7 @@ public partial class ActivityDetailViewModel : ViewModelBase
         Activity = await _activityFacade.GetAsync(ActivityId);
     }
 
+    [RelayCommand]
     public async void DeleteActivity(Guid Id)
     {
         await _activityFacade.DeleteAsync(Id);
