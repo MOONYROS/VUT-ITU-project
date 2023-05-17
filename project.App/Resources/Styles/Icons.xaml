@@ -6,5 +6,6 @@
     <x:String x:Key="User">&#xf007;</x:String>
     <x:String x:Key="LeftArrow">&#xf060;</x:String>
     <x:String x:Key="RightArrow">&#xf061;</x:String>
+    <x:String x:Key="Delete">&#xf2ed;</x:String>
 
 </ResourceDictionary>

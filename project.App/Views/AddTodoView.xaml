@@ -24,7 +24,8 @@
                 <Entry
                     HeightRequest="60"
                     HorizontalOptions="Start"
-                    Placeholder="Activity Name"
+                    MaxLength="20"
+                    Placeholder="Task Name"
                     Text="{Binding Todo.Name}"
                     WidthRequest="300" />
                 <Grid ColumnDefinitions="60,100" RowDefinitions="50,50">
