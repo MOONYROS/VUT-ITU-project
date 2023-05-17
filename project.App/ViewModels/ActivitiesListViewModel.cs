@@ -43,14 +43,13 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     }
 
     [RelayCommand]
-    public async void GoToActivityDetailView()
+    public async void GoToActivityDetailView(Guid activityId)
     {
-       await _navigationService.GoToAsync<ActivityDetailView>(
-            new Dictionary<string, object?> { [nameof(AddActivityViewModel.UserId)] = UserId });
+       await _navigationService.GoToAsync<ActivityDetailViewModel>(
+            new Dictionary<string, object?> { [nameof(ActivityDetailViewModel.ActivityId)] = activityId });
     }
 
     [RelayCommand]
-
     private async void SortActivities()
     {
         IEnumerable<ActivityListModel> act; 
