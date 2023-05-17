@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using project.App.Messages;
 using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
@@ -8,23 +9,32 @@ using System.Collections.ObjectModel;
 namespace project.App.ViewModels;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
-public class TodoListViewModel : ViewModelBase,
+public partial class TodoListViewModel : ViewModelBase,
     IRecipient<TodoAddMessage>,
     IRecipient<TodoDeleteMessage>
 {
     private readonly ITodoFacade _todoFacade;
+    private readonly INavigationService _navigationService;
     public Guid UserId { get; set; }
     public ObservableCollection<TodoDetailModel> Todos { get; set; } = new();
     public TodoListViewModel(IMessengerService messengerService,
-        ITodoFacade todoFacade) : base(messengerService)
+        ITodoFacade todoFacade,
+        INavigationService navigationService) : base(messengerService)
     {
+        _navigationService = navigationService;
         _todoFacade = todoFacade;
     }
-
     protected override async Task LoadDataAsync()
     {
         var todos = await _todoFacade.GetAsyncUser(UserId);
         Todos = todos.ToObservableCollection();
+    }
+
+    [RelayCommand]
+    private async void GoToAddTodo()
+    {
+        await _navigationService.GoToAsync<AddTodoViewModel>(
+                new Dictionary<string, object?> { [nameof(AddTodoViewModel.UserId)] = UserId });
     }
 
     public async void Receive(TodoAddMessage message)

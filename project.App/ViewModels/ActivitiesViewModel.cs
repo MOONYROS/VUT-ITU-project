@@ -40,7 +40,8 @@ public partial class ActivitiesViewModel : ViewModelBase
     [RelayCommand]
     private async void GoToTodoList()
     {
-        await _navigationService.GoToAsync("main/activities/userTodos");
+        await _navigationService.GoToAsync<TodoListViewModel>(
+                new Dictionary<string, object?> { [nameof(TodoListViewModel.UserId)] = UserId });
     }
     
     [RelayCommand]

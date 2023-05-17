@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     Title="TodoListView"
     x:DataType="viewmodels:TodoListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
@@ -29,23 +30,25 @@
                 Grid.Column="0"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Text="Add Todo"/>
+                Text="Add Todo"
+                Command="{Binding GoToAddTodoCommand}"/>
             
             <CollectionView
                 Grid.Row="3"
                 Grid.Column="0"
                 EmptyView="No todos yet"
                 HorizontalOptions="Center"
-                MinimumWidthRequest="460">
+                MinimumWidthRequest="460"
+                ItemsSource="{Binding Todos}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:TodoDetailModel">
                         <Frame>
                             <HorizontalStackLayout>
                                 <Button 
                                     MinimumWidthRequest="100"
-                                    Text="TodoName"/>
-                                <Label Text="Date"/>
-                                <Label Text="Finished"/>
+                                    Text="{Binding Name}"/>
+                                <Label Text="{Binding Date}"/>
+                                <Label Text="{Binding Finished}"/>
                                 <Button Text="Remove"/>
                             </HorizontalStackLayout>
                         </Frame>

@@ -14,8 +14,10 @@ public partial class AddTodoViewModel : ViewModelBase
 {
     private readonly ITodoFacade _todoFacade;
     public Guid UserId { get; set; }
-    public ObservableCollection<TodoDetailModel> Todos { get; set; } = new();
-    public TodoDetailModel Todo = TodoDetailModel.Empty;
+
+    public DateTime Time { get; set; }
+    public TodoDetailModel Todo { get; set; } = TodoDetailModel.Empty;
+
     public AddTodoViewModel(IMessengerService messengerService,
         ITodoFacade todoFacade) : base(messengerService)
     {
@@ -24,15 +26,11 @@ public partial class AddTodoViewModel : ViewModelBase
 
     [RelayCommand]
     public async Task SaveTodoAsync()
-    { 
+    {
+        Todo.Finished = false;
+        Todo.Date = DateOnly.FromDateTime(Time);
         await _todoFacade.SaveAsync(Todo, UserId);
         messengerService.Send(new TodoAddMessage());
-    }
-
-    protected override async Task LoadDataAsync()
-    {
-        var todos = await _todoFacade.GetAsyncUser(UserId);
-        Todos = todos.ToObservableCollection();
     }
 
     public async void Receive(TodoAddMessage message)
