@@ -90,7 +90,7 @@
                                             FontFamily="FAS"
                                             Glyph="{StaticResource Delete}"
                                             Size="35"
-                                            Color="Red" />
+                                            Color="{StaticResource Madder-Red}" />
                                     </ImageButton.Source>
                                 </ImageButton>
                             </Grid>
@@ -105,7 +105,7 @@
                                     FontSize="19"
                                     HorizontalOptions="Center"
                                     Text="You have nothing TO DO"
-                                    TextColor="Red" />
+                                    TextColor="{StaticResource Madder-Red}" />
                             </Frame>
                         </StackLayout>
                     </ContentView>
