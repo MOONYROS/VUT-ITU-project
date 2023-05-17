@@ -7,7 +7,7 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ProjectListView"
-    x:DataType="viewmodels:TodoListViewModel"
+    x:DataType="views:ProjectListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="False">
     <ScrollView>
@@ -29,7 +29,8 @@
                 Grid.Column="0"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Text="Add project"/>
+                Text="Add project"
+                Command="{Binding GoToAddProjectCommand}"/>
             
             <CollectionView
                 Grid.Row="3"
