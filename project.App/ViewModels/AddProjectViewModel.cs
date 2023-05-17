@@ -17,7 +17,6 @@ public partial class AddProjectViewModel : ViewModelBase
     public ProjectDetailModel Project { get; set; } = ProjectDetailModel.Empty;
     public AddProjectViewModel(
         IMessengerService messengerService,
-       IUserFacade userFacade,
        IProjectFacade projectFacade,
        INavigationService navigationService) : base(messengerService)
     {

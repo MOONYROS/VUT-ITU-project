@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using project.BL.Facades;
 using project.BL.Facades.Interfaces;
 using project.BL.Mappers.Interfaces;
 
@@ -8,7 +9,7 @@ public static class BLInstaller
 {
     public static IServiceCollection AddBLServices(this IServiceCollection services)
     {
-        services.AddSingleton<IUserProjectFacade, IUserProjectFacade>();
+        services.AddSingleton<IUserProjectFacade, UserProjectFacade>();
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
             .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
