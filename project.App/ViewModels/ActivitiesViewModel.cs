@@ -47,6 +47,7 @@ public partial class ActivitiesViewModel : ViewModelBase
     [RelayCommand]
     private async void GoToProjectList()
     {
-        await _navigationService.GoToAsync("main/activities/userProject");
+        await _navigationService.GoToAsync<ProjectListViewModel>(
+                new Dictionary<string, object?> { [nameof(ProjectListViewModel.UserId)] = UserId });
     }
 }

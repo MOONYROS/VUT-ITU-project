@@ -25,29 +25,22 @@
             <StackLayout>
                 <Button
                     WidthRequest="150"
-                    Text="Confirm"/>
+                    Text="Confirm"
+                    Command="{Binding SaveProjectCommand}"/>
                 <Entry
                     Margin="20"
                     HeightRequest="40"
                     WidthRequest="300"
                     HorizontalOptions="Center"
-                    Placeholder="Project name"/>
+                    Placeholder="Project name"
+                    Text="{Binding Project.Name}"/>
                 <Entry
                     HeightRequest="150"
                     WidthRequest="300"
                     HorizontalOptions="Center"
-                    Placeholder="Project description"/>
+                    Placeholder="Project description"
+                    Text="{Binding Project.Description}"/>
             </StackLayout>
         </Frame>
-        <Button
-            Margin="0,40"
-            BackgroundColor="{StaticResource YlmNmBlue}"
-            BorderColor="{StaticResource OxfordBlue}"
-            BorderWidth="3"
-            FontAttributes="Bold"
-            HeightRequest="100"
-            HorizontalOptions="Center"
-            Text="ADD"
-            WidthRequest="100" />
     </VerticalStackLayout>
 </views:ContentPageBase>

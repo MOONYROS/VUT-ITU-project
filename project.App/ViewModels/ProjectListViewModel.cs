@@ -17,7 +17,7 @@ public partial class ProjectListViewModel : ViewModelBase,
     private readonly INavigationService _navigationService;
     public Guid UserId { get; set; }
 
-    public ObservableCollection<ProjectDetailModel> Projects { get; set; } = new();
+    public ObservableCollection<ProjectListModel> Projects { get; set; } = new();
     public ProjectListViewModel(IMessengerService messengerService,
         IProjectFacade projectFacade,
         INavigationService navigationService) : base(messengerService)
@@ -28,8 +28,8 @@ public partial class ProjectListViewModel : ViewModelBase,
 
     protected override async Task LoadDataAsync()
     {
-        var todos = await _projectFacade.GetAsync();
-        Projects = Projects.ToObservableCollection();
+        var projects = await _projectFacade.GetAsync();
+        Projects = projects.ToObservableCollection();
     }
 
     [RelayCommand]

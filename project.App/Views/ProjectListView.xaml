@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     Title="ProjectListView"
     x:DataType="viewmodels:ProjectListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
@@ -37,14 +38,15 @@
                 Grid.Column="0"
                 EmptyView="No projects assigned yet"
                 HorizontalOptions="Center"
-                MinimumWidthRequest="460">
+                MinimumWidthRequest="460"
+                ItemsSource="{Binding Projects}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:ProjectListModel">
                         <Frame>
                             <HorizontalStackLayout>
                                 <Button
                                     MinimumWidthRequest="100"
-                                    Text="Project name"/>
+                                    Text="{Binding Name}"/>
                                 <Button Text="Remove"/>
                             </HorizontalStackLayout>
                         </Frame>
