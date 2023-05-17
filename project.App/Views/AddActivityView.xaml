@@ -25,13 +25,13 @@
                     HeightRequest="60"
                     HorizontalOptions="Start"
                     Placeholder="Activity Name"
-                    Text="{Binding activityDetailModel.Name}"
+                    Text="{Binding ActivityDetailModel.Name}"
                     WidthRequest="300" />
                 <Entry
                     HeightRequest="60"
                     HorizontalOptions="Start"
                     Placeholder="Description"
-                    Text="{Binding activityDetailModel.Description}"
+                    Text="{Binding ActivityDetailModel.Description}"
                     WidthRequest="300" />
                 <Grid ColumnDefinitions="60,100" RowDefinitions="50,50">
                     <Label
@@ -44,8 +44,10 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         HorizontalOptions="End">
-                        <DatePicker Date="{Binding activityDetailModel.DateTimeFrom}" MinimumDate="01/01/2023" />
-                        <TimePicker Time="{Binding TimeFrom}" />
+                        <DatePicker Date="{Binding ActivityDetailModel.DateTimeFrom}"
+                                    MinimumDate="01/01/2023" />
+                        <TimePicker Time="{Binding TimeFrom}"
+                                    />
                     </HorizontalStackLayout>
                     <Label
                         Grid.Row="1"
@@ -54,7 +56,7 @@
                         Text="To:"
                         VerticalOptions="Center" />
                     <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
-                        <DatePicker Date="{Binding activityDetailModel.DateTimeTo}" MinimumDate="01/01/2023" />
+                        <DatePicker Date="{Binding ActivityDetailModel.DateTimeTo}" MinimumDate="01/01/2023" />
                         <TimePicker Time="{Binding TimeTo}" />
                     </HorizontalStackLayout>
                 </Grid>
