@@ -4,8 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    x:Name="TodoListViewRoot"
     Title="TodoListView"
     x:DataType="viewmodels:TodoListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
@@ -51,10 +53,18 @@
                         <Frame Margin="0,10">
                             <Grid ColumnDefinitions="50,200,150,100" HeightRequest="50">
                                 <CheckBox
+                                    x:Name="Task"
                                     Grid.Column="0"
                                     IsChecked="{Binding Finished}"
                                     Scale="2"
-                                    VerticalOptions="Center" />
+                                    VerticalOptions="Center">
+                                    <CheckBox.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            x:DataType="viewmodels:TodoListViewModel"
+                                            Command="{Binding Source={x:Reference TodoListViewRoot}, Path=BindingContext.SaveAllTodosCommand}"
+                                            EventName="CheckedChanged" />
+                                    </CheckBox.Behaviors>
+                                </CheckBox>
                                 <Button
                                     Grid.Column="1"
                                     BackgroundColor="{StaticResource YlmNmBlue}"

@@ -36,7 +36,14 @@ public partial class TodoListViewModel : ViewModelBase,
         await _navigationService.GoToAsync<AddTodoViewModel>(
                 new Dictionary<string, object?> { [nameof(AddTodoViewModel.UserId)] = UserId });
     }
-
+    [RelayCommand]
+    public async Task SaveAllTodos()
+    {
+        foreach (var Todo in Todos)
+        {
+            await _todoFacade.SaveAsync(Todo, UserId);
+        }
+    }
     public async void Receive(TodoAddMessage message)
     {
         await LoadDataAsync();
