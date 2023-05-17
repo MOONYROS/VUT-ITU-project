@@ -5,6 +5,7 @@ using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
 using System.Collections.ObjectModel;
+using project.App.Views;
 
 namespace project.App.ViewModels;
 
@@ -42,6 +43,13 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     }
 
     [RelayCommand]
+    public async void GoToActivityDetailView()
+    {
+       await _navigationService.GoToAsync<ActivityDetailView>(
+            new Dictionary<string, object?> { [nameof(AddActivityViewModel.UserId)] = UserId });
+    }
+
+    [RelayCommand]
 
     private async void SortActivities()
     {
@@ -71,7 +79,7 @@ public partial class ActivitiesListViewModel : ViewModelBase,
         Activities = act.ToObservableCollection();
     }
 
-
+   
     public async void Receive(ActivityDeleteMessage message)
     {
         await LoadDataAsync();
