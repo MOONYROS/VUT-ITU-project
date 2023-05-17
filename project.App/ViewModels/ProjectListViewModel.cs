@@ -12,8 +12,8 @@ namespace project.App.Views;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class ProjectListViewModel : ViewModelBase,
-    IRecipient<TodoAddMessage>,
-    IRecipient<TodoDeleteMessage>
+    IRecipient<ProjectAddMessage>,
+    IRecipient<ProjectDeleteMessage>
 {
     private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
@@ -28,17 +28,24 @@ public partial class ProjectListViewModel : ViewModelBase,
         _projectFacade = projectFacade;
     }
 
+    protected override async Task LoadDataAsync()
+    {
+        var todos = await _projectFacade.GetAsync();
+        Projects = Projects.ToObservableCollection();
+    }
+
     [RelayCommand]
     private async void GoToAddProject()
     {
-        await _navigationService.GoToAsync("main/activities/userProject/addProject");
+        await _navigationService.GoToAsync<AddProjectViewModel>(
+                new Dictionary<string, object?> { [nameof(AddProjectViewModel.UserId)] = UserId });
     }
-    public async void Receive(TodoAddMessage message)
+    public async void Receive(ProjectAddMessage message)
     {
         await LoadDataAsync();
     }
 
-    public async void Receive(TodoDeleteMessage message)
+    public async void Receive(ProjectDeleteMessage message)
     {
         await LoadDataAsync();
     }
