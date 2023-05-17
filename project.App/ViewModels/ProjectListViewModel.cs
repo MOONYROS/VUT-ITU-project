@@ -1,14 +1,12 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using project.App.Messages;
 using project.App.Services.Interfaces;
-using project.App.ViewModels;
-using project.BL.Facades;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
-using System.Collections.ObjectModel;
 
-namespace project.App.Views;
+namespace project.App.ViewModels;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class ProjectListViewModel : ViewModelBase,

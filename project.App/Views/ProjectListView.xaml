@@ -7,7 +7,7 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ProjectListView"
-    x:DataType="views:ProjectListViewModel"
+    x:DataType="viewmodels:ProjectListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="False">
     <ScrollView>
