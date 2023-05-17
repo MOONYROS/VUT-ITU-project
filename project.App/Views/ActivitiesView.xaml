@@ -7,32 +7,37 @@
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
     Title="ActivitiesPage"
+    x:DataType="viewmodels:ActivitiesViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
-    Shell.NavBarIsVisible="false"
-    x:DataType="viewmodels:ActivitiesViewModel">
+    Shell.NavBarIsVisible="false">
 
-    <ScrollView Orientation="Horizontal">
 
-        <Grid
-            Padding="5"
-            ColumnDefinitions="100,*,100"
-            RowDefinitions="150,*">
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                FontSize="48"
-                HorizontalOptions="Center"
-                Text="Activities"
-                VerticalOptions="Center" />
-            <VerticalStackLayout Spacing="2">
-                <Button Text="Activities" 
-                        Command="{Binding GoToActivitiesListCommand}"/>
-                <Button Text="Projects"
-                        Command="{Binding GoToProjectListCommand}"/>
-                <Button Text="TODO" 
-                        Command="{Binding GoToTodoListCommand}"/>
-            </VerticalStackLayout>
-        </Grid>
-    </ScrollView>
+    <VerticalStackLayout Margin="0,40" Spacing="200">
+
+        <HorizontalStackLayout
+            HorizontalOptions="Center"
+            Spacing="5"
+            VerticalOptions="Center">
+            <Label FontSize="48" Text="Hello" />
+            <Label FontSize="48" Text="+Name" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button
+                Command="{Binding GoToActivitiesListCommand}"
+                Style="{StaticResource NavigationButton}"
+                Text="Activities" />
+            <Button
+                Command="{Binding GoToProjectListCommand}"
+                Style="{StaticResource NavigationButton}"
+                Text="Projects" />
+            <Button
+                Command="{Binding GoToTodoListCommand}"
+                Style="{StaticResource NavigationButton}"
+                Text="TODO" />
+            <Button
+                BackgroundColor="{StaticResource Madder-Red}"
+                Style="{StaticResource NavigationButton}"
+                Text="DELETE" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </views:ContentPageBase>

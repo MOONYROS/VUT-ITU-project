@@ -45,7 +45,7 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     [RelayCommand]
     public async void GoToActivityDetailView()
     {
-       await _navigationService.GoToAsync<ActivityDetailView>(
+       await _navigationService.GoToAsync<ActivityDetailViewModel>(
             new Dictionary<string, object?> { [nameof(AddActivityViewModel.UserId)] = UserId });
     }
 

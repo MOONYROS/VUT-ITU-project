@@ -8,6 +8,7 @@
     <Color x:Key="YlmNmBlue">#415A77</Color>
     <Color x:Key="SilverLakeBlue">#778DA9</Color>
     <Color x:Key="Platinum">#E0E1DD</Color>
+    <Color x:Key="Madder-Red">#A71D31</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
 
 

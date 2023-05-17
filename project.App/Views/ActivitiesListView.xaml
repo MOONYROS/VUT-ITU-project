@@ -77,7 +77,6 @@
                             <VerticalStackLayout>
                                 <Button
                                     BackgroundColor="{Binding Color}"
-                                    Command=""
                                     FontSize="18"
                                     Text="{Binding Name}" />
                                 <VerticalStackLayout>
