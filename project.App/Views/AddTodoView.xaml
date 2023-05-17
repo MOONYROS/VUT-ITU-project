@@ -14,7 +14,7 @@
             Padding="30"
             FontSize="36"
             HorizontalOptions="Center"
-            Text="New Activity"
+            Text="New Todo"
             VerticalOptions="Center" />
         <Frame
             BackgroundColor="Transparent"
@@ -25,7 +25,7 @@
                     HeightRequest="60"
                     HorizontalOptions="Start"
                     MaxLength="20"
-                    Placeholder="Task Name"
+                    Placeholder="Todo name"
                     Text="{Binding Todo.Name}"
                     WidthRequest="300" />
                 <Grid ColumnDefinitions="60,100" RowDefinitions="50,50">
@@ -33,7 +33,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         FontSize="18"
-                        Text="From:"
+                        Text="On:"
                         VerticalOptions="Center" />
                     <HorizontalStackLayout
                         Grid.Row="0"
