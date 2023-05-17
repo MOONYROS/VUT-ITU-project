@@ -12,47 +12,46 @@
     BackgroundColor="{StaticResource SilverLakeBlue}"
     Shell.NavBarIsVisible="False">
     <ScrollView>
-        <Grid
-            Padding="15"
-            ColumnDefinitions="*"
-            RowDefinitions="100,100,*,*">
+        <StackLayout>
             <Label
-                Grid.Row="0"
-                Grid.Column="0"
+                Margin="30"
                 FontSize="48"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
                 MinimumWidthRequest="200"
                 Text="Projects"/>
             
             <Button
-                Grid.Row="2"
-                Grid.Column="0"
+                Margin="30"
+                BackgroundColor="{StaticResource OxfordBlue}"
+                BorderColor="{StaticResource RichBlack}"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
+                WidthRequest="120"
+                HeightRequest="60"
                 Text="Add project"
                 Command="{Binding GoToAddProjectCommand}"/>
             
             <CollectionView
-                Grid.Row="3"
-                Grid.Column="0"
                 EmptyView="No projects assigned yet"
                 HorizontalOptions="Center"
                 MinimumWidthRequest="460"
                 ItemsSource="{Binding Projects}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ProjectListModel">
-                        <Frame>
+                        <Frame
+                            Margin="3"
+                            BorderColor="{StaticResource Platinum}"
+                            BackgroundColor="{StaticResource YlmNmBlue}"
+                            Padding="10">
                             <HorizontalStackLayout>
                                 <Button
-                                    MinimumWidthRequest="100"
+                                    MinimumWidthRequest="460"
+                                    HeightRequest="35"
                                     Text="{Binding Name}"/>
-                                <Button Text="Remove"/>
                             </HorizontalStackLayout>
                         </Frame>
                     </DataTemplate>        
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </Grid>
+        </StackLayout>
     </ScrollView>
 </views:ContentPageBase>
