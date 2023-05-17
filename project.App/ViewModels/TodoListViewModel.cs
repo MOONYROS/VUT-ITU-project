@@ -44,6 +44,12 @@ public partial class TodoListViewModel : ViewModelBase,
             await _todoFacade.SaveAsync(Todo, UserId);
         }
     }
+    [RelayCommand]
+    public async Task DeleteTodo(Guid TodoID)
+    {
+        await _todoFacade.DeleteAsync(TodoID);
+        messengerService.Send(new TodoDeleteMessage());
+    }
     public async void Receive(TodoAddMessage message)
     {
         await LoadDataAsync();

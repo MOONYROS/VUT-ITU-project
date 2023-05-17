@@ -80,6 +80,8 @@
                                     Grid.Column="3"
                                     Padding="5"
                                     BackgroundColor="{StaticResource Platinum}"
+                                    Command="{Binding Source={x:Reference TodoListViewRoot}, Path=BindingContext.DeleteTodoCommand}"
+                                    CommandParameter="{Binding Id}"
                                     HeightRequest="70"
                                     HorizontalOptions="End"
                                     WidthRequest="70">
