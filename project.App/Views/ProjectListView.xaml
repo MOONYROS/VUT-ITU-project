@@ -28,7 +28,7 @@
                 HorizontalOptions="Center"
                 WidthRequest="120"
                 HeightRequest="60"
-                Text="Add project"
+                Text="Create project"
                 Command="{Binding GoToAddProjectCommand}"/>
             
             <CollectionView
