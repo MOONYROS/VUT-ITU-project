@@ -16,6 +16,7 @@ public partial class ProjectListViewModel : ViewModelBase,
     private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
     public Guid UserId { get; set; }
+    public Guid ProjectId { get; set; }
 
     public ObservableCollection<ProjectListModel> Projects { get; set; } = new();
     public ProjectListViewModel(IMessengerService messengerService,
@@ -37,6 +38,12 @@ public partial class ProjectListViewModel : ViewModelBase,
     {
         await _navigationService.GoToAsync<AddProjectViewModel>(
                 new Dictionary<string, object?> { [nameof(AddProjectViewModel.UserId)] = UserId });
+    }
+    [RelayCommand]
+    private async void GoToDetailProject()
+    {
+        await _navigationService.GoToAsync<ProjectDetailViewModel>(
+                new Dictionary<string, object?> { [nameof(ProjectDetailViewModel.UserId)] = UserId, [nameof(ProjectDetailViewModel.ProjectId)] = ProjectId });
     }
     public async void Receive(ProjectAddMessage message)
     {

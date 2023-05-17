@@ -10,7 +10,8 @@
     Title="ProjectListView"
     x:DataType="viewmodels:ProjectListViewModel"
     BackgroundColor="{StaticResource SilverLakeBlue}"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    x:Name="ProjectListViewRoot">
     <ScrollView>
         <StackLayout>
             <Label
@@ -46,7 +47,8 @@
                                 <Button
                                     MinimumWidthRequest="460"
                                     HeightRequest="35"
-                                    Text="{Binding Name}"/>
+                                    Text="{Binding Name}"
+                                    Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GoToDetailProjectCommand}"/>
                             </HorizontalStackLayout>
                         </Frame>
                     </DataTemplate>        

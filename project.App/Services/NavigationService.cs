@@ -18,6 +18,7 @@ public class NavigationService : INavigationService
         new("main/activities/userTodos", typeof(TodoListView), typeof(TodoListViewModel)),
         new("main/activities/userTodos/addTodo", typeof(AddTodoView), typeof(AddTodoViewModel)),
         new("main/activities/userProject", typeof(ProjectListView), typeof(ProjectListViewModel)),
+        new("main/activities/userProject/projectDetail", typeof(ProjectDetailView), typeof(ProjectDetailViewModel)),
         new("main/activities/userProject/addProject", typeof(AddProjectView), typeof(AddProjectViewModel))
     };
 

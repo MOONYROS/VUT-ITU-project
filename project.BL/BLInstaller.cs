@@ -8,6 +8,7 @@ public static class BLInstaller
 {
     public static IServiceCollection AddBLServices(this IServiceCollection services)
     {
+        services.AddSingleton<IUserProjectFacade, IUserProjectFacade>();
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
             .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
