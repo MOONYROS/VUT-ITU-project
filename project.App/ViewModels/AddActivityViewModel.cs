@@ -47,7 +47,7 @@ public partial class AddActivityViewModel : ViewModelBase
         }
         else
         {
-            
+
             ActivityDetailModel.Color = IndexToColor(ColorIndex);
             try
             {
@@ -65,8 +65,25 @@ public partial class AddActivityViewModel : ViewModelBase
     }
     private System.Drawing.Color IndexToColor(int index)
     {
-        return System.Drawing.Color.Green;
+        switch (index)
+        {
+            case 0:
+                return System.Drawing.Color.Red;
+            case 1:
+                return System.Drawing.Color.Blue;
+            case 2:
+                return System.Drawing.Color.Yellow;
+            case 3:
+                return System.Drawing.Color.Purple;
+            case 4:
+                return System.Drawing.Color.Pink;
+            case 5:
+                return System.Drawing.Color.Orange;
+            case 6:
+                return System.Drawing.Color.Brown;
+            default: break;
+        }
+        return System.Drawing.Color.Black;
     }
 }
-
 

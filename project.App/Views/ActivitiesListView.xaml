@@ -6,6 +6,7 @@
     xmlns:model="clr-namespace:project.BL.Models;assembly=project.BL"
     xmlns:viewmodels="clr-namespace:project.App.ViewModels"
     xmlns:views="clr-namespace:project.App.Views"
+    xmlns:converters="clr-namespace:project.App.Converters"
     x:Name="ActivitiesListViewRoot"
     Title="ActivitiesListView"
     x:DataType="viewmodels:ActivitiesListViewModel"
@@ -77,7 +78,7 @@
                             HorizontalOptions="Start">
                             <VerticalStackLayout>
                                 <Button
-                                    BackgroundColor="{Binding Color}"
+                                    BackgroundColor="{Binding Color, Converter={converters:ActivityColorConverter}}"
                                     Command="{Binding Source={x:Reference ActivitiesListViewRoot}, Path=BindingContext.GoToActivityDetailViewCommand}"
                                     CommandParameter="{Binding Id}"
                                     FontSize="18"
