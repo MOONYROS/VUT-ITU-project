@@ -52,15 +52,15 @@ public partial class AddActivityViewModel : ViewModelBase
             try
             {
                 await _activityFacade.SaveAsync(ActivityDetailModel, UserId, null);
+                messengerService.Send(new ActivityAddMessage());
+                ActivityDetailModel = ActivityDetailModel.Empty;
+                await _navigationService.GoToAsync<ActivitiesListViewModel>(
+                    new Dictionary<string, object?> { [nameof(ActivitiesListViewModel.UserId)] = UserId });
             }
             catch (OverlappingException)
             {
                 await _alertService.DisplayAsync("Hupsik Dupsik", "Activites are overlapping");
             }
-            messengerService.Send(new ActivityAddMessage());
-            ActivityDetailModel = ActivityDetailModel.Empty;
-            await _navigationService.GoToAsync<ActivitiesListViewModel>(
-                new Dictionary<string, object?> { [nameof(ActivitiesListViewModel.UserId)] = UserId });
         }
     }
     private System.Drawing.Color IndexToColor(int index)
