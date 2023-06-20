@@ -3,7 +3,6 @@ using project.App.Messages;
 using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
-using System.Drawing;
 using project.BL;
 
 namespace project.App.ViewModels;
@@ -20,6 +19,9 @@ public partial class AddActivityViewModel : ViewModelBase
     public TimeSpan TimeFrom { get; set; }
     public TimeSpan TimeTo { get; set; }
     public ActivityDetailModel ActivityDetailModel { get; set; } = ActivityDetailModel.Empty;
+	public DateTime Today { get; } = DateTime.Today;
+	public DateTime LastYear { get; } = DateTime.Today.AddYears(-1);
+	public DateTime NextYear { get; } = DateTime.Today.AddYears(1);
     public AddActivityViewModel(
         IMessengerService messengerService,
         IActivityFacade activityFacade,

@@ -45,8 +45,9 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             HorizontalOptions="End">
-                            <DatePicker Date="{Binding ActivityDetailModel.DateTimeFrom}"
-                                        MinimumDate="01/01/2023" />
+                            <DatePicker MinimumDate="{Binding LastYear}"
+                                        MaximumDate="{Binding NextYear}"
+                                        Date="{Binding Today}"/>
                             <TimePicker Time="{Binding TimeFrom}"
                                         />
                         </HorizontalStackLayout>
@@ -57,7 +58,9 @@
                             Text="To:"
                             VerticalOptions="Center" />
                         <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
-                            <DatePicker Date="{Binding ActivityDetailModel.DateTimeTo}" MinimumDate="01/01/2023" />
+                            <DatePicker MinimumDate="{Binding LastYear}"
+                                        MaximumDate="{Binding NextYear}"
+                                        Date="{Binding Today}"/>
                             <TimePicker Time="{Binding TimeTo}" />
                         </HorizontalStackLayout>
                     </Grid>

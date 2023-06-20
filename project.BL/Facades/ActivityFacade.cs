@@ -171,7 +171,7 @@ public class ActivityFacade :
         {
             filter = now.AddYears(-1);
         }
-        else//lastmonth
+        else
         {
             now = now.AddMonths(-1);
             filter = now.AddMonths(-1);

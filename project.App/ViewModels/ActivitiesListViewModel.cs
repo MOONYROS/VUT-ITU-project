@@ -5,7 +5,7 @@ using project.App.Services.Interfaces;
 using project.BL.Facades.Interfaces;
 using project.BL.Models;
 using System.Collections.ObjectModel;
-using project.App.Views;
+using project.BL.Enums;
 
 namespace project.App.ViewModels;
 
@@ -32,7 +32,7 @@ public partial class ActivitiesListViewModel : ViewModelBase,
     protected override async Task LoadDataAsync()
     {
         var act = await _activityFacade.GetAsyncUser(UserId);
-        Activities = act.ToObservableCollection();
+		Activities = act.ToObservableCollection<ActivityListModel>();
     }
 
     [RelayCommand]
@@ -60,16 +60,16 @@ public partial class ActivitiesListViewModel : ViewModelBase,
                 act = await _activityFacade.GetAsyncUser(UserId);
                 break;
             case 1:
-                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddDays(-7), DateTime.Today);   
+				act = await _activityFacade.GetAsyncIntervalFilter(UserId, FilterBy.Week);
                 break;
             case 2:
-                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddMonths(-1), DateTime.Today);
+                act = await _activityFacade.GetAsyncIntervalFilter(UserId, FilterBy.Month);
                 break;
             case 3:
-                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddMonths(-2), DateTime.Today);
+                act = await _activityFacade.GetAsyncIntervalFilter(UserId, FilterBy.PreviousMonth);
                 break;
             case 4: 
-                act = await _activityFacade.GetAsyncDateFilter(UserId, DateTime.Today.AddYears(-1), DateTime.Today);
+                act = await _activityFacade.GetAsyncIntervalFilter(UserId, FilterBy.Year);
                 break;
             default: 
                 act = await _activityFacade.GetAsyncUser(UserId);
@@ -79,7 +79,6 @@ public partial class ActivitiesListViewModel : ViewModelBase,
         Activities = act.ToObservableCollection();
     }
 
-   
     public async void Receive(ActivityDeleteMessage message)
     {
         await LoadDataAsync();
