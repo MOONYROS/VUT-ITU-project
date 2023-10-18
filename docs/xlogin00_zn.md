@@ -1,8 +1,8 @@
-# Zprava o navrhu
+# Zpráva o návrhu
 
-- Ondrej Koumar (xkouma02)
-- Adam Malysak (xmalys02)
-- Ondrej Lukasek(xlukas15)
+- Ondřej Koumar (xkouma02)
+- Adam Malysák (xmalys02)
+- Ondřej Lukášek (xlukas15)
 
 ## Navrzene_tema.exe1
 
@@ -16,22 +16,22 @@ malys
 
 muni
 
-## Vybrane tema (koume)
+## Vybrané tema (kalendář)
 
 nejaka zduvodneni, proc je jeho tema "nejlepsi"
 
-## Dotaznik
+## Dotazník
 
 - otazka
   - odpoved 1
   - ...
   - odpoved 6
 
-### Analyza odpovedi
+### Analýza odpovědí
 
 nejaky conclusion...
 
-## Existujici aplikace
+## Existující aplikace
 
 ### Toggl Track
 
@@ -41,28 +41,28 @@ nejaky conclusion...
 
 ...
 
-### Aplikace na poznamky (Apple Notes, Samsung Notes, ...)
+### Aplikace na poznámky (Apple Notes, Samsung Notes, ...)
 
 ...
 
-## Klicove vlastnosti aplikace
+## Klíčové vlastnosti aplikace
 
 ... nejaky seznam funkci, co by mela aplikace mit...
 
-## Rozdeleni prace
+## Rozdělení práce
 
 ... neco vymyslet pozdeji...
 
-## Popis GUI navrhu
+## Popis GUI návrhu
 
-### kunder
+### Ondřej Koumar (xkouma02)
 
 - popis navrhu
 - conclusion z testovani
 
-### malys
+### Adam Malysák (xmalys02)
 
-### onder
+### Ondřej Lukášek (xlukas15)
 
 ## Popis architektury
 
