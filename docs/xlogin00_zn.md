@@ -53,7 +53,15 @@ nejaky conclusion...
 
 ## Existující aplikace
 
-### Toggl Track
+### Google Calendar (xkouma02)
+
+**TODO**
+
+### Aplikace na poznámky (Apple Notes, Samsung Notes, ...) (xmalys02)
+
+**TODO**
+
+### Toggl Track (xlukas15)
 
 [Toggl Track](https://toggl.com/track/) je velice chytrá aplikace pro zaznaménávání aktivit. Aktivity si umožňuje rozdělovat do různých skupin a ty následně různě nazývat.
 Například si udělám skupinu *ITU projekt* a do kalendáře si mohu zaznamenat například, že v úterý od 16 do 18 hodin budu mít meeting na analýzu odpovědí z dotazníku.
@@ -74,14 +82,6 @@ Díky tomu by pak Toggl Track mohl hůře používat lidem, co nejsou s ovládá
 Jako finální řešení by tedy bylo vhodné ponechat nějakou formu rozdělování aktivit do skupin (například podle barev), které podporují přehlednost aplikace.
 Naopak by bylo dobré zase odstranit funkce, které jsou pro jednotlivce spíš zbytečné, jako již zmíněný okamžitý start aktivity, sestavování rozpočtu, vyúčtování,
 fakturace, pracovní hlášení a další.
-
-### Google Calendar
-
-**TODO**
-
-### Aplikace na poznámky (Apple Notes, Samsung Notes, ...)
-
-**TODO**...
 
 ## Klíčové vlastnosti aplikace
 
