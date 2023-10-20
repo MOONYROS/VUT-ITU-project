@@ -4,13 +4,13 @@
 - Adam Malysák (xmalys02)
 - Ondřej Lukášek (xlukas15)
 
-## Navrzene_tema.exe1
+## Navrzene_tema.exe1 (xkouma02)
 
-koume
+**TODO**
 
-## Navrzene_tema.exe2
+## Navrzene_tema.exe2 (xmalys02)
 
-malys
+**TODO**
 
 ## Kuchařka pro ukládání receptů (xlukas15)
 
@@ -32,9 +32,13 @@ Cílovou skupinou by tak byl prakticky kdokoliv, kdo by měl zájem mít všechn
 
 ## Vybrané tema (kalendář)
 
+**TODO**
+
 nejaka zduvodneni, proc je jeho tema "nejlepsi"
 
 ## Dotazník
+
+**TODO**
 
 - otazka
   - odpoved 1
@@ -42,6 +46,8 @@ nejaka zduvodneni, proc je jeho tema "nejlepsi"
   - odpoved 6
 
 ### Analýza odpovědí
+
+**TODO**
 
 nejaky conclusion...
 
@@ -70,17 +76,22 @@ Naopak by bylo dobré zase odstranit funkce, které jsou pro jednotlivce spíš 
 fakturace, pracovní hlášení a další.
 
 ### Google Calendar
-...
+
+**TODO**
 
 ### Aplikace na poznámky (Apple Notes, Samsung Notes, ...)
 
-...
+**TODO**...
 
 ## Klíčové vlastnosti aplikace
+
+**TODO**
 
 ... nejaky seznam funkci, co by mela aplikace mit...
 
 ## Rozdělení práce
+
+**TODO**
 
 ... neco vymyslet pozdeji...
 
@@ -88,13 +99,22 @@ fakturace, pracovní hlášení a další.
 
 ### Ondřej Koumar (xkouma02)
 
+**TODO**
+
 - popis navrhu
 - conclusion z testovani
 
+**TODO**
+
 ### Adam Malysák (xmalys02)
+
+**TODO**
 
 ### Ondřej Lukášek (xlukas15)
 
+**TODO**
+
 ## Popis architektury
 
-... MVVVM n shit...
+... MVVM n shit...
+**TODO**
