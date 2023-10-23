@@ -8,9 +8,15 @@
 
 **TODO**
 
-## Navrzene_tema.exe2 (xmalys02)
+## Mobilní aplikace pro filmovou databázi (xmalys02)
 
-**TODO**
+S některými mými přáteli sdílíme lásku k filmu. Rádi dáváme najevo, co si o nich myslíme, rozšiřujeme si obecné povědomí o filmové popkultuře jako takové, nebo třeba rádi zjišťujeme zajímavosti o různých filmech. Velice často se proto pohybujeme na stránce ČSFD.cz (Česko-Slovenská filmová databáze). Jsme zvyklí na její strukturu a na její funkcionalitu. Na co si ovšem zvyknout nemůžeme, je mobilní aplikace ČSFD.cz. 
+
+Mobilní aplikace má hodně problémů. Největší z nich je, že v ní chybí některá funkcionalita z webového prohlížeče, ale tváří se, že ji splňuje. Dále úvodní stránka je velice omezená a některé funkce tam fungují velice diskutabilně. 
+
+V prohlížeči je na hlavní stránce hodně různých "tabulek" (nejnavštěvovanější filmy, nejnavštěvovanější seriály, nejnavštěvovanější herci, nové recenze TOP uživatelů, ...), kdežto v aplikaci je jen zlomek toho. Buď by tam šlo dát víc věcí a nechat uživatele scrollovat na tu, která ho zajímá, nebo uživatele nechat, ať si vybere to, co ho zajímá a nechá si to na hlavní stránce zobrazovat. Některé tyto věci (např. Novinky) v aplikaci kompletně chybí.
+
+Některé věci, které v mobilní aplikaci chybí považuji za naprosto základní. Rozšíření této aplikace by tedy mohlo poskytnout příjemnější prostředí i pro nové uživatele, i pro stávající.
 
 ## Kuchařka pro ukládání receptů (xlukas15)
 
@@ -59,7 +65,13 @@ nejaky conclusion...
 
 ### Aplikace na poznámky (Apple Notes, Samsung Notes, ...) (xmalys02)
 
-**TODO**
+Samsung notes je v podstatě elektronický poznámkový blok. Já osobně ho používám ,asi protože jsem, jak jsem již dříve zmínil, velmi konzervativní a podobné základní aplikace jsem používal na každém svém telefonu asi od chvíle, co jsem nějaký telefon vlastnil. 
+
+Podle mě je největší předost aplikace ta, že její použití ve velice snadné. I starší lidé, kteří tomuto modernímu světu moc nerozumí a nestíhají ho, by tuto aplikaci mohli do určité míry používat.
+
+Největší nedostatek je určitě ten, že tato aplikace poskytuje velmi málo funkcionality. Je to v podstatě jako tužka a papír, akorát v elektronické podobě. Organizace informací je hodně o tom, kolik si s tím uživatel dá práce.
+
+V takové aplikaci na poznámky může být úplně všechno, což je taková dvousečná zbraň. Pokud bych tuto aplikaci chtěl používat výhradně na evidování aktivit, jejich časů, popisu atd. a nějak je propojit, moje možnosti jsou velmi omezené. Určitě by bylo lepší se zaměřit na nějaké téma (aktivity, todo list, projekty) a tomu aplikaci přizpůsobit funkčně i vzhledově.
 
 ### Toggl Track (xlukas15)
 
