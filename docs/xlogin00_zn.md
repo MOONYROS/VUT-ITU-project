@@ -44,7 +44,7 @@ nejaka zduvodneni, proc je jeho tema "nejlepsi"
 
 ## Dotazník
 
-**TODO**
+**TODO přidat otázku na sdílení počítače**
 
 - otazka
   - odpoved 1
@@ -97,9 +97,39 @@ fakturace, pracovní hlášení a další.
 
 ## Klíčové vlastnosti aplikace
 
-**TODO**
+Na základě zjišťování údajů o konkurenčních aplikacích a rozeslaného dotazníku nám vyplynulo následující.
 
-... nejaky seznam funkci, co by mela aplikace mit...
+### Uživatelé
+
+Pokud sdílí více uživatelů jedno zařízení (z našeho výzkumu se zjistilo, že se to děje).
+Díky tomu by mohli uživatelé mít svoje aktivity jenom na svém účtu a nepletly by se mezi ostatními aktivitami dalších uživatelů počítače.
+Také by bylo uživatelsky přívětivé umožnit při vytváření nového profilu nastavit profilový obrázek a uživatelské jméno.
+
+### Aktivity
+
+Měla by existovat nějaká možnost zapisování klasických údajů, akcí, aktivit.
+Ty by měly mít nějaký časový rozsah, popis, samozřejmě název a možnost nějakého specifického označení.
+Díky tomu by se dalo lépe orientovat mezi aktivitami.
+Typicky bych mohl označit třeba domácí aktivity, rodinné aktivity, pracovní povinnosti, atd...
+
+### Tagy
+
+Specifické označení aktivit by mohlo být realizováno přidělováním tagů.
+Došlo by tak k dalšímu zpřehlednění práce s aplikací.
+To je, jak vyplynulo z dotazníku, jeden z hlavních klíčových cílů našeho řešení.
+Také to bylo hezky vidět na konkurenční aplikaci **Toggl Track**, která tuto funkci měla (v trochu jiné podobě) a práce tak byla o něco přehlednější.
+
+### TODO-list
+
+Měla by pro uživatele existovat možnost si vytvořit aktivity, které nemají žádné časové omezení, ale pouze denní omezení, ale měly by se někdy udělat.
+Typicky by pod to patřily úkoly, které se mají provést do nějakého dne (deadlinu).
+Uživatel by měl mít možnost si zaškrtnout úspěšné vykonání dané události, čímž by se mu smazala z jeho seznamu úkolů.
+Mezi tyto aktivity by mohli patřit úkoly jako "jít se psem", "umýt nádobí", "převléct postel", "zavolat doktorovi", a podobně.
+
+### Možnost editace
+
+Všechny uživatelské profily, aktivity, tagy a úkoly (TODOs) by mělo být možné také upravovat.
+To je užitečné pokud se změní okolnosti nějaké již vytvořené události nebo pokud při vytváření události došlo k omylu (například pravopisné chybě).
 
 ## Rozdělení práce
 
