@@ -8,7 +8,7 @@
 
 V dnešní době snad každý používá nějakou aplikaci pro organizaci času a nepotřebu si pamatovat každou schůzi, každý úkol (ať už do práce, do školy, co by člověk rád udělal doma, atd.), ale i třeba věci jako nákupní seznam. Snad už ani nemá smysl se bavit o zápisnících a papírových kalendářích, které se dnes již skoro vůbec nevidí. 
 
-Jednou z takových aplikací je například Google Calendar. Tato aplikace je nabitá funkcionalitou a umí toho opravdu hodně. A to je vlastně ten důvod, proč bych se rád vrhnul do stavby podobné aplikace. Google Calendar je na můj vkus až příliš "overkill" k tomu, aby si člověk jen velmi jednoduše zapsal schůzky, deadlines a různé podobné aktivity. Navíc, co mi v této aplikaci velmi chybí, je nějaká sekce TODOs, což by naše aplikace vyřešila. V kalendáři od Googlu se takovéto věci dají nastavit pouze jako celodenní aktivita, což nepovažuji za optimální řešení, protože pak barevný blok je vidět přes celý den a dodává pocit, že celý den je vlastně obsazen. Přitom by často taková věc zabrala klidně jen pár minut a uživatel jen neví, kdy během dne dané TODO opravdu udělá.
+Jednou z takových aplikací je například Google Calendar. Tato aplikace je nabitá funkcionalitou a umí toho opravdu hodně. A to je vlastně ten důvod, proč bych se rád vrhnul do stavby podobné aplikace. Google Calendar je na můj vkus až příliš "overkill" k tomu, aby si člověk jen velmi jednoduše zapsal schůzky, deadlines a různé podobné aktivity. 
 
 Naše aplikace by tedy sloužila uživatelům zároveň jako jakýsi kalendář aktivit, ve kterém jsou pouze nejnutnější položky pro aktivitu, a zároveň jako TODO list, kde by si zapisovali veškeré věci, které během dne potřebují udělat, ale nevědí, kdy přesně. Další prvek, který by byl uživatelům poskytnut, je vytváření vzorů pro různé aktivity. Při vytváření nové aktivity by si místo proklikávání všemi parametry jen zvolili vzor, atributy aktivity by se automaticky doplnily a uživatel by si změnil pouze to, co by nutně potřeboval, například detailnější popis aktivity.
 
@@ -74,7 +74,13 @@ nejaky conclusion...
 
 ### Google Calendar (xkouma02)
 
-**TODO**
+K aplikaci Google Calendar jsem se již trochu rozepsal, ale vezměme to trochu podrobněji.
+
+Google Calendar je aplikace pro organizaci schůzí, setkání, událostí, volného času, ale umožňuje i dosti pokročilé věci, jako například sdílení kalendářů mezi uživateli, propojení aplikace s diskem Google, GMailem. Při vkládání aktivit pak podporuje různé základní věci jako čas, popis, barva, lokace, nicméně je tam spousta věcí, které amatérský uživatel nevyužije, jako například video conferencing přes google meet, přidání přílohy, změna viditelnosti, apod.
+
+Velkou předností aplikace je univerzálnost při zachování relativně solidní jednoduchosti. Může jej používat úplný laik s cílem si zapsat pár TODOček a aktivit během dne, nicméně to využije i ostřílený kalendářový profesionál, který u Google využívá úplně všechny služby a vyžaduje pro své potřeby těžkotonážní kalendář.
+
+Naopak slabinou je právě ta již zmiňovaná *relativní* jednoduchost, která by se pro nenáročné uživatele dala vylepšit a po které bych mířil. Díky jednoduchosti bychom mohli mířit na velmi širokou škálu uživatelů, do které by zapadli i technicky velmi nezkušené osoby. 
 
 ### Aplikace na poznámky (Apple Notes, Samsung Notes, ...) (xmalys02)
 
