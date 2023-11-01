@@ -4,7 +4,7 @@
 - Adam Malysák (xmalys02)
 - Ondřej Lukášek (xlukas15)
 
-## Navrzene_tema.exe1 (xkouma02)
+## Chytrý zápisník událostí a poznámek (xkouma02)
 
 **TODO**
 
@@ -36,11 +36,16 @@ V případě rozšíření by aplikace také mohla mít možnost exportu recept�
 Při chytrém návrhu UX by tak aplikace mohla sloužit lidem jak s nízkými schopnostmi práce s aplikacemi, tak i těm zdatnějším.
 Cílovou skupinou by tak byl prakticky kdokoliv, kdo by měl zájem mít všechny svoje recepty na jednom místě a mít je přehledné.
 
-## Vybrané tema (kalendář)
+## Vybrané tema (zápisník)
 
-**TODO**
+Vybrali jsme téma navržené kapitánem (xkouma02), tedy chytrý zápisník událostí a poznámek.
 
-nejaka zduvodneni, proc je jeho tema "nejlepsi"
+Nejdříve jsme kolektivně zavrhli téma navržené kolegou Malysákem (xmalys02), protože bylo nad naše možnosti, hlavně vzhledem k
+času k vypracování projektu.
+
+Mezi zbylými dvěma tématy jsme nemohli rozhodnout, ale poté jsme usoudili, že bude lepší vybrat si téma zápisníku událostí, protože
+k tomuto tématu máme blíže a vzniklou aplikaci bychom i sami použili. Aplikaci kuchařky navrženou kolegou Ondřejem Lukáškem (xlukas15)
+by nikdo z nás asi nepoužil.
 
 ## Dotazník
 
@@ -65,7 +70,7 @@ nejaky conclusion...
 
 ### Aplikace na poznámky (Apple Notes, Samsung Notes, ...) (xmalys02)
 
-Samsung notes je v podstatě elektronický poznámkový blok. Já osobně ho používám ,asi protože jsem, jak jsem již dříve zmínil, velmi konzervativní a podobné základní aplikace jsem používal na každém svém telefonu asi od chvíle, co jsem nějaký telefon vlastnil. 
+Samsung notes je v podstatě elektronický poznámkový blok. Já osobně ho používám, asi protože jsem, jak jsem již dříve zmínil, velmi konzervativní a podobné základní aplikace jsem používal na každém svém telefonu asi od chvíle, co jsem nějaký telefon vlastnil. 
 
 Podle mě je největší předost aplikace ta, že její použití ve velice snadné. I starší lidé, kteří tomuto modernímu světu moc nerozumí a nestíhají ho, by tuto aplikaci mohli do určité míry používat.
 
@@ -133,9 +138,24 @@ To je užitečné pokud se změní okolnosti nějaké již vytvořené události
 
 ## Rozdělení práce
 
-**TODO**
+Rozhodli jsme se pro rozdělení práce způsobem číslo 2, tedy každý člen pracuje na části aplikace, výsledkem je jedna aplikace.
 
-... neco vymyslet pozdeji...
+### Kapitán Ondřej Koumar
+
+Kapitán bude pracovat na propojování backendu s frontendem (hlavně viewmodely).
+A v backendu bude asistovat na databázové vrstvě.
+V samotném GUI bude mít za úkol 3 obrazovky (views).
+Konkrétně úvodní stránku s výběrem profilu, tvorbu profilů a úpravu profilů.
+
+### Důstojník Ondřej Lukášek
+
+Důstojník Lukášek bude (spolu)pracovat na pokrytí backendu testy.
+V GUI bude mít za úkol vytvořit 5 obrazovek. Konkrétně stránka todo, tvorba todo, stranka tagů, tvorba tagů a úprava tagů.
+
+### První důstojník Adam Malysák
+
+První důstojník Malysák bude mít na starost backend, s tím, že mu oba kolegové budou k ruce.
+V GUI bude mít za úkol vytvořit 3 obrazovky, a to: stránku aktivit, úpravu aktivit a tvorbu aktivit.
 
 ## Popis GUI návrhu
 
@@ -159,4 +179,7 @@ To je užitečné pokud se změní okolnosti nějaké již vytvořené události
 ## Popis architektury
 
 ... MVVM n shit...
+.NET
+C#
+WPF nebo maui
 **TODO**
