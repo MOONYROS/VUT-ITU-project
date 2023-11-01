@@ -142,7 +142,7 @@ Rozhodli jsme se pro rozdělení práce způsobem číslo 2, tedy každý člen 
 
 ### Kapitán Ondřej Koumar
 
-Kapitán bude pracovat na propojování backendu s frontendem (hlavně viewmodely).
+Kapitán Koumar bude pracovat na propojování backendu s frontendem (hlavně viewmodely).
 A v backendu bude asistovat na databázové vrstvě.
 V samotném GUI bude mít za úkol 3 obrazovky (views).
 Konkrétně úvodní stránku s výběrem profilu, tvorbu profilů a úpravu profilů.
@@ -178,8 +178,15 @@ V GUI bude mít za úkol vytvořit 3 obrazovky, a to: stránku aktivit, úpravu 
 
 ## Popis architektury
 
-... MVVM n shit...
+návrhový vzor MVVM
 .NET
 C#
 WPF nebo maui
-**TODO**
+
+Naše aplikace má 3 vrstvy. Databázovou, business a aplikační.
+V databázové vrstvě se nachází entity, které se mapují do relační databáze (sqlite) a případně o vrstvu výš, na modely.
+Jsou zde třídy, které přímo pracují s databází (CRUD) a třídy, které jsou využívány business vrstvou pro práci s databází.
+
+V business vrstvě je veškerá funkcionalita aplikace.
+Jsou zde fasády, pomocí kterých pracujeme s databázovou vrstvou, mapují entity z databázové vrstvy na modely
+a také implementují funkcionalitu, jako je například filtrace aktivit podle data, nebo podle tagu.
