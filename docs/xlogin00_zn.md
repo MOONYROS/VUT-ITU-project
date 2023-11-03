@@ -135,6 +135,13 @@ __Možné odpovědi:__
 - Používám to jenom občas.
 - Vůbec to nepoužívám.
 
+U této otázky jsme se snažili zjistit, jak moc respondenti využívají sdílení akcí v kalendáři, mezi lidmi kolem.
+Čekali jsme, že tato funkce bude poměrně hojně využívaná, nicméně jsme byli opět poměrně překvapeni.
+
+88,9% dotazovaných, žádné svoje aktivity mezi ostatními vůbec nesdílí a 11,1% je sdílí pouze občas.
+Implementovat tedy tuto funkci rozhodně nebo plánovat její implementaci tedy (alespoň prozatím) nemá moc smysl.
+Dala by se však implementovat jako nějaké z možných rozšíření, pokud by zbyl čas.
+
 ### 5 - Jakým způsobem si zapisujete svoje úkoly na den, které nemají pevně daný časový úsek? (například vyprat oblečení, zavolat doktorovi, jít nakoupit)
 
 ![Q5](images/forms/Q5.jpg)
@@ -145,6 +152,16 @@ __Možné odpovědi:__
 - Zvolím jim nějaký časový úsek, co si namyslím.
 - Nastavím je jako celodenní aktivitu.
 - Jiná...
+
+Tady nás zajímalo, jak si potenciální uživatelé zapisují svoje jednorázové úkoly typu "jít se psem", "utřít prach", "zavolat doktorovi" a podobně.
+Sami jsme totiž nějakou takovou věc chtěli řešit, protože s ní i my máme problém.
+V běžných aplikacích, jako je Google Calendar nebo jeho obdoba od Apple totiž neumožňuje si úkoly zapsat.
+
+Zjistili jsme, že jednorázové úkoly si lidé v 44,4% si je lidé snaží zapamatovat.
+Dále používají nějaký jejich vymyšlený časový úsek a ve zbylých případech si je zapíšou bez času a data, nastaví si je jako celodenní aktivitu nebo si je zapíší do poznámek v telefonu.
+
+Žádnou z variant ovšem nepovažujeme za plně funkčí, všechny totiž obsahují nějakou úroveň nepříjemného kompromisu.
+Na tuto funkcionalitu by se tedy bylo dobré zaměřit.
 
 ### 6 - Jaké problémy má vaše používaná aplikace na organizaci času?
 
