@@ -77,6 +77,17 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 - Narozeniny a svátky rodiny a přátel.
 - Jiná...
 
+Tato otázka byla primárně zaměřená na to, abychom zjistili, co si uživatelé ve své aplikaci pro organizaci vlastně ukládají, případně co jiného si ukládají.
+Jako možnosti jsme dali varianty, které sami používáme.
+
+Jak lze vidět, nejčastější jsou zejména školní a pracovní aktivity, návštěvy lékaře a rodinné aktivity.
+Tedy nejvíce využívanými jsou právě ty nejtypičtější úlohy na zapamatování. Ty, co si představí asi každý. Aplikace je tedy musí podporovat.
+
+Uživatelé si také v menšině zapisují i narozeniny a svátky lidí okolo nich.
+
+Nakonec respondenti, co neodpověděli na nic z uvedeného napsali, že si zapisují jejich naplánované sportovní aktivity, různé schůzky a úkoly na později nebo na jindy.
+V prvním případě se tedy jedná o spíše osobní záležitosti, v tom druhém zase o úkoly, na které je v dotazníku otázka později.
+
 ### 2 - Co používáte na organizaci svého času?
 
 ![Q2](images/forms/Q2.jpg)
