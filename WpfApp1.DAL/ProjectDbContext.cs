@@ -11,20 +11,13 @@ public class ProjectDbContext : DbContext
         : base(contextOptions) => _seedDemoData = seedDemoData;
     public DbSet<ActivityEntity> Activities => Set<ActivityEntity>();
     public DbSet<ActivityTagListEntity> ATLists => Set<ActivityTagListEntity>();
-    public DbSet<ProjectEntity> Projects => Set<ProjectEntity>();
     public DbSet<TagEntity> Tags => Set<TagEntity>();
     public DbSet<TodoEntity> Todos => Set<TodoEntity>();
     public DbSet<UserEntity> Users => Set<UserEntity>();
-    public DbSet<UserProjectListEntity> UPLists => Set<UserProjectListEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-            
-        modelBuilder.Entity<UserEntity>()
-            .HasMany(i => i.Projects)
-            .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Cascade); 
             
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Todos)
@@ -40,16 +33,6 @@ public class ProjectDbContext : DbContext
             .HasMany(i => i.Tags)
             .WithOne(i => i.User)
             .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<ProjectEntity>()
-            .HasMany(i => i.Users)
-            .WithOne(i => i.Project)
-            .OnDelete(DeleteBehavior.Cascade); 
-
-        modelBuilder.Entity<ProjectEntity>()
-            .HasMany(i => i.Activities)
-            .WithOne(i => i.Project)
-            .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<TagEntity>()
             .HasMany(i=>i.Activities)
@@ -70,11 +53,6 @@ public class ProjectDbContext : DbContext
             .HasOne(i => i.User)
             .WithMany(i => i.Activities)
             .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<ActivityEntity>()
-            .HasOne(i => i.Project)
-            .WithMany(i => i.Activities)
-            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<TodoEntity>()
             .HasOne(i=>i.User)
