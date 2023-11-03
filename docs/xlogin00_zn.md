@@ -63,23 +63,84 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 - vybrat jednu možnost,
 - vybrat více nabízených možností,
-- určit důležitost (stupně "Velmi důleřitý", "Důležitý", "Spíše nepotřebný" a "Nepotřebný").
+- určit důležitost (stupně "Velmi důležitý", "Důležitý", "Spíše nepotřebný" a "Nepotřebný").
 
 ### 1 - Jaké údaje si zaznamenávate do kalendáře? (ať už papírového, či do mobilní, případně počítačové aplikace)
 
+**Možné odpovědi:**
+
+- Školní/pracovní aktivity.
+- Návštěvy lékaře.
+- Rodinné aktivity nebo aktivity s přáteli.
+- Narozeniny a svátky rodiny a přátel.
+- Jiná...
+
 ### 2 - Co používáte na organizaci svého času?
+
+**Možné odpovědi:**
+
+- Papírový kalendář.
+- Poznámky v telefonu nebo na počítači.
+- Aplikaci na telefonu nebo na počítači.
+- Jiná...
 
 ### 3 - Pokud jste v předchozí odpovědi zaškrtli odpověď "Aplikaci na telefonu nebo na počítači.", jakou aplikaci používáte?
 
+**Možné odpovědi:**
+
+- Základní kalendářovou aplikaci v telefonu. (Apple Calendar, Google Calendar, ...)
+- Microsoft Outlook
+- Jiná...
+
 ### 4 - Používáte sdílení akcí svým přátelům často?
+
+**Možné odpovědi:**
+
+- Ano, v podstatě každou svou aktivitu s někým sdílím.
+- Používám to jenom občas.
+- Vůbec to nepoužívám.
 
 ### 5 - Jakým způsobem si zapisujete svoje úkoly na den, které nemají pevně daný časový úsek? (například vyprat oblečení, zavolat doktorovi, jít nakoupit)
 
+**Možné odpovědi:**
+
+- Nezapisuji si je, snažím se si je zapamatovat.
+- Zvolím jim nějaký časový úsek, co si namyslím.
+- Nastavím je jako celodenní aktivitu.
+- Jiná...
+
 ### 6 - Jaké problémy má vaše používaná aplikace na organizaci času?
+
+**Možné odpovědi:**
+
+- Přihlašování se do účtu.
+- Zapisování událostí je příliš zdlouhavé a detailní.
+- Aplikace je nepřehledná, špatně se v ní orientuje.
+- Aplikace nabízí příliš mnoho možností, je příliš složitá.
+- Jiná...
 
 ### 7 - Jak důležité jsou pro vás následující možnosti při vytváření akce?
 
+Tato otázka byla trochu jiná, než všechny ostatní, protože zjišťovala důležitost nějaké z níže uvedených funkcí.
+Respondenti měli na výběr ze 4 různých úrovní důležitosti:
+
+- Velmi důležitý.
+- Důležitý.
+- Spíše nepotřebný.
+- Nepotřebný.
+
+Tyto stupně byly vybrány na základě toho, aby vykazovaly větší jednoznačnost, než odpovědi typu "Nevím", "Nejsem si jistý", a tomu podobné.
+
+**Funkce:**
+
+- Pozvat další účastníky.
+- Zadání místa akce.
+- Přidat popisek k akci.
+- Upozornění v nějakém čase před akcí.
+
 ### 8 - Používáte nějakou organizační aplikaci v práci?
+
+**Možné odpovědi:**
 
 Otázky v dotazníku budou probrány a zanalyzovány formou kapitol.
 
