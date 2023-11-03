@@ -13,8 +13,6 @@ public static class ActivitySeeds
         DateTimeTo = default,
         Name = $"random activity number {ActivityCounter()}",
         Color = 0,
-        Project = null,
-        ProjectId = null,
         User = null,
         UserId = default
     };
