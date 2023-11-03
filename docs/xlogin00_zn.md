@@ -175,6 +175,13 @@ __Možné odpovědi:__
 - Aplikace nabízí příliš mnoho možností, je příliš složitá.
 - Jiná...
 
+U této otázky opět musíme zvážit validitu získaných odpovědí. Těmi jsou "Náchylnost k selhání pod vlivem alkoholu" a "Nefunguje, reklamace zamítnuta". U těchto odpovědí se jedná buďto o vtip nebo o nepochopitelnou myšlenku.
+
+Lidem jinak hodně vadí, že aplikace nabízí příliš mnoho možností a je tak složitá.
+Dále vadí přihlašování do účtu a že zapisování událostí je příliš komplikované.
+
+Výsledkem by tedy měla být jednoduchá a přehledná aplikace, která nenabízí spoustu "zbytečností".
+
 ### 7 - Jak důležité jsou pro vás následující možnosti při vytváření akce?
 
 ![Q7](images/forms/Q7.jpg)
