@@ -55,14 +55,36 @@ Mezi zbylými dvěma tématy jsme nemohli rozhodnout, ale poté jsme usoudili, �
 k tomuto tématu máme blíže a vzniklou aplikaci bychom i sami použili. Aplikaci kuchařky navrženou kolegou Ondřejem Lukáškem (xlukas15)
 by nikdo z nás asi nepoužil.
 
-## Dotazník
+## Uživatelské potřeby
 
-**TODO přidat otázku na sdílení počítače**
+Pro analýzu uživatelských potřeb jsme se rozhodli udělat dotazník.
+Ten byl proveden formou Google Forms a odkaz na něj je [zde](https://docs.google.com/forms/d/e/1FAIpQLSc_8gJi0I01YQoS2cMm3qATbbzEG8eU3Uu_74xMexYKysFVFw/viewform?usp=sf_link) (odkaz respondenta).
+Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat následujícími způsoby:
 
-- otazka
-  - odpoved 1
-  - ...
-  - odpoved 6
+- vybrat jednu možnost,
+- vybrat více nabízených možností,
+- určit důležitost (stupně "Velmi důleřitý", "Důležitý", "Spíše nepotřebný" a "Nepotřebný").
+
+### 1 - Jaké údaje si zaznamenávate do kalendáře? (ať už papírového, či do mobilní, případně počítačové aplikace)
+
+### 2 - Co používáte na organizaci svého času?
+
+### 3 - Pokud jste v předchozí odpovědi zaškrtli odpověď "Aplikaci na telefonu nebo na počítači.", jakou aplikaci používáte?
+
+### 4 - Používáte sdílení akcí svým přátelům často?
+
+### 5 - Jakým způsobem si zapisujete svoje úkoly na den, které nemají pevně daný časový úsek? (například vyprat oblečení, zavolat doktorovi, jít nakoupit)
+
+### 6 - Jaké problémy má vaše používaná aplikace na organizaci času?
+
+### 7 - Jak důležité jsou pro vás následující možnosti při vytváření akce?
+
+### 8 - Používáte nějakou organizační aplikaci v práci?
+
+Otázky v dotazníku budou probrány a zanalyzovány formou kapitol.
+
+Celkově měl dotazník **9 respondentů**, nicméně některé odpovědi byly znehodnoceny, což bude popsáno v kapitolách, kterých se to týká.
+Těchto znehodnocených odpovědí bylo naštěstí velmi málo.
 
 ### Analýza odpovědí
 
