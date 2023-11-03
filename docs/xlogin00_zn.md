@@ -192,10 +192,8 @@ V GUI bude mít za úkol vytvořit 3 obrazovky, a to: stránku aktivit, úpravu 
 
 ## Popis architektury
 
-návrhový vzor MVVM
-.NET
-C#
-WPF nebo maui
+Aplikace bude napsána v jazyce C#, na platformě .NET 7. Pro návrh aplikace bude použit návrhový vzor
+Model-view-viewmodel (MVVM).
 
 Naše aplikace má 3 vrstvy. Databázovou, business a aplikační.
 V databázové vrstvě se nachází entity, které se mapují do relační databáze (sqlite) a případně o vrstvu výš, na modely.
@@ -204,3 +202,7 @@ Jsou zde třídy, které přímo pracují s databází (CRUD) a třídy, které 
 V business vrstvě je veškerá funkcionalita aplikace.
 Jsou zde fasády, pomocí kterých pracujeme s databázovou vrstvou, mapují entity z databázové vrstvy na modely
 a také implementují funkcionalitu, jako je například filtrace aktivit podle data, nebo podle tagu.
+
+V aplikační vrstvě se budou nacházet views a viewmodely. K samotné implementaci grafického uživatelského rozhraní (tedy views)
+použijeme framework WPF. Tento framework jsme vybrali po vyzkoušení WPF na cvičení. Zároveň máme několik málo zkušeností s
+.NET maui, které by mělo být alespoň v něčem trošku podobné. Také jsme tuto volbu konzultovali s přednášejícím.
