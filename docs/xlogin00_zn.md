@@ -67,6 +67,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ### 1 - Jaké údaje si zaznamenávate do kalendáře? (ať už papírového, či do mobilní, případně počítačové aplikace)
 
+![Q1](images/forms/Q1.jpg)
+
 **Možné odpovědi:**
 
 - Školní/pracovní aktivity.
@@ -77,6 +79,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ### 2 - Co používáte na organizaci svého času?
 
+![Q2](images/forms/Q2.jpg)
+
 **Možné odpovědi:**
 
 - Papírový kalendář.
@@ -86,6 +90,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ### 3 - Pokud jste v předchozí odpovědi zaškrtli odpověď "Aplikaci na telefonu nebo na počítači.", jakou aplikaci používáte?
 
+![Q3](images/forms/Q3.jpg)
+
 **Možné odpovědi:**
 
 - Základní kalendářovou aplikaci v telefonu. (Apple Calendar, Google Calendar, ...)
@@ -94,6 +100,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ### 4 - Používáte sdílení akcí svým přátelům často?
 
+![Q4](images/forms/Q4.jpg)
+
 **Možné odpovědi:**
 
 - Ano, v podstatě každou svou aktivitu s někým sdílím.
@@ -101,6 +109,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 - Vůbec to nepoužívám.
 
 ### 5 - Jakým způsobem si zapisujete svoje úkoly na den, které nemají pevně daný časový úsek? (například vyprat oblečení, zavolat doktorovi, jít nakoupit)
+
+![Q5](images/forms/Q5.jpg)
 
 **Možné odpovědi:**
 
@@ -111,6 +121,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ### 6 - Jaké problémy má vaše používaná aplikace na organizaci času?
 
+![Q6](images/forms/Q6.jpg)
+
 **Možné odpovědi:**
 
 - Přihlašování se do účtu.
@@ -120,6 +132,8 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 - Jiná...
 
 ### 7 - Jak důležité jsou pro vás následující možnosti při vytváření akce?
+
+![Q7](images/forms/Q7.jpg)
 
 Tato otázka byla trochu jiná, než všechny ostatní, protože zjišťovala důležitost nějaké z níže uvedených funkcí.
 Respondenti měli na výběr ze 4 různých úrovní důležitosti:
@@ -139,6 +153,8 @@ Tyto stupně byly vybrány na základě toho, aby vykazovaly větší jednoznač
 - Upozornění v nějakém čase před akcí.
 
 ### 8 - Používáte nějakou organizační aplikaci v práci?
+
+![Q8](images/forms/Q8.jpg)
 
 **Možné odpovědi:**
 
