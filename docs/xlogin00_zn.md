@@ -119,6 +119,12 @@ __Možné odpovědi:__
 - Microsoft Outlook
 - Jiná...
 
+V této otázce jsme se snažili hlavně zjistit, jaké aplikace respondenti na řešení své organizace využívají.
+Hlavně nás zajímalo, jaké různé aplikace ve světě jsou a pomocí toho jsme se to mohli dozvědět.
+Doufali jsme tedy, že se tedy bude hojně využívat možnosti jiná, ovšem opak byl pravdou.
+
+K žádnému zázračnému zjištění jsme bohužel nedošli, protože respondenti využívají buď nějakou základní aplikace, které jsou už předinstalované v mobilu nebo používají na svoje úkoly Microsoft Outlook.
+
 ### 4 - Používáte sdílení akcí svým přátelům často?
 
 ![Q4](images/forms/Q4.jpg)
