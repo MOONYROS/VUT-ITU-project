@@ -203,6 +203,13 @@ __Funkce:__
 - Přidat popisek k akci.
 - Upozornění v nějakém čase před akcí.
 
+Na této vidíme, jak důležté jsou které funkce.
+Pozvání více účatníků akce respondenti spíše nevyužívají.
+
+Smíšené názory jsou k zadání místa akce, tuto věc by se asi hodilo udělat jako nepovinnou součást aktivit, stejně jako možnost přidat popisku k akci.
+
+Dále by se v případě zbylého času dalo věnovat notifikacím pro uživatele předtím, než jim nějaká akce započne.
+
 ### 8 - Používáte nějakou organizační aplikaci v práci?
 
 ![Q8](images/forms/Q8.jpg)
@@ -214,11 +221,13 @@ Otázky v dotazníku budou probrány a zanalyzovány formou kapitol.
 Celkově měl dotazník **9 respondentů**, nicméně některé odpovědi byly znehodnoceny, což bude popsáno v kapitolách, kterých se to týká.
 Těchto znehodnocených odpovědí bylo naštěstí velmi málo.
 
+Tato otázka byla primárně zaměřena jenom jako orientační, jestli případně udělat druhý dotazník, kde bychom se mohli více věnovat profesionálnímu použití respondentů v práci.
+
+Z dotazníku vyplývá, že drtivá větina participantů v práci žádný dedikovaný nástroj na organizaci nepoužívají. Je tedy nejspíše nadbytečné se věnovat nějakému komplexnějšímu řešení.
+
 ### Analýza odpovědí
 
-**TODO**
 
-nejaky conclusion...
 
 ## Existující aplikace
 
