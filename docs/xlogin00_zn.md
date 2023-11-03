@@ -283,7 +283,7 @@ Na základě zjišťování údajů o konkurenčních aplikacích a rozeslaného
 
 ### Uživatelé
 
-Pokud sdílí více uživatelů jedno zařízení (z našeho výzkumu se zjistilo, že se to děje).
+Pokud sdílí více uživatelů jedno zařízení, bylo by určitě praktické mít možnost založení více účtů.
 Díky tomu by mohli uživatelé mít svoje aktivity jenom na svém účtu a nepletly by se mezi ostatními aktivitami dalších uživatelů počítače.
 Také by bylo uživatelsky přívětivé umožnit při vytváření nového profilu nastavit profilový obrázek a uživatelské jméno.
 
