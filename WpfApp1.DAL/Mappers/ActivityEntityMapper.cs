@@ -11,6 +11,5 @@ public class ActivityEntityMapper : IEntityIDMapper<ActivityEntity>
         existingEntity.Name = newEntity.Name;
         existingEntity.Description = newEntity.Description;
         existingEntity.Color = newEntity.Color;
-        existingEntity.ProjectId = newEntity.ProjectId;
     }
 }
