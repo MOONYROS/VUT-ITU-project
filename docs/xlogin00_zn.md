@@ -69,7 +69,7 @@ Celkově se dotazník skládal z osmi otázek, na ty bylo možno odpovídat nás
 
 ![Q1](images/forms/Q1.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Školní/pracovní aktivity.
 - Návštěvy lékaře.
@@ -92,18 +92,28 @@ V prvním případě se tedy jedná o spíše osobní záležitosti, v tom druh�
 
 ![Q2](images/forms/Q2.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Papírový kalendář.
 - Poznámky v telefonu nebo na počítači.
 - Aplikaci na telefonu nebo na počítači.
 - Jiná...
 
+Tuto otázku jsme položili respondentům z důvodu, abychom viděli, čemu bychom se vlastně měli snažit vyrovnat, jak by měla aplikace fungovat, co by měla umět, také abychom se mohli podívat na možná konkurentní řešení.
+
+Zde je první otázka, kde se setkáváme s nevalidními odpověďmi. Jsou to ty dvě, které jsou na spodu obrázku, tedy "Šedé buňky mozkové" a "Svou biologickou paměť".
+Zde se bohužel s největší pravděpodobností jedná o vtip ze strany respondentů a bohužel je tedy jejich odpověď neplatná. Zbylé odpovědi jsou naštěstí validní.
+
+Z nich vyplývá to, že nejčastěji jsou na organizaci času využívané aplikace na telefonu nebo počítači, případně poznámky na telefonu nebo počítači.
+Také je však využíván i papírový kalendář.
+
+Zejména se tedy jedná o lidi, kteří mají zájem o co nejrychlejší a nejjednodušší řešení, které splní svůj účel.
+
 ### 3 - Pokud jste v předchozí odpovědi zaškrtli odpověď "Aplikaci na telefonu nebo na počítači.", jakou aplikaci používáte?
 
 ![Q3](images/forms/Q3.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Základní kalendářovou aplikaci v telefonu. (Apple Calendar, Google Calendar, ...)
 - Microsoft Outlook
@@ -113,7 +123,7 @@ V prvním případě se tedy jedná o spíše osobní záležitosti, v tom druh�
 
 ![Q4](images/forms/Q4.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Ano, v podstatě každou svou aktivitu s někým sdílím.
 - Používám to jenom občas.
@@ -123,7 +133,7 @@ V prvním případě se tedy jedná o spíše osobní záležitosti, v tom druh�
 
 ![Q5](images/forms/Q5.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Nezapisuji si je, snažím se si je zapamatovat.
 - Zvolím jim nějaký časový úsek, co si namyslím.
@@ -134,7 +144,7 @@ V prvním případě se tedy jedná o spíše osobní záležitosti, v tom druh�
 
 ![Q6](images/forms/Q6.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 - Přihlašování se do účtu.
 - Zapisování událostí je příliš zdlouhavé a detailní.
@@ -156,7 +166,7 @@ Respondenti měli na výběr ze 4 různých úrovní důležitosti:
 
 Tyto stupně byly vybrány na základě toho, aby vykazovaly větší jednoznačnost, než odpovědi typu "Nevím", "Nejsem si jistý", a tomu podobné.
 
-**Funkce:**
+__Funkce:__
 
 - Pozvat další účastníky.
 - Zadání místa akce.
@@ -167,7 +177,7 @@ Tyto stupně byly vybrány na základě toho, aby vykazovaly větší jednoznač
 
 ![Q8](images/forms/Q8.jpg)
 
-**Možné odpovědi:**
+__Možné odpovědi:__
 
 Otázky v dotazníku budou probrány a zanalyzovány formou kapitol.
 
