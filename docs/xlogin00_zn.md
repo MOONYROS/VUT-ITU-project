@@ -227,7 +227,11 @@ Z dotazníku vyplývá, že drtivá větina participantů v práci žádný dedi
 
 ### Analýza odpovědí
 
+Z dotazníků tedy vyplývá, že bychom se v základu měli primárně věnovat zjednodušení UI rozhraní.
+Udělat ho co nejvíce jednoduché, nepřeplnit ho spoustou nadbytečných funkcionalit, ale zároveň splnit co nejvíce potřeb uživatelů.
 
+Určitě bychom tedy měli implementovat nějaké aktivity a úkoly.
+Zejména úkoly působily poměrně nedůvěryhodně, co se týče jejich praktičnosti (jak bylo rozebráno u otázky).
 
 ## Existující aplikace
 
