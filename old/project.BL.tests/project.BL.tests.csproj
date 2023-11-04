@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WpfApp1.BL\WpfApp1.BL.csproj" />
-      <ProjectReference Include="..\WpfApp1.DAL.Tests\WpfApp1.DAL.Tests.csproj" />
+      <ProjectReference Include="..\project.BL\project.BL.csproj" />
+      <ProjectReference Include="..\project.DAL.Tests\project.DAL.Tests.csproj" />
     </ItemGroup>
 
 </Project>
