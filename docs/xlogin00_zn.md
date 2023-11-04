@@ -372,7 +372,96 @@ Na stránce s tagy má uživatel vylistované tagy. Vytvořené taky pak může 
 
 ### Ondřej Lukášek (xlukas15)
 
-**TODO**
+Můj protoyp zahrnuje 4 hlavní obrazovky, od kterých se odvíjí ostatní.
+
+- Uživatel - 3 obrazovky (volba, tvorba, úprava)
+- Události/Aktivity - 3 obrazovky (přehled, tvorba, úprava)
+- TODOS/Úkoly - 2 obrazovky (přehled, tvorba)
+- Tagy/Označení - 3 obrazovky (přehed, tvorba, úprava)
+
+Celkem se tedy můj protoyp skládá z 11 obrazovek, které zahrnují všechny funkcionality, uvedené v klíčových vlastnostech.
+Můj Figma návrh je dostupný pod [tímto odkazem](https://www.figma.com/file/PMn5borw1Z5eQ8OnwOqu9e/ITU-Project?type=design&node-id=0%3A1&mode=design&t=xwDONDfVz5VVUz4e-1).
+
+Testování mého návrhu proběhlo na třech osobách, které spadaly mezi cílové uživatele.
+Všechny testované scénaře zahrnovaly nalogování uživatele Benoit Blanc.
+Scénáře byly následující.
+
+- Vytvořte nového uživatele.
+- Nalogujte se jako uživatel Benoit Blanc a zobrazte si informace o Vás.
+- Vytvořte si Tag a poté se podívejte na svoje aktivity.
+- Nalogujte se jako uživatel Benoit Blanc a zkuste si vytvořit nový úkol. Poté se Odhlašte.
+- Zkuste upravit akci "Dinner with family", po její úpravě se odhlašte.
+- Nalogujte se jako Benoit Blanc a následně smazejte svůj profil.
+
+Hned v úvodu byl u jednoho z testovaných problém s jazykem, jelikož uživatel neuměl moc dobře mluvit nebo rozumět anglicky. Bylo by tedy vhodné zvážit, jestli v aplikaci nepoužít češtinu místo angličtiny.
+
+![user](images/muni_figma/user.jpg)
+
+Celé první využití aplikace začíná volbou uživatele.
+Pokud uživatel nemá svůj účet, může si ho zde vytvořit skrze tlačítko Create User.
+
+Uživatele jde samozřejmě také upravit nebo vymazat.
+Úpravy existujícího účtu ale jdou provést pouze tehdy, když je uživatel nalogovaný.
+
+![user-creator-editor](images/muni_figma/user-creator-editor.jpg)
+
+Po zvolení nebo případného vytvoření účtu se uživatel ocitne na přehledové obrazovce pro úkoly.
+Je to z důvodu, že používat úkoly budou uživatelé asi nejčastěji, protože to jsou jejich plány na krátkou dobu dopředu.
+Při testování se úkazala možnost přidání profilového obrázku formou odkazu na internet jako hezká možnost, která se uživatelům líbila.
+Mohou si totiž dát na profil prakticky cokoliv, co najdou na internetu.
+Negativum této vlastnosti je ovšem to, že je nutné být připojen k internetu.
+
+![todo](images/muni_figma/todo.jpg)
+
+Úkoly je možné si na této obrazovce také vytvořit. Udělat obrazovku pro úpravu mi nepřišlo tak užitečné, protože smazat chybný úkol a vytvořit nový, je prakticky stejně náročné, jako jej jenom upravit, jelikož obsahuje jenom jedno pole pro vyplnění. Při testování se ukázalo, že uživatelům přijde zbytečné mít u úkolu možnost ho smazat nebo potvrdit, když oba udělají prakticky to stejné.
+Stálo by tedy za zvážení, jestli nenechat u úkolu pouze jedno tlačítko, pro smazání události.
+
+![todo-creator](images/muni_figma/todo-creator.jpg)
+
+Obrazovka pro úkoly obsahuje boční nabídku, pomocí které se může uživatel přemisťovat po aplikaci.
+V tomto menu může přecházet mezi úkoly, událostmi, tagy, může si zde upravit účet nebo se může odhlásit, kdyby chtěl aplikaci používat jiný uživatel.
+Při testování jsem se často dozvídal, že by boční nabídka mohla obsahovat nějaké ikonky, protože pouze text nevypadá dobře. Co se však týče přehlednosti, tak tu boční nabídka splňuje bez problému. V průběhu testování s ní nebyl žádný problém, jenom by údajně mohla mít nějaké ikonky na oživení vzhledu.
+
+Přesuňme se tedy k událostem. Přehled obsahuje všechny vyvořené události, boční menu (jako tomu bude i nadále u obrazovek) a možnost vytvoření a úpravy události.
+
+![event](images/muni_figma/event.jpg)
+
+Při testování se uživatelům přehled líbil, nicméně jim vadilo, že si nemohou události nijak vyfiltrovat pro případ, že by jich měly přidaných hodně.
+Třeba seřadit podle data. Bylo by tedy dobré zvážit přidání nějakých filtrů, které by tuto vlastnost přidaly.
+
+Co se týče vytváření úpravy nových události, tak tam problém prakticky nebyl.
+Snažil jsem se dělat styl konzistentní mezi všemi úpravami, aby uživatelé věděli, co kde je.
+To se dle mého názoru i docela povedlo.
+Měl jsem ovšem od testovaných uživatelů otázky, jestli budou muset vyplnit všechny údaje.
+Bylo by dobré se znovu podívat na statistiky a domluvit se s kolegy, které údaje budou při vyplění dobrovolné.
+
+![event-creator-editor](images/muni_figma/event-creator-editor.jpg)
+
+A jako poslední část aplikace jsou tu tagy.
+Ty dělali uživatelům asi největší problém, protože pořádně nechápali jejich pointu.
+Po vysvětlení začalo dávat skoro všem smysl, nicméně jeden z testovaných potenciálních uživatelů řekl, že mu to přijde zbytečné.
+Bylo by tedy asi dobré funkci přidat, ale nenutit uživatele ji používat.
+Tagy jsou celkově důležité k tomu, aby si uživatelé pomocí nich mohl označit typ aktivity, kterou přidávají (jak je to vidět v návrhu a jak bylo řečeno v kapitole o klíčových vlastnostech).
+
+![tag](images/muni_figma/tag.jpg)
+
+U testování úpravy a vytváření nových tagů (až na zmíněný problém v pochopení jejich pointy), prakticky nebyl.
+UI je opět konzistentní s ostatními úpravami.
+
+![tag-creator-editor](images/muni_figma/tag-creator-editor.jpg)
+
+Celkově UI na některé testované potenciální uživatele působilo trochu moc "obyčejně".
+Bylo mi řečeno, že by mohlo vypadat trochu živěji, zajímavěji. Mohly by pomoct nějaké ikonky nebo nějaké zajímavé přechody barev. Případně by se dalo si hrát se stále více moderním tmavým motivem.
+
+Výsledky testování tedy byly spíše kladné, nicméně určitě vznikly poznámky, nad kterými by bylo vhodné zapřemýšlet, jako třeba:
+
+- jaký jazyk bude aplikace používat (anglický nebo český),
+- u úkolů by mohlo být pouze jedno tlačítko,
+- přidání nějakých ikonek, aby nebyl všude pouze text,
+- vytvoření filtrů,
+- povinnost zadávání některých údajů,
+- větší intuitivnost tagů,
+- větší oživení aplikace.
 
 ## Popis architektury
 
