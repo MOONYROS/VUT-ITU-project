@@ -347,7 +347,28 @@ V GUI bude mít za úkol vytvořit 3 obrazovky, a to: stránku aktivit, úpravu 
 
 ### Adam Malysák (xmalys02)
 
-**TODO**
+Návrh začíná na úvodní obrazovce, na které si uživatel vybere svůj profil, případně, pokud ho nemá, si ho vytvoří.
+
+![Q9](images/malish_figma/WPF1.png)
+
+Kromě úvodní obrazovky je na každé obrazovce možnost vrátit se na předchozí obrazovku (vlevo nahoře).
+
+Pokud si chce profil vytvořit, klikne na tlačítko vytvořit profil, vyplní údaje a klikne na tlačítko "vytvořit profil".
+
+![Q10](images/malish_figma/WPF2.png)
+
+Poté co se uživatel dostane na svůj profil, tak je implicitně na stránce s aktivitami.
+Na levém boku je nabídka obrazovek, takže se uživatel může libovolně přepínat mezi aktivitami, todos nebo tagy. Případně si může upravit svůj profil kliknutím na tlačítko vlevo dole.
+
+Na stránce s aktivitami má uživatel vylistované aktivity, s některými údaji. Aktivity může filtrovat podle času a tagů. Může je upravovat i mazat. Pokud se na aktivity chce uživatel podívat ve větším detailu (zobrazit si tagy bez zkratek, popis aktivity, ...), může si aktivitu rozkliknout.
+
+![Q11](images/malish_figma/WPF3.png)
+
+Na stránce s todos má uživatel vylistované todos ve dvou sloupcích. Vlevo jsou zatím nesplněné a vpravo jsou splněné. Uživatel si může tlačítkem "odkliknout" todo a označit ho tím jako splněné (a přesunout ho tak do pravého sloupce). Tuto akci může i vrátit zpět kliknutím na stejné tlačitko. Uživatel může samozřejmě mazat i vytvářet nové todos.
+
+![Q11](images/malish_figma/WPF4.png)
+
+Na stránce s tagy má uživatel vylistované tagy. Vytvořené taky pak může přidat do libovolných aktivit. Může je upravovat a mazat.
 
 ### Ondřej Lukášek (xlukas15)
 
