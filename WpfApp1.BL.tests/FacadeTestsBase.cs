@@ -16,16 +16,13 @@ public class FacadeTestsBase : IAsyncLifetime
         TagModelMapper = new TagModelMapper();
         TodoModelMapper = new TodoModelMapper();
         UserModelMapper = new UserModelMapper();
-        ProjectModelMapper = new ProjectModelMapper();
         ActivityModelMapper = new ActivityModelMapper();
 
         ActivityEntityMapper = new ActivityEntityMapper();
         ActivityTagListEntityMapper = new ActivityTagListEntityMapper();
-        ProjectEntityMapper = new ProjectEntityMapper();
         TagEntityMapper = new TagEntityMapper();
         TodoEntityMapper = new TodoEntityMapper();
         UserEntityMapper = new UserEntityMapper();
-        UserProjectListEntityMapper = new UserProjectListEntityMapper();
         
         DbContextFactory = new DbContextSqLiteTestingFactory(GetType().FullName!);
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
@@ -33,18 +30,15 @@ public class FacadeTestsBase : IAsyncLifetime
 
     private IDbContextFactory<ProjectDbContext> DbContextFactory { get; }
     protected ActivityModelMapper ActivityModelMapper { get; }
-    protected ProjectModelMapper ProjectModelMapper { get; }
     protected TagModelMapper TagModelMapper { get; }
     protected ITodoModelMapper TodoModelMapper { get; }
     protected UserModelMapper UserModelMapper { get; }
 
     protected ActivityEntityMapper ActivityEntityMapper { get; }
     protected ActivityTagListEntityMapper ActivityTagListEntityMapper { get; }
-    protected ProjectEntityMapper ProjectEntityMapper { get; }
     protected TagEntityMapper TagEntityMapper { get; }
     protected TodoEntityMapper TodoEntityMapper { get; }
     protected UserEntityMapper UserEntityMapper { get; }
-    protected UserProjectListEntityMapper UserProjectListEntityMapper { get; }
     protected UnitOfWorkFactory UnitOfWorkFactory { get; }
 
     public async Task InitializeAsync()

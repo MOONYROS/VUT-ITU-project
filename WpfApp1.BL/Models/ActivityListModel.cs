@@ -10,7 +10,6 @@ public record ActivityListModel : ModelBase
     public required DateTime DateTimeTo { get; set; }
     public required Color Color { get; set; }
     public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
-    public ProjectListModel? Project { get; set; }
     public static ActivityListModel Empty => new()
     {
         Id = Guid.Empty,

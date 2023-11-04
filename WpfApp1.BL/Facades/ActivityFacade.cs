@@ -42,10 +42,8 @@ public class ActivityFacade :
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
         IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();
-
-        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        
         query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
-
 
         ActivityEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
 
@@ -54,13 +52,13 @@ public class ActivityFacade :
             : _modelMapper.MapToDetailModel(entity);
     }
 
-    public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId, Guid? projectId)
+    public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId)
     {
         ActivityDetailModel result;
 
         GuardCollectionsAreNotSet(model);
     
-        ActivityEntity entity = _modelMapper.MapToEntity(model, userId, projectId);
+        ActivityEntity entity = _modelMapper.MapToEntity(model, userId);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
@@ -112,8 +110,7 @@ public class ActivityFacade :
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => i.UserId == userId);
-
-        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        
         query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
         List<ActivityEntity> entities = await query.ToListAsync();
@@ -142,8 +139,7 @@ public class ActivityFacade :
         {
             query = query.Where(i => i.DateTimeFrom >= from && i.DateTimeTo <= to);
         }
-
-        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        
         query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
         List<ActivityEntity> entities = await query.ToListAsync();
@@ -178,8 +174,7 @@ public class ActivityFacade :
         }
 
         query = query.Where(i => i.DateTimeFrom >= filter && i.DateTimeTo <= now);
-
-        query = query.Include($"{nameof(ActivityEntity.Project)}");
+        
         query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
         List<ActivityEntity> entities = await query.ToListAsync();

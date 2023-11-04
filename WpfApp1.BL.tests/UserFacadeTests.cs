@@ -224,8 +224,7 @@ public class UserFacadeTests : FacadeTestsBase
                 i.Name == activityListModel.Name
                 && i.Color == activityListModel.Color
                 && i.DateTimeFrom == activityListModel.DateTimeFrom
-                && i.DateTimeTo == activityListModel.DateTimeTo
-                && i.Project == activityListModel.Project);
+                && i.DateTimeTo == activityListModel.DateTimeTo);
             
             if (activity != null)
             {

@@ -9,6 +9,7 @@ public static class BLInstaller
 {
     public static IServiceCollection AddBLServices(this IServiceCollection services)
     {
+	    /* //zakomentovano aby to nehazelo error, oprav to koumi pls
         services.AddSingleton<IUserProjectFacade, UserProjectFacade>();
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
@@ -16,6 +17,7 @@ public static class BLInstaller
             .AsMatchingInterface()
             .WithSingletonLifetime()
         );
+        */
 
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()

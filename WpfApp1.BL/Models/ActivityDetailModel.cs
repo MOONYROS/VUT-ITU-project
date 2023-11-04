@@ -11,7 +11,6 @@ public record ActivityDetailModel : ModelBase
     public required Color Color { get; set; }
     public string? Description { get; set; }
     public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
-    public ProjectListModel? Project { get; set; }
     public required Guid UserId { get; set; }
     public static ActivityDetailModel Empty => new()
     {

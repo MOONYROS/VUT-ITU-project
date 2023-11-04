@@ -43,21 +43,5 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
                 Activities = activityMapper.MapToListModel(entity.Activities).ToObservableCollection()
             };
     }
-
-    public UserListModel MapToListModel(UserProjectListEntity entity) 
-        => entity.User is null 
-            ? UserListModel.Empty 
-            : new UserListModel
-            {
-                Id = entity.UserId,
-                UserName = entity.User.UserName,
-                ImageUrl = entity.User.ImageUrl
-            };
-    public IEnumerable<UserListModel> MapToListModel(IEnumerable<UserProjectListEntity> entities)
-    {
-        var projectUserListEntities = entities.ToList();
-        return projectUserListEntities.IsNullOrEmpty() ?
-            Enumerable.Empty<UserListModel>() :
-            projectUserListEntities.Select(MapToListModel);
-    }
+    
 }

@@ -69,7 +69,6 @@ public class UserFacade :
 
         IQueryable<UserEntity> query = uow.GetRepository<UserEntity, UserEntityMapper>().Get();
 
-        query = query.Include($"{nameof(UserEntity.Activities)}.{nameof(ActivityEntity.Project)}");
         query = query.Include($"{nameof(UserEntity.Activities)}.{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
         UserEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
