@@ -11,6 +11,7 @@ public class ProjectDbContext : DbContext
         : base(contextOptions) => _seedDemoData = seedDemoData;
     public DbSet<ActivityEntity> Activities => Set<ActivityEntity>();
     public DbSet<ActivityTagListEntity> ATLists => Set<ActivityTagListEntity>();
+    public DbSet<UserActivityListEntity> UALists => Set<UserActivityListEntity>();
     public DbSet<TagEntity> Tags => Set<TagEntity>();
     public DbSet<TodoEntity> Todos => Set<TodoEntity>();
     public DbSet<UserEntity> Users => Set<UserEntity>();
@@ -19,15 +20,15 @@ public class ProjectDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
             
-        modelBuilder.Entity<UserEntity>()
-            .HasMany(i => i.Todos)
-            .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Restrict); 
+        // modelBuilder.Entity<UserEntity>()
+        //     .HasMany(i => i.Todos)
+        //     .WithOne(i => i.User)
+        //     .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Activities)
             .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<UserEntity>()
             .HasMany(i => i.Tags)
@@ -50,8 +51,8 @@ public class ProjectDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade); 
 
         modelBuilder.Entity<ActivityEntity>()
-            .HasOne(i => i.User)
-            .WithMany(i => i.Activities)
+            .HasMany(i => i.Users)
+            .WithOne(i => i.Activity)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<TodoEntity>()
