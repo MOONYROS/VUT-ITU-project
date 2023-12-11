@@ -2,6 +2,7 @@
 
 public record ActivityEntity : IEntityID
 {
+	//xd
     public required Guid Id { get; set; }
     public required DateTime DateTimeFrom { get; set; }
     public required DateTime DateTimeTo { get; set; }
