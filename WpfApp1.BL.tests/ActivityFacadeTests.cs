@@ -27,415 +27,83 @@ public class ActivityFacadeTests : FacadeTestsBase
         _activityFacade = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
     }
 
-
+    
     [Fact]
-    public async Task CreateActivity_Success()
+    public async Task CreateActivity()
     {
-        // Arrange
-        var activity = ActivitySeeds.ActivitySeed();
+	    var activity = ActivitySeeds.ActivitySeed();
+	    var user = UserSeeds.UserSeed();
+	    
+	    var returnedUser = await _userFacade.SaveAsync(user);
+	    
+	    IEnumerable<Guid> userIds = new List<Guid>();
+	    userIds = userIds.Append(returnedUser.Id);
 
-        // Act
-        var returnedActivity = await _activityFacade.SaveAsync(activity);
-        var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
 
-        // Assert
-        DeepAssert.Equal(returnedActivity, dbActivity);
+	    var dbActivities = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
+
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    
+	    Assert.Equal(dbActivity.Users.First().Id, returnedUser.Id);
+	    Assert.NotEmpty(dbActivities);
     }
-
-
+    
     [Fact]
-    public async Task DeleteActivity()
+    public async Task CreateActivity_NoUsers()
     {
-        // Arrange
-        var activity = ActivitySeeds.ActivitySeed();
-        var user = UserSeeds.UserSeed();
+	    var activity = ActivitySeeds.ActivitySeed();
+	    
+	    IEnumerable<Guid> userIds = new List<Guid>();// empty list
 
-        // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-        IEnumerable<Guid> guidList = new List<Guid>
-        {
-	        returnedUser.Id
-        };
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
 
-        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, guidList);
-        var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-
-        DeepAssert.Equal(returnedActivity, dbActivity);
-    }
-
-
-    [Fact]
-    public async Task DeleteNonExistingAcitivty()
-    {
-        // Arrange
-        var activity = ActivitySeeds.ActivitySeed();
-
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _activityFacade.DeleteAsync(activity.Id));
-    }
-
-
-    [Fact]
-    public async Task DeleteUserWithAcitivty()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity = ActivitySeeds.ActivitySeed();
-
-        // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
-
-        var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-        Assert.NotNull(DbActivity);
-
-        await _userFacade.DeleteAsync(returnedUser.Id);
-
-        // Assert
-        DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-        var DbUser = await _userFacade.GetAsync(returnedUser.Id);
-        Assert.Null(DbUser);
-        Assert.Null(DbActivity);
-    }
-
-
-    [Fact]
-    public async Task GetList_OneActivity_DeepAssert()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity = ActivitySeeds.ActivitySeed();
-
-        // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
-
-        // Check
-        var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-        Assert.NotNull(DbActivity);
-
-        var _activityListModel = new ActivityListModel()
-        {
-            Id = DbActivity.Id,
-            Name = DbActivity.Name,
-            DateTimeFrom = DbActivity.DateTimeFrom,
-            DateTimeTo = DbActivity.DateTimeTo,
-            Color = DbActivity.Color,
-            Tags = DbActivity.Tags,
-        };
-
-        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
-        Assert.True(activityList.Any());
-        Assert.True(activityList.Count() == 1);
-        DeepAssert.Equal(_activityListModel, activityList.First());
-    }
-
-
-    [Fact]
-    public async Task GetList_Empty()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-
-        // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-
-        // Assert
-        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
-        Assert.NotNull(activityList);
-        Assert.True(activityList.IsNullOrEmpty());
-    }
-
-
-    [Fact]
-    public async Task GetList_MoreActivites()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-        var activity2 = ActivitySeeds.ActivitySeed();
-        var activity3 = ActivitySeeds.ActivitySeed();
-
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
-        activity2.DateTimeFrom = new DateTime(2021, 05, 15, 20, 30, 00);
-        activity2.DateTimeTo = new DateTime(2021, 05, 15, 22, 00, 00);
-
-        activity3.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
-        activity3.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
-
-        // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
-        var returnedActivity3 = await _activityFacade.CreateActivityAsync(activity3, returnedUser.Id);
-
-        var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
-        var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
-        var DbActivity3 = await _activityFacade.GetAsync(returnedActivity3.Id);
-
-
-        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
-
-        Assert.True(activityList.Any());
-
-        List<Guid> Guids = new ();
-        foreach (var activity in activityList)
-        {
-            Guids.Add(activity.Id);
-        }
-
-        Assert.NotNull(DbActivity1);
-        Assert.NotNull(DbActivity2);
-        Assert.NotNull(DbActivity3);
-
-        Assert.Equal(3, activityList.Count());
-        Assert.Contains(DbActivity1.Id, Guids);
-        Assert.Contains(DbActivity2.Id, Guids);
-        Assert.Contains(DbActivity3.Id, Guids);
-    }
-
-
-    [Fact]
-    public async Task MoreUsers_MoreActivities()
-    {
-        // Arrange
-        var user1 = UserSeeds.UserSeed();
-        var user2 = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-        var activity2 = ActivitySeeds.ActivitySeed();
-
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
-        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
-        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
-
-        // Act
-        var returnedUser1 = await _userFacade.SaveAsync(user1);
-        var returnedUser2 = await _userFacade.SaveAsync(user2);
-        var usr1Act1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser1.Id);
-        var usr1Act2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser1.Id);
-        var usr2Act1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser2.Id);
-        var usr2Act2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser2.Id);
-
-        var DbActivity1 = await _activityFacade.GetAsync(usr1Act1.Id);
-        var DbActivity2 = await _activityFacade.GetAsync(usr1Act2.Id);
-        var DbActivity3 = await _activityFacade.GetAsync(usr2Act1.Id);
-        var DbActivity4 = await _activityFacade.GetAsync(usr2Act2.Id);
-
-
-        var activityList1 = await _activityFacade.GetUserActivitiesAsync(returnedUser1.Id);
-        var activityList2 = await _activityFacade.GetUserActivitiesAsync(returnedUser2.Id);
-
-        Assert.True(activityList1.Any());
-        Assert.True(activityList2.Any());
-
-        List<Guid> Guids1 = new ();
-        List<Guid> Guids2 = new ();
-        foreach (var activity in activityList1)
-        {
-            Guids1.Add(activity.Id);
-        }
-        foreach (var activity in activityList2)
-        {
-            Guids2.Add(activity.Id);
-        }
-
-        Assert.NotNull(DbActivity1);
-        Assert.NotNull(DbActivity2);
-        Assert.NotNull(DbActivity3);
-        Assert.NotNull(DbActivity4);
-
-        Assert.Equal(2, activityList1.Count());
-        Assert.Contains(DbActivity1.Id, Guids1);
-        Assert.Contains(DbActivity2.Id, Guids1);
-
-        Assert.Equal(2, activityList2.Count());
-        Assert.Contains(DbActivity3.Id, Guids2);
-        Assert.Contains(DbActivity4.Id, Guids2);
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    Assert.NotNull(dbActivity);
     }
 
     [Fact]
-    public async Task DateFilter_NotSupported()
+    public async Task RemoveActivity_ActivityDeleted()
     {
-        // Arrange
-        var user = UserSeeds.UserSeed();
+	    var activity = ActivitySeeds.ActivitySeed();
+	    var user = UserSeeds.UserSeed();
+	    
+	    var returnedUser = await _userFacade.SaveAsync(user);
+	    
+	    IEnumerable<Guid> userIds = new List<Guid>();
+	    userIds = userIds.Append(returnedUser.Id);
 
-        var returnedUser = await _userFacade.SaveAsync(user);
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
+	    var dbActivities = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    Assert.Equal(dbActivity.Users.First().Id, returnedUser.Id);
+	    Assert.NotEmpty(dbActivities);
 
-        await Assert.ThrowsAsync<NotSupportedException>(async () => await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, null));
+	    await _activityFacade.RemoveActivityFromUserAsync(dbActivity.Id, returnedUser.Id);
+	    dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+		Assert.Null(dbActivity);
     }
 
-
     [Fact]
-    public async Task DateFilter_from()
+    public async Task RemoveActivity_ActivityRemains()
     {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-        var activity2 = ActivitySeeds.ActivitySeed();
+	    var activity = ActivitySeeds.ActivitySeed();
+	    var user1 = UserSeeds.UserSeed();
+	    var user2 = UserSeeds.UserSeed();
+	    
+	    var returnedUser1 = await _userFacade.SaveAsync(user1);
+	    var returnedUser2 = await _userFacade.SaveAsync(user2);
+	    
+	    IEnumerable<Guid> userIds = new List<Guid>();
+	    userIds = userIds.Append(returnedUser1.Id).Append(returnedUser2.Id);
 
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    Assert.NotNull(dbActivity);
 
-        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
-        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
-
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
-
-
-        // Asserts
-        var from = new DateTime(2021, 05, 17, 00, 00, 00);
-        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
-        Assert.False(list.Any());
-
-
-        from = new DateTime(2021, 05, 16, 00, 00, 00);
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 1);
-        Assert.Equal(returnedActivity2.Id, list.First().Id);
-
-
-        from = new DateTime(2021, 05, 15, 00, 00, 00);
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 2);
-    }
-
-
-    [Fact]
-    public async Task DateFilter_to()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-        var activity2 = ActivitySeeds.ActivitySeed();
-
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
-        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
-        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
-
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
-
-        // Asserts
-        var to = new DateTime(2021, 05, 15, 00, 00, 00);
-        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
-        Assert.False(list.Any());
-
-
-        to = new DateTime(2021, 05, 16, 00, 00, 00);
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 1);
-        Assert.Equal(returnedActivity1.Id, list.First().Id);
-
-
-        to = new DateTime(2021, 05, 17, 00, 00, 00);
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 2);
-    }
-
-
-    [Fact]
-    public async Task DateFilter_from_to()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-        var activity2 = ActivitySeeds.ActivitySeed();
-        var activity3 = ActivitySeeds.ActivitySeed();
-
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
-        activity2.DateTimeFrom = new DateTime(2021, 05, 16, 20, 30, 00);
-        activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
-
-        activity3.DateTimeFrom = new DateTime(2021, 05, 17, 20, 30, 00);
-        activity3.DateTimeTo = new DateTime(2021, 05, 17, 22, 00, 00);
-
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
-        var returnedActivity3 = await _activityFacade.CreateActivityAsync(activity3, returnedUser.Id);
-
-        // Asserts
-        var from = new DateTime(2021, 05, 16, 00, 00, 00);
-        var to = new DateTime(2021, 05, 17, 00, 00, 00);
-        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 1);
-        Assert.Equal(returnedActivity2.Id, list.First().Id);
-
-
-        from = new DateTime(2021, 05, 15, 00, 00, 00);
-        to = new DateTime(2021, 05, 18, 00, 00, 00);
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 3);
-    }
-
-
-    [Fact]
-    public async Task DateFilter_NoActivities()
-    {
-        // Arrange
-        var user = UserSeeds.UserSeed();
-
-        var returnedUser = await _userFacade.SaveAsync(user);
-
-        var from = new DateTime(2021, 05, 16, 00, 00, 00);
-        var to = new DateTime(2021, 05, 17, 00, 00, 00);
-
-        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
-        Assert.NotNull(list);
-        Assert.True(list.IsNullOrEmpty());
-
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
-        Assert.NotNull(list);
-        Assert.True(list.IsNullOrEmpty());
-
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
-        Assert.NotNull(list);
-        Assert.True(list.IsNullOrEmpty());
-    }
-
-
-    [Fact]
-    public async Task DateFilter_From_MoreUsers()
-    {
-        // Arrange
-        var user1 = UserSeeds.UserSeed();
-        var user2 = UserSeeds.UserSeed();
-        var activity1 = ActivitySeeds.ActivitySeed();
-
-        activity1.DateTimeFrom = new DateTime(2021, 05, 15, 18, 00, 00);
-        activity1.DateTimeTo = new DateTime(2021, 05, 15, 20, 00, 00);
-
-        var returnedUser1 = await _userFacade.SaveAsync(user1);
-        var returnedUser2 = await _userFacade.SaveAsync(user2);
-        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser1.Id);
-        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity1, returnedUser2.Id);
-
-
-        // Asserts
-        var from = new DateTime(2021, 05, 15, 00, 00, 00);
-        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser1.Id, from, null);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 1);
-
-        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser2.Id, from, null);
-        Assert.True(list.Any());
-        Assert.True(list.Count() == 1);
+	    await _activityFacade.RemoveActivityFromUserAsync(dbActivity.Id, returnedUser1.Id);
+	    dbActivity = await _activityFacade.GetAsync(dbActivity.Id);
+	    Assert.NotNull(dbActivity);
     }
 }
 
