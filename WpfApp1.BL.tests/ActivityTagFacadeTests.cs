@@ -1,13 +1,5 @@
-﻿using Azure;
-using WpfApp1.BL.Facades;
-using WpfApp1.BL.Facades.Interfaces;
+﻿using WpfApp1.BL.Facades;
 using WpfApp1.BL.tests.ModelSeeds;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 
 namespace WpfApp1.BL.tests;
@@ -36,7 +28,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag = await _tagFacade.SaveAsync(tag, returnedUser.Id);
 
         // Act
@@ -76,7 +68,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag3 = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag1 = await _tagFacade.SaveAsync(tag1, returnedUser.Id);
         var returnedTag2 = await _tagFacade.SaveAsync(tag2, returnedUser.Id);
         var returnedTag3 = await _tagFacade.SaveAsync(tag3, returnedUser.Id);
@@ -138,7 +130,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag2 = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag1 = await _tagFacade.SaveAsync(tag1, returnedUser.Id);
         var returnedTag2 = await _tagFacade.SaveAsync(tag2, returnedUser.Id);
 
@@ -214,7 +206,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag = await _tagFacade.SaveAsync(tag, returnedUser.Id);
 
         // Act
@@ -262,7 +254,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag = await _tagFacade.SaveAsync(tag, returnedUser.Id);
 
         // Act
@@ -308,7 +300,7 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         var tag = TagSeeds.TagSeed();
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
         var returnedTag = await _tagFacade.SaveAsync(tag, returnedUser.Id);
 
         // Act

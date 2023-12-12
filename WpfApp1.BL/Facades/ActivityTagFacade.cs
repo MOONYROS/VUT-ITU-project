@@ -26,9 +26,8 @@ public class ActivityTagFacade : IActivityTagFacade
         };
 
         await using IUnitOfWork uow = _unitOfWorkFactory.Create();
-        IRepository<ActivityTagListEntity> repository = uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>();
-
-        await repository.InsertAsync(bindingEntity);
+		await uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>()
+			.InsertAsync(bindingEntity);
 
         await uow.CommitAsync();
     }
@@ -37,9 +36,9 @@ public class ActivityTagFacade : IActivityTagFacade
     {
         await using IUnitOfWork uow = _unitOfWorkFactory.Create();
 
-        IQueryable<ActivityTagListEntity> query = uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>().Get();
-
-        ActivityTagListEntity bindingEntity = await query.SingleAsync(i => i.ActivityId == activityId && i.TagId == tagId);
+        ActivityTagListEntity bindingEntity = await uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>()
+	        .Get()
+	        .SingleAsync(i => i.ActivityId == activityId && i.TagId == tagId);
 
         try
         {

@@ -23,14 +23,11 @@ public class ActivityFacade :
         _modelMapper = modelMapper;
     }
 
-    public async Task DeleteAsync(Guid activityId, Guid userId)
+    public async Task RemoveActivityFromUserAsync(Guid activityId, Guid userId)
     {
 	    await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        
-	    IRepository<UserActivityListEntity> repository = uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>();
+	    IQueryable<UserActivityListEntity> query = uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>().Get();
 
-	    IQueryable<UserActivityListEntity> query = repository.Get();
-	    
 	    UserActivityListEntity bindingEntity = await query.SingleAsync(i => i.ActivityId == activityId && i.UserId == userId);
 
 	    try
@@ -46,14 +43,13 @@ public class ActivityFacade :
 	    query = query.Where(i => i.ActivityId == activityId);
 
 	    var remainingBindings = await query.ToListAsync();
-
 	    if (!remainingBindings.Any())
 	    {
 		    await DeleteAsync(activityId);
 	    }
     }
-    
-    public override async Task DeleteAsync(Guid id)//id == userid
+
+    public override async Task DeleteAsync(Guid id)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         try
@@ -71,31 +67,29 @@ public class ActivityFacade :
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
-        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();
-        
-        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
-        query = query.Include($"{nameof(ActivityEntity.Users)}.{nameof(UserActivityListEntity.User)}");
-
-        ActivityEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        ActivityEntity? entity = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+	        .Get()
+	        .Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}")
+	        .Include($"{nameof(ActivityEntity.Users)}.{nameof(UserActivityListEntity.User)}")
+	        .SingleOrDefaultAsync(e => e.Id == id);
 
         return entity is null
             ? null
             : _modelMapper.MapToDetailModel(entity);
     }
 
-
-    public async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, IEnumerable<Guid> userIds)
+    public async Task<ActivityDetailModel> CreateActivityAsync(ActivityDetailModel model, IEnumerable<Guid> userIds)
     {
         GuardCollectionsAreNotSet(model);
     
         ActivityEntity entity = _modelMapper.MapToEntity(model);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-        
         entity.Id = Guid.NewGuid();
-        ActivityEntity insertedEntity = await repository.InsertAsync(entity);
-        ActivityDetailModel result = _modelMapper.MapToDetailModel(entity);
+        var insertedEntity = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+	        .InsertAsync(entity);
+
+        ActivityDetailModel result = _modelMapper.MapToDetailModel(insertedEntity);
 
         await uow.CommitAsync();
         
@@ -107,7 +101,8 @@ public class ActivityFacade :
 		        UserId = userId,
 		        ActivityId = entity.Id
 	        };
-	        await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>().InsertAsync(bindingEntity);
+	        await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>()
+		        .InsertAsync(bindingEntity);
         }
         
         await uow.CommitAsync();
@@ -115,34 +110,38 @@ public class ActivityFacade :
         return result;
     }
 
-    public async Task<IEnumerable<ActivityListModel>> GetAsyncUser(Guid userId)
+    public async Task<IEnumerable<ActivityListModel>> GetUserActivitiesAsync(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
         var bindings = await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>()
-	        .Get().Where(i => i.UserId == userId).ToListAsync();
+	        .Get()
+	        .Where(i => i.UserId == userId)
+	        .ToListAsync();
 
         IEnumerable<Guid> activityIds = new List<Guid>();
         foreach (var binding in bindings)
         {
 	        activityIds = activityIds.Append(binding.ActivityId);
         }
-        
-        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => activityIds.Contains(i.Id));
-        
-        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
-        List<ActivityEntity> entities = await query.ToListAsync();
+        List<ActivityEntity> entities = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+	        .Get()
+	        .Where(i => activityIds.Contains(i.Id))
+	        .Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}")
+	        .ToListAsync();
 
         return _modelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> GetAsyncDateFilter(Guid userId, DateTime? from, DateTime? to)
+    public async Task<IEnumerable<ActivityListModel>> GetActivitiesDateFilterAsync(Guid userId, DateTime? from, DateTime? to)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         
         var bindings = await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>()
-	        .Get().Where(i => i.UserId == userId).ToListAsync();
+	        .Get()
+	        .Where(i => i.UserId == userId)
+	        .ToListAsync();
 
         IEnumerable<Guid> activityIds = new List<Guid>();
         foreach (var binding in bindings)
@@ -150,13 +149,15 @@ public class ActivityFacade :
 	        activityIds = activityIds.Append(binding.ActivityId);
         }
         
-        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => activityIds.Contains(i.Id));
+        IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+	        .Get()
+	        .Where(i => activityIds.Contains(i.Id));
 
         if (from == null && to == null)
         {
             throw new NotSupportedException();
         }
-        else if (from == null) 
+        else if (from == null)
         {
             query = query.Where(i => i.DateTimeTo <= to);
         }
@@ -168,23 +169,26 @@ public class ActivityFacade :
         {
             query = query.Where(i => i.DateTimeFrom >= from && i.DateTimeTo <= to);
         }
-        
-        query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
 
-        List<ActivityEntity> entities = await query.ToListAsync();
+        List<ActivityEntity> entities = await query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}")
+	        .ToListAsync();
 
         return _modelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> GetAsyncTagFilter(Guid userId, Guid tagId)
+    public async Task<IEnumerable<ActivityListModel>> GetActivitiesTagFilterAsync(Guid userId, Guid tagId)
     {
 	    await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         
 	    var userBindings = await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>()
-		    .Get().Where(i => i.UserId == userId).ToListAsync();
+		    .Get()
+		    .Where(i => i.UserId == userId)
+		    .ToListAsync();
 	    
 	    var tagBindings = await uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>()
-		    .Get().Where(i => i.TagId == tagId).ToListAsync();
+		    .Get()
+		    .Where(i => i.TagId == tagId)
+		    .ToListAsync();
 
 	    IEnumerable<Guid> userActivityIds = new List<Guid>();
 	    foreach (var binding in userBindings)
@@ -200,11 +204,11 @@ public class ActivityFacade :
 
 	    var activityIds = userActivityIds.Intersect(tagActivityIds);
 	    
-	    IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get().Where(i => activityIds.Contains(i.Id));
-	    
-	    query = query.Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}");
-
-	    List<ActivityEntity> entities = await query.ToListAsync();
+	    List<ActivityEntity> entities = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+		    .Get()
+		    .Where(i => activityIds.Contains(i.Id))
+		    .Include($"{nameof(ActivityEntity.Tags)}.{nameof(ActivityTagListEntity.Tag)}")
+		    .ToListAsync();
 
 	    return _modelMapper.MapToListModel(entities);
     }
@@ -220,7 +224,8 @@ public class ActivityFacade :
 
 	    var entity = _modelMapper.MapToEntity(model);
 
-	    ActivityEntity updatedEntity = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>().UpdateAsync(entity);
+	    ActivityEntity updatedEntity = await uow.GetRepository<ActivityEntity, ActivityEntityMapper>()
+		    .UpdateAsync(entity);
 
 	    await uow.CommitAsync();
 	    

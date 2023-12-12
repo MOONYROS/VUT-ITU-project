@@ -55,7 +55,7 @@ public class UserFacade :
         {
             entity.Id = Guid.NewGuid();
             UserEntity insertedEntity = await repository.InsertAsync(entity);
-            result = _userModelMapper.MapToDetailModel(entity);
+            result = _userModelMapper.MapToDetailModel(insertedEntity);
         }
 
         await uow.CommitAsync();
@@ -67,9 +67,9 @@ public class UserFacade :
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
-        IQueryable<UserEntity> query = uow.GetRepository<UserEntity, UserEntityMapper>().Get();
-
-        UserEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        UserEntity? entity = await uow.GetRepository<UserEntity, UserEntityMapper>()
+	        .Get()
+	        .SingleOrDefaultAsync(e => e.Id == id);
 
         return entity is null
             ? null
@@ -80,7 +80,9 @@ public class UserFacade :
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
-        List<UserEntity> entities = await uow.GetRepository<UserEntity, UserEntityMapper>().Get().ToListAsync();
+        List<UserEntity> entities = await uow.GetRepository<UserEntity, UserEntityMapper>()
+	        .Get()
+	        .ToListAsync();
         return _userModelMapper.MapToListModel(entities);
     }
 }

@@ -32,12 +32,10 @@ public class ActivityFacadeTests : FacadeTestsBase
     public async Task CreateActivity_Success()
     {
         // Arrange
-        var user = UserSeeds.UserSeed();
         var activity = ActivitySeeds.ActivitySeed();
 
         // Act
-        var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.SaveAsync(activity);
 
         var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
 
@@ -58,7 +56,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
 
         var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
         Assert.NotNull(DbActivity);
@@ -90,7 +88,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
 
         var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
         Assert.NotNull(DbActivity);
@@ -114,7 +112,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.SaveAsync(activity, returnedUser.Id);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
 
         // Check
         var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
@@ -130,7 +128,7 @@ public class ActivityFacadeTests : FacadeTestsBase
             Tags = DbActivity.Tags,
         };
 
-        var activityList = await _activityFacade.GetAsyncUser(returnedUser.Id);
+        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
         Assert.True(activityList.Any());
         Assert.True(activityList.Count() == 1);
         DeepAssert.Equal(_activityListModel, activityList.First());
@@ -147,7 +145,7 @@ public class ActivityFacadeTests : FacadeTestsBase
         var returnedUser = await _userFacade.SaveAsync(user);
 
         // Assert
-        var activityList = await _activityFacade.GetAsyncUser(returnedUser.Id);
+        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
         Assert.NotNull(activityList);
         Assert.True(activityList.IsNullOrEmpty());
     }
@@ -173,16 +171,16 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id);
-        var returnedActivity3 = await _activityFacade.SaveAsync(activity3, returnedUser.Id);
+        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
+        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
+        var returnedActivity3 = await _activityFacade.CreateActivityAsync(activity3, returnedUser.Id);
 
         var DbActivity1 = await _activityFacade.GetAsync(returnedActivity1.Id);
         var DbActivity2 = await _activityFacade.GetAsync(returnedActivity2.Id);
         var DbActivity3 = await _activityFacade.GetAsync(returnedActivity3.Id);
 
 
-        var activityList = await _activityFacade.GetAsyncUser(returnedUser.Id);
+        var activityList = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
 
         Assert.True(activityList.Any());
 
@@ -221,10 +219,10 @@ public class ActivityFacadeTests : FacadeTestsBase
         // Act
         var returnedUser1 = await _userFacade.SaveAsync(user1);
         var returnedUser2 = await _userFacade.SaveAsync(user2);
-        var usr1Act1 = await _activityFacade.SaveAsync(activity1, returnedUser1.Id);
-        var usr1Act2 = await _activityFacade.SaveAsync(activity2, returnedUser1.Id);
-        var usr2Act1 = await _activityFacade.SaveAsync(activity1, returnedUser2.Id);
-        var usr2Act2 = await _activityFacade.SaveAsync(activity2, returnedUser2.Id);
+        var usr1Act1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser1.Id);
+        var usr1Act2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser1.Id);
+        var usr2Act1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser2.Id);
+        var usr2Act2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser2.Id);
 
         var DbActivity1 = await _activityFacade.GetAsync(usr1Act1.Id);
         var DbActivity2 = await _activityFacade.GetAsync(usr1Act2.Id);
@@ -232,8 +230,8 @@ public class ActivityFacadeTests : FacadeTestsBase
         var DbActivity4 = await _activityFacade.GetAsync(usr2Act2.Id);
 
 
-        var activityList1 = await _activityFacade.GetAsyncUser(returnedUser1.Id);
-        var activityList2 = await _activityFacade.GetAsyncUser(returnedUser2.Id);
+        var activityList1 = await _activityFacade.GetUserActivitiesAsync(returnedUser1.Id);
+        var activityList2 = await _activityFacade.GetUserActivitiesAsync(returnedUser2.Id);
 
         Assert.True(activityList1.Any());
         Assert.True(activityList2.Any());
@@ -271,7 +269,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var returnedUser = await _userFacade.SaveAsync(user);
 
-        await Assert.ThrowsAsync<NotSupportedException>(async () => await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, null));
+        await Assert.ThrowsAsync<NotSupportedException>(async () => await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, null));
     }
 
 
@@ -290,25 +288,25 @@ public class ActivityFacadeTests : FacadeTestsBase
         activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id);
+        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
+        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
 
 
         // Asserts
         var from = new DateTime(2021, 05, 17, 00, 00, 00);
-        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
         Assert.False(list.Any());
 
 
         from = new DateTime(2021, 05, 16, 00, 00, 00);
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
         Assert.True(list.Any());
         Assert.True(list.Count() == 1);
         Assert.Equal(returnedActivity2.Id, list.First().Id);
 
 
         from = new DateTime(2021, 05, 15, 00, 00, 00);
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
         Assert.True(list.Any());
         Assert.True(list.Count() == 2);
     }
@@ -329,24 +327,24 @@ public class ActivityFacadeTests : FacadeTestsBase
         activity2.DateTimeTo = new DateTime(2021, 05, 16, 22, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id);
+        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
+        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
 
         // Asserts
         var to = new DateTime(2021, 05, 15, 00, 00, 00);
-        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
         Assert.False(list.Any());
 
 
         to = new DateTime(2021, 05, 16, 00, 00, 00);
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
         Assert.True(list.Any());
         Assert.True(list.Count() == 1);
         Assert.Equal(returnedActivity1.Id, list.First().Id);
 
 
         to = new DateTime(2021, 05, 17, 00, 00, 00);
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
         Assert.True(list.Any());
         Assert.True(list.Count() == 2);
     }
@@ -371,14 +369,14 @@ public class ActivityFacadeTests : FacadeTestsBase
         activity3.DateTimeTo = new DateTime(2021, 05, 17, 22, 00, 00);
 
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser.Id);
-        var returnedActivity2 = await _activityFacade.SaveAsync(activity2, returnedUser.Id);
-        var returnedActivity3 = await _activityFacade.SaveAsync(activity3, returnedUser.Id);
+        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser.Id);
+        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity2, returnedUser.Id);
+        var returnedActivity3 = await _activityFacade.CreateActivityAsync(activity3, returnedUser.Id);
 
         // Asserts
         var from = new DateTime(2021, 05, 16, 00, 00, 00);
         var to = new DateTime(2021, 05, 17, 00, 00, 00);
-        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
         Assert.True(list.Any());
         Assert.True(list.Count() == 1);
         Assert.Equal(returnedActivity2.Id, list.First().Id);
@@ -386,7 +384,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         from = new DateTime(2021, 05, 15, 00, 00, 00);
         to = new DateTime(2021, 05, 18, 00, 00, 00);
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
         Assert.True(list.Any());
         Assert.True(list.Count() == 3);
     }
@@ -403,15 +401,15 @@ public class ActivityFacadeTests : FacadeTestsBase
         var from = new DateTime(2021, 05, 16, 00, 00, 00);
         var to = new DateTime(2021, 05, 17, 00, 00, 00);
 
-        var list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, to);
+        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, to);
         Assert.NotNull(list);
         Assert.True(list.IsNullOrEmpty());
 
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, from, null);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, from, null);
         Assert.NotNull(list);
         Assert.True(list.IsNullOrEmpty());
 
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser.Id, null, to);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser.Id, null, to);
         Assert.NotNull(list);
         Assert.True(list.IsNullOrEmpty());
     }
@@ -430,17 +428,17 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         var returnedUser1 = await _userFacade.SaveAsync(user1);
         var returnedUser2 = await _userFacade.SaveAsync(user2);
-        var returnedActivity1 = await _activityFacade.SaveAsync(activity1, returnedUser1.Id);
-        var returnedActivity2 = await _activityFacade.SaveAsync(activity1, returnedUser2.Id);
+        var returnedActivity1 = await _activityFacade.CreateActivityAsync(activity1, returnedUser1.Id);
+        var returnedActivity2 = await _activityFacade.CreateActivityAsync(activity1, returnedUser2.Id);
 
 
         // Asserts
         var from = new DateTime(2021, 05, 15, 00, 00, 00);
-        var list = await _activityFacade.GetAsyncDateFilter(returnedUser1.Id, from, null);
+        var list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser1.Id, from, null);
         Assert.True(list.Any());
         Assert.True(list.Count() == 1);
 
-        list = await _activityFacade.GetAsyncDateFilter(returnedUser2.Id, from, null);
+        list = await _activityFacade.GetActivitiesDateFilterAsync(returnedUser2.Id, from, null);
         Assert.True(list.Any());
         Assert.True(list.Count() == 1);
     }

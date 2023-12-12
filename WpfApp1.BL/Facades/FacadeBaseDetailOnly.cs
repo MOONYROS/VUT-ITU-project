@@ -42,9 +42,9 @@ public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
-        IQueryable<TEntity> query = uow.GetRepository<TEntity, TEntityMapper>().Get();
-
-        TEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        TEntity? entity = await uow.GetRepository<TEntity, TEntityMapper>()
+	        .Get()
+	        .SingleOrDefaultAsync(e => e.Id == id);
 
         return entity is null
             ? null
