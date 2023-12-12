@@ -19,45 +19,34 @@ public class ProjectDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-            
-        // modelBuilder.Entity<UserEntity>()
-        //     .HasMany(i => i.Todos)
-        //     .WithOne(i => i.User)
-        //     .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<UserEntity>()
-            .HasMany(i => i.Activities)
-            .WithOne(i => i.User)
+        modelBuilder.Entity<TodoEntity>()
+            .HasOne(i=>i.User)
+            .WithMany(i => i.Todos)
             .OnDelete(DeleteBehavior.Cascade);
-        
-        modelBuilder.Entity<UserEntity>()
-            .HasMany(i => i.Tags)
-            .WithOne(i => i.User)
-            .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<TagEntity>()
-            .HasMany(i=>i.Activities)
-            .WithOne(i => i.Tag)
-            .OnDelete(DeleteBehavior.Cascade); 
-        
         modelBuilder.Entity<TagEntity>()
             .HasOne(i => i.User)
             .WithMany(i => i.Tags)
             .OnDelete(DeleteBehavior.Cascade);
-            
+
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i=>i.Tags)
             .WithOne(i => i.Activity)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<TagEntity>()
+            .HasMany(i=>i.Activities)
+            .WithOne(i => i.Tag)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ActivityEntity>()
             .HasMany(i => i.Users)
             .WithOne(i => i.Activity)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<TodoEntity>()
-            .HasOne(i=>i.User)
-            .WithMany(i => i.Todos)
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<UserEntity>()
+	        .HasMany(i => i.Activities)
+	        .WithOne(i => i.User)
+	        .OnDelete(DeleteBehavior.Cascade);
     }
 }
