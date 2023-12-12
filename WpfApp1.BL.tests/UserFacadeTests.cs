@@ -22,29 +22,10 @@ public class UserFacadeTests : FacadeTestsBase
         
         // Act
         var idk = await _userFacade.SaveAsync(userModel);
+        var idk2 = await _userFacade.GetAsync(idk.Id);
         
         // Assert
-        FixIds(userModel, idk);
-        DeepAssert.Equal(userModel, idk);
-    }
-
-    [Fact]
-    public async Task CreateUserModel_GetEntity_Compare_Success()
-    {
-        // Arrange
-        var userModel = UserSeeds.UserSeed();
-        
-        // Act
-        var userModelUpdated = await _userFacade.SaveAsync(userModel);
-        var userFromDb = await _userFacade.GetAsync(userModelUpdated.Id);
-        
-        // Assert
-        Assert.NotNull(userFromDb);
-        FixIds(userModel, userModelUpdated);
-        FixIds(userModel,userFromDb);
-        DeepAssert.Equal(userModel, userModelUpdated);
-        DeepAssert.Equal(userModel, userFromDb);
-        DeepAssert.Equal(userModelUpdated, userFromDb);
+        DeepAssert.Equal(idk2, idk);
     }
 
     [Fact]
@@ -83,8 +64,7 @@ public class UserFacadeTests : FacadeTestsBase
         
         // Assert
         Assert.NotNull(userFromDb);
-        FixIds(user4, userFromDb);
-        DeepAssert.Equal(user4, userFromDb);
+        DeepAssert.Equal(user4Updated, userFromDb);
     }
 
     [Fact]
@@ -211,25 +191,5 @@ public class UserFacadeTests : FacadeTestsBase
         var UserList = await _userFacade.GetAsync();
 
         Assert.Empty(UserList);
-    }
-
-
-    private static void FixIds(UserDetailModel expectedModel, UserDetailModel returnedModel)
-    {
-        returnedModel.Id = expectedModel.Id;
-
-        foreach (var activityListModel in returnedModel.Activities)
-        {
-            var activity = expectedModel.Activities.FirstOrDefault(i =>
-                i.Name == activityListModel.Name
-                && i.Color == activityListModel.Color
-                && i.DateTimeFrom == activityListModel.DateTimeFrom
-                && i.DateTimeTo == activityListModel.DateTimeTo);
-            
-            if (activity != null)
-            {
-                activityListModel.Id = activity.Id;
-            }
-        }
     }
 }

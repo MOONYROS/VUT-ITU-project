@@ -347,7 +347,4 @@ public class ActivityTagFacadeTests : FacadeTestsBase
         Assert.Null(DbTag);
         Assert.Null(DbActivity);
     }
-
-    //public async Task MoreActivites_MoreTags()
-    //public async Task MoreUsers_MoreActivities_MoreTags()
 }
