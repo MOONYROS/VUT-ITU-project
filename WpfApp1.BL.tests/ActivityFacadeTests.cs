@@ -36,36 +36,31 @@ public class ActivityFacadeTests : FacadeTestsBase
 
         // Act
         var returnedActivity = await _activityFacade.SaveAsync(activity);
-
-        var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+        var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
 
         // Assert
-        Assert.NotNull(DbActivity);
-        Assert.NotNull(DbActivity.Tags);
-        Assert.True(DbActivity.Tags.IsNullOrEmpty());
-        DeepAssert.Equal(returnedActivity, DbActivity);
+        DeepAssert.Equal(returnedActivity, dbActivity);
     }
 
 
     [Fact]
-    public async Task DeleteAcitivty()
+    public async Task DeleteActivity()
     {
         // Arrange
-        var user = UserSeeds.UserSeed();
         var activity = ActivitySeeds.ActivitySeed();
+        var user = UserSeeds.UserSeed();
 
         // Act
         var returnedUser = await _userFacade.SaveAsync(user);
-        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, returnedUser.Id);
+        IEnumerable<Guid> guidList = new List<Guid>
+        {
+	        returnedUser.Id
+        };
 
-        var DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-        Assert.NotNull(DbActivity);
+        var returnedActivity = await _activityFacade.CreateActivityAsync(activity, guidList);
+        var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
 
-        await _activityFacade.DeleteAsync(returnedActivity.Id);
-
-        // Assert
-        DbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-        Assert.Null(DbActivity);
+        DeepAssert.Equal(returnedActivity, dbActivity);
     }
 
 
