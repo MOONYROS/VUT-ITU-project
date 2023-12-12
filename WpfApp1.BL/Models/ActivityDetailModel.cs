@@ -11,14 +11,13 @@ public record ActivityDetailModel : ModelBase
     public required Color Color { get; set; }
     public string? Description { get; set; }
     public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
-    public required Guid UserId { get; set; }
+    public ObservableCollection<UserListModel> Users { get; set; } = new();
     public static ActivityDetailModel Empty => new()
     {
         Id = Guid.Empty,
         Name = string.Empty,
         DateTimeFrom = default,
         DateTimeTo = default,
-        Color = Color.Black,
-        UserId = Guid.Empty
+        Color = Color.Black
     };
 }

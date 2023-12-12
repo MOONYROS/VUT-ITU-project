@@ -6,5 +6,5 @@ public interface IModelMapperDetailOnly<TEntity, TDetailModel>
     TEntity MapToEntity(TDetailModel model);
     TEntity MapToEntity(TDetailModel model, Guid userGuid);
     IEnumerable<TDetailModel> MapToDetailModel(IEnumerable<TEntity> entities)
-        => entities.Select(MapToDetailModel); // maybe smazat tento radek?
+        => entities.Select(MapToDetailModel); 
 }

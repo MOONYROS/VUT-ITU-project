@@ -6,8 +6,9 @@ namespace WpfApp1.BL.Facades.Interfaces;
 
 public interface IActivityFacade : IFacade<ActivityEntity, ActivityListModel, ActivityDetailModel>
 {
-    Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, Guid userId);
+	Task DeleteAsync(Guid activityId, Guid userId);
+    Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model, IEnumerable<Guid> userIds);
     Task<IEnumerable<ActivityListModel>> GetAsyncUser(Guid userId);
     Task<IEnumerable<ActivityListModel>> GetAsyncDateFilter(Guid userId, DateTime? from, DateTime? to);
-    Task<IEnumerable<ActivityListModel>> GetAsyncIntervalFilter(Guid userId, FilterBy interval);
+    Task<IEnumerable<ActivityListModel>> GetAsyncTagFilter(Guid userId, Guid tagId);
 }

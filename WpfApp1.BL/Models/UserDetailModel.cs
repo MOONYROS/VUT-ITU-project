@@ -7,7 +7,7 @@ public record UserDetailModel : ModelBase
     public required string UserName { get; set; }
     public required string FullName { get; set; }
     public string? ImageUrl { get; set; }
-    public ObservableCollection<ActivityListModel> Activities { get; init; } = new();
+    // public ObservableCollection<ActivityListModel> Activities { get; init; } = new();
 
     public static UserDetailModel Empty => new()
     {

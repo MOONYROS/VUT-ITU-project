@@ -40,8 +40,24 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
                 FullName = entity.FullName,
                 UserName = entity.UserName,
                 ImageUrl = entity.ImageUrl,
-                Activities = activityMapper.MapToListModel(entity.Activities).ToObservableCollection()
+                // Activities = activityMapper.MapToListModel(entity.Activities).ToObservableCollection()
             };
     }
+    public UserListModel MapToListModel(UserActivityListEntity entity) =>
+	    entity.User is null
+		    ? UserListModel.Empty
+		    : new UserListModel
+		    {
+			    Id = entity.User.Id,
+			    UserName = entity.User.UserName,
+			    ImageUrl = entity.User.ImageUrl
+		    };
     
+    public IEnumerable<UserListModel> MapToListModel(IEnumerable<UserActivityListEntity> entities)
+    {
+	    var userActivityListEntities = entities.ToList();
+	    return userActivityListEntities.IsNullOrEmpty() ? 
+		    Enumerable.Empty<UserListModel>() : 
+		    userActivityListEntities.Select(MapToListModel);
+    }
 }
