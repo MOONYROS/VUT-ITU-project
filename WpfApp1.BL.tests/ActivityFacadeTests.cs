@@ -127,5 +127,29 @@ public class ActivityFacadeTests : FacadeTestsBase
 
 	    Assert.Null(dbActivity);
     }
+
+    [Fact]
+    public async Task AddTwoUsersOneActivity_DeleteUser_ActivityPersists()
+    {
+	    var activity = ActivitySeeds.ActivitySeed();
+	    var user = UserSeeds.UserSeed();
+	    var user2 = UserSeeds.UserSeed();
+
+	    var returnedUser = await _userFacade.SaveAsync(user);
+	    var returnedUser2 = await _userFacade.SaveAsync(user2);
+	    IEnumerable<Guid> userIds = new List<Guid>
+	    {
+		    returnedUser.Id,
+		    returnedUser2.Id
+	    };
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity, userIds);
+
+	    await _userFacade.DeleteAsync(returnedUser.Id);
+
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+
+	    Assert.NotNull(dbActivity);
+	    Assert.Equal(dbActivity.Users.First().Id, returnedUser2.Id);
+    }
 }
 

@@ -41,8 +41,8 @@ public class UserFacade :
         try
         {
 	        await using var uow2 = UnitOfWorkFactory.Create();
-	        var repository = uow2.GetRepository<UserEntity, UserEntityMapper>();
-	        repository.Delete(id);
+	        uow2.GetRepository<UserEntity, UserEntityMapper>().
+		        Delete(id);
             await uow2.CommitAsync();
         }
         catch (DbUpdateException e)
