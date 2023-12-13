@@ -44,7 +44,8 @@ public class ActivityFacadeTests : FacadeTestsBase
 	    var dbActivities = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
 
 	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
-	    
+
+	    Assert.NotNull(dbActivity);
 	    Assert.Equal(dbActivity.Users.First().Id, returnedUser.Id);
 	    Assert.NotEmpty(dbActivities);
     }
@@ -76,6 +77,7 @@ public class ActivityFacadeTests : FacadeTestsBase
 	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
 	    var dbActivities = await _activityFacade.GetUserActivitiesAsync(returnedUser.Id);
 	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+	    Assert.NotNull(dbActivity);
 	    Assert.Equal(dbActivity.Users.First().Id, returnedUser.Id);
 	    Assert.NotEmpty(dbActivities);
 
@@ -104,6 +106,26 @@ public class ActivityFacadeTests : FacadeTestsBase
 	    await _activityFacade.RemoveActivityFromUserAsync(dbActivity.Id, returnedUser1.Id);
 	    dbActivity = await _activityFacade.GetAsync(dbActivity.Id);
 	    Assert.NotNull(dbActivity);
+    }
+
+    [Fact]
+    public async Task AddActivityAndUser_DeleteUser_ActivityDeleted()
+    {
+	    var activity = ActivitySeeds.ActivitySeed();
+	    var user = UserSeeds.UserSeed();
+
+	    var returnedUser = await _userFacade.SaveAsync(user);
+	    IEnumerable<Guid> userIds = new List<Guid>
+	    {
+		    returnedUser.Id
+	    };
+	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity, userIds);
+
+	    await _userFacade.DeleteAsync(returnedUser.Id);
+
+	    var dbActivity = await _activityFacade.GetAsync(returnedActivity.Id);
+
+	    Assert.Null(dbActivity);
     }
 }
 

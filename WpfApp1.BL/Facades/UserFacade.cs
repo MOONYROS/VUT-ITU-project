@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
 using WpfApp1.BL.Facades.Interfaces;
+using WpfApp1.BL.Mappers;
 using WpfApp1.BL.Mappers.Interfaces;
 using WpfApp1.BL.Models;
 using WpfApp1.DAL.Entities;
@@ -24,6 +26,18 @@ public class UserFacade :
     public override async Task DeleteAsync(Guid id)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+
+        IEnumerable<UserActivityListEntity> bindingEntities = await uow.GetRepository<UserActivityListEntity, UserActivityListEntityMapper>()
+	        .Get()
+	        .Where(i => i.UserId == id)
+	        .ToListAsync();
+
+        foreach (var bindingEntity in  bindingEntities)
+        {
+	        var activityFacade = new ActivityFacade(UnitOfWorkFactory, new ActivityModelMapper());
+	        await activityFacade.RemoveActivityFromUserAsync(bindingEntity.ActivityId, bindingEntity.UserId);
+        }
+
         try
         {
             uow.GetRepository<UserEntity, UserEntityMapper>().Delete(id);
