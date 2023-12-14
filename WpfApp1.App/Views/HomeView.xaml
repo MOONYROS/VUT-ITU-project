@@ -12,13 +12,25 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="2*" /><!--Headline-->
             <RowDefinition Height="*" />
-            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" /><!--User list-->
             <RowDefinition Height="2*" /><!--Create user button-->
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="1" TextAlignment="Center" Text="WellPerforming Funny App 1" FontSize="50" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold" Foreground="Black"/>
 
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                
+            </Label>
+        </Grid>
+        
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
