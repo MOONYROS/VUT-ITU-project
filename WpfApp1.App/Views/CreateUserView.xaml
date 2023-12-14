@@ -30,8 +30,7 @@
         
         <Border Grid.Row="2"
                 Style="{StaticResource CreateUserImage}">
-            <Image x:Name="userImage"
-                   Width="100"
+            <Image Width="100"
                    Height="100"
                    Stretch="UniformToFill">
                 <Image.Source>
@@ -51,7 +50,6 @@
                Margin="150,0,0,0"/>
 
         <TextBox Grid.Row="4"
-                 x:Name="usernameInput"
                  Style="{StaticResource BasicTextBox}"
                  Margin="0,0,0,20"
                  Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -75,19 +73,16 @@
                Margin="150,0,0,0"/>
 
         <TextBox Grid.Row="8"
-                 x:Name="imageLinkInput"
                  Style="{StaticResource BasicTextBox}"
                  Margin="0,0,0,10"
                  Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
         
         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="dismissButton" 
-                    Style="{StaticResource RedButton}" 
+            <Button Style="{StaticResource RedButton}" 
                     Content="Dismiss"
                     Command="{Binding GoToHomeViewCommand}"/>
             
-            <Button x:Name="createUserButton"
-                    Style="{StaticResource GreenButton}"
+            <Button Style="{StaticResource GreenButton}"
                     Content="Create"
                     Command="{Binding CreateUserCommand}"/>
         </StackPanel>
