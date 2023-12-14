@@ -17,8 +17,10 @@
 
         <TextBlock Grid.Row="0" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
         
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel Width="500">
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Width="500"
+                        HorizontalAlignment="Center">
                 <Border Style="{StaticResource CreateUserImage}">
                     <Image Width="100"
                            Height="100"
