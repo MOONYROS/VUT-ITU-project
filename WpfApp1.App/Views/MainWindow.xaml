@@ -21,6 +21,9 @@
                         <DataTemplate DataType="{x:Type viewModels:TodoListViewModel}">
                                 <views:TodoListView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:TagListViewModel}">
+                                <views:TagListView/>
+                        </DataTemplate>
                 </ContentControl.Resources>
         </ContentControl>
 </Window>

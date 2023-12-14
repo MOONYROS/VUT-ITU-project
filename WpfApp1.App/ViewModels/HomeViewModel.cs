@@ -46,7 +46,7 @@ public partial class HomeViewModel : ViewModelBase,
 	private void GoToUserTodos(Guid userGuid)
 	{
 		_idService.UserId = userGuid;
-		_messengerService.Send(new TodoNavigationMessage());
+		_messengerService.Send(new NavigationMessage());
 		_navigationService.NavigateTo<TodoListViewModel>();
 	}
 

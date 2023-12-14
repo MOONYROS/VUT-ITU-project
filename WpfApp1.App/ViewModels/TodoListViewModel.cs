@@ -13,7 +13,7 @@ using WpfApp1.BL.Models;
 namespace WpfApp1.APP.ViewModels;
 
 public partial class TodoListViewModel : ViewModelBase,
-	IRecipient<TodoNavigationMessage>
+	IRecipient<NavigationMessage>
 {
 	private readonly ITodoFacade _todoFacade;
 	private readonly IMessengerService _messengerService;
@@ -32,7 +32,7 @@ public partial class TodoListViewModel : ViewModelBase,
 		_todoFacade = todoFacade;
 		_navigationService = navigationService;
 		_idService = idService;
-		messengerService.Messenger.Register<TodoNavigationMessage>(this);
+		messengerService.Messenger.Register<NavigationMessage>(this);
 	}
 
 	protected override async Task LoadDataAsync()
@@ -46,8 +46,16 @@ public partial class TodoListViewModel : ViewModelBase,
 	{
 		MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
 	}
+	
+		
+	[RelayCommand]
+	private void GoToTagListView()
+	{
+		_messengerService.Send(new NavigationMessage());
+		_navigationService.NavigateTo<TagListViewModel>();
+	}
 
-	public async void Receive(TodoNavigationMessage message)
+	public async void Receive(NavigationMessage message)
 	{
 		await LoadDataAsync();
 	}

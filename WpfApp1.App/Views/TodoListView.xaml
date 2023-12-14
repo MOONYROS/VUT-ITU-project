@@ -20,7 +20,8 @@
                 <StackPanel VerticalAlignment="Top" DockPanel.Dock="Top">
                     <Button Content="TODOS" Style="{StaticResource BasicButton}"/>
                     <Button Content="EVENTS" Style="{StaticResource BasicButton}"/>
-                    <Button Content="TAGS" Style="{StaticResource BasicButton}"/>
+                    <Button Content="TAGS" Style="{StaticResource BasicButton}"
+                            Command="{Binding GoToTagListViewCommand}"/>
                 </StackPanel>
                 
                 <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
