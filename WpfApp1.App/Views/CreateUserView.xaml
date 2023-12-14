@@ -32,7 +32,16 @@
                 Style="{StaticResource CreateUserImage}">
             <Image x:Name="userImage"
                    Width="100"
-                   Height="100"/>
+                   Height="100"
+                   Stretch="UniformToFill">
+                <Image.Source>
+                    <Binding Path="User.ImageUrl">
+                        <Binding.Converter>
+                            <local:UrlImageConverter/>
+                        </Binding.Converter>
+                    </Binding>
+                </Image.Source>
+            </Image>
         </Border>
         
         <Label Grid.Row="3"
