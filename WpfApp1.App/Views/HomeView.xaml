@@ -25,10 +25,18 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                
-            </Label>
+
+            <ListBox Grid.Column="1"
+                     ItemsSource="{Binding Users}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding UserName}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
         </Grid>
         
         <Grid Grid.Row="4">

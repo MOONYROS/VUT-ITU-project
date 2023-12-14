@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using WpfApp1.App.Messages;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL.Models;
@@ -11,13 +12,18 @@ public partial class CreateUserViewModel : ViewModelBase
 {
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
+	private readonly IMessengerService _messengerService;
 
 	public UserDetailModel User { get; set; } = UserDetailModel.Empty;
 
-	public CreateUserViewModel(INavigationService navigationService, IUserFacade userFacade)
+	public CreateUserViewModel(
+		INavigationService navigationService,
+		IUserFacade userFacade,
+		IMessengerService messengerService) : base(messengerService)
 	{
 		_navigationService = navigationService;
 		_userFacade = userFacade;
+		_messengerService = messengerService;
 	}
 
 	[RelayCommand]
@@ -31,6 +37,7 @@ public partial class CreateUserViewModel : ViewModelBase
 		{
 			await _userFacade.SaveAsync(User);
 			User = UserDetailModel.Empty;
+			_messengerService.Send(new UserCreatedMessage());
 			_navigationService.NavigateTo<HomeViewModel>();
 		}
 	}

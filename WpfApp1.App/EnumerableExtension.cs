@@ -1,0 +1,10 @@
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace WpfApp1.App;
+
+public static class EnumerableExtension
+{
+	public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> values)
+		=> new(values);
+}

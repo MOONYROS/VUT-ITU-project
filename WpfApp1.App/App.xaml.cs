@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualBasic.FileIO;
+using WpfApp1.App.Messages;
 using WpfApp1.APP.Services;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.APP.ViewModels;
@@ -29,7 +30,7 @@ public partial class App : Application
 	public App()
 	{
 		IServiceCollection serviceCollection = new ServiceCollection();
-		serviceCollection.AddSingleton<IMessenger, StrongReferenceMessenger>();
+		serviceCollection.AddSingleton<IMessenger>(idk => StrongReferenceMessenger.Default);
 
 		serviceCollection.AddSingleton<IMessengerService, MessengerService>();
 
@@ -102,6 +103,7 @@ public partial class App : Application
 	{
 		_serviceProvider.GetRequiredService<IDbMigrator>().Migrate();
 		var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+		_serviceProvider.GetRequiredService<IMessengerService>().Send(new BootMessage());
 		mainWindow.Show();
 		base.OnStartup(e);
 	}

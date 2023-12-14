@@ -9,7 +9,8 @@ public partial class MainViewModel : ViewModelBase
 	public INavigationService NavigationService { get; set; }
 	public MainViewModel(
 		INavigationService navigationService,
-		HomeViewModel starting) : base()
+		HomeViewModel starting,
+		IMessengerService messengerService) : base(messengerService)
 	{
 		NavigationService = navigationService;
 		NavigationService.CurrentViewModel = starting;
