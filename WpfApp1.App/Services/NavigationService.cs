@@ -1,52 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-using WpfApp1.APP.Models;
+using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WpfApp1.APP.Services.Interfaces;
-using WpfApp1.APP.ViewModels.Interfaces;
+using WpfApp1.APP.ViewModels;
 
 namespace WpfApp1.APP.Services;
 
-public class NavigationService : INavigationService
+public class NavigationService : ObservableObject, INavigationService
 {
-	private readonly Frame _mainFrame;
+	private readonly Func<Type, ViewModelBase> _viewModelFactory;
+	private readonly IMessengerService _messengerService;
 
-	public NavigationService(Frame mainFrame)
+	public event Action CurrentViewModelChanged;
+	private ViewModelBase _currentViewModel;
+
+	public ViewModelBase CurrentViewModel
 	{
-		_mainFrame = mainFrame ?? throw new ArgumentNullException(nameof(mainFrame));
+		get => _currentViewModel;
+		set 
+		{
+			_currentViewModel = value;
+			OnPropertyChanged();
+		}
 	}
 
-	public IEnumerable<RouteModel> Routes { get; } = new List<RouteModel>
+	private void OnCurrentViewModelChanged()
 	{
-
-	};
-
-	public void GoTo<TViewModel>() where TViewModel : IViewModel
-	{
-		var route = GetRouteByViewModel<TViewModel>();
-		NavigateTo(route);
+		CurrentViewModelChanged?.Invoke();
 	}
 
-	public void GoTo<TViewModel>(IDictionary<string, object?>? parameters) where TViewModel : IViewModel
+	public NavigationService(
+		IMessengerService messengerService,
+		Func<Type, ViewModelBase> viewModelFactory)
 	{
-		var route = GetRouteByViewModel<TViewModel>();
-		NavigateTo(route, parameters);
+		_messengerService = messengerService;
+		_viewModelFactory = viewModelFactory;
 	}
 
-	public void GoTo(string route, IDictionary<string, object?>? parameters)
+	public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
 	{
-		NavigateTo(route, parameters);
-	}
-
-	private string GetRouteByViewModel<TViewModel>() where TViewModel : IViewModel
-	{
-		return Routes.First(route => route.ViewModelType == typeof(TViewModel)).Route;
-	}
-
-	private void NavigateTo(string route, IDictionary<string, object?>? parameters = null)
-	{
-		var uri = new Uri(route, UriKind.Absolute);
-		_mainFrame.Navigate(uri, parameters);
+		CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
 	}
 }

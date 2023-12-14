@@ -4,33 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
+        xmlns:views="clr-namespace:WpfApp1.App.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Background="#fef4e6">
-        
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="2*" /><!--Headline-->
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5*" />
-            <RowDefinition Height="2*" /><!--Create user button-->
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="1" TextAlignment="Center" Text="WellPerforming Funny App 1" FontSize="50" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold" Foreground="Black"/>
-        
-        <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="1">
-                <TextBlock >Create user</TextBlock>
-            </Button>
-        </Grid>
-       
-    </Grid>
+        Background="#fef4e6" d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}">
+
+        <ContentControl Content="{Binding CurrentViewModel}">
+                <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                                <views:HomeView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:CreateUserViewModel}">
+                                <views:CreateUserView/>
+                        </DataTemplate>
+                </ContentControl.Resources>
+        </ContentControl>
 </Window>
