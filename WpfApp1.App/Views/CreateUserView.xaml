@@ -48,31 +48,35 @@
                  Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
         
         <Label Grid.Row="5"
-               Content="Profile Picture Link:"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Margin="150,0,0,0"/>
-
-        <TextBox Grid.Row="6"
-                 x:Name="imageLinkInput"
-                 Style="{StaticResource BasicTextBox}"
-                 Margin="0,0,0,10"
-                 Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <Label Grid.Row="7"
                Content="Full Name:"
                VerticalAlignment="Bottom"
                HorizontalAlignment="Left"
                Margin="150,0,0,0"/>
 
-        <TextBox Grid.Row="8"
+        <TextBox Grid.Row="6"
                  x:Name="Fullname"
                  Style="{StaticResource BasicTextBox}"
                  Margin="0,0,0,10"
                  Text="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}"/>
         
+        <Label Grid.Row="7"
+               Content="Profile Picture Link:"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Left"
+               Margin="150,0,0,0"/>
+
+        <TextBox Grid.Row="8"
+                 x:Name="imageLinkInput"
+                 Style="{StaticResource BasicTextBox}"
+                 Margin="0,0,0,10"
+                 Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
+        
         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="dismissButton" Style="{StaticResource RedButton}" Content="Dismiss"/>
+            <Button x:Name="dismissButton" 
+                    Style="{StaticResource RedButton}" 
+                    Content="Dismiss"
+                    Command="{Binding GoToHomeViewCommand}"/>
+            
             <Button x:Name="createUserButton"
                     Style="{StaticResource GreenButton}"
                     Content="Create"

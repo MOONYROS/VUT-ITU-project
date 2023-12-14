@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.BL.Facades.Interfaces;
@@ -22,13 +23,22 @@ public partial class CreateUserViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task CreateUser()
 	{
-		await _userFacade.SaveAsync(User);
+		if (User.UserName.Length < 3 || User.UserName.Length > 15)
+		{
+			MessageBox.Show("Username musí být dlouhý 3 až 15 znaků", "Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+		else
+		{
+			await _userFacade.SaveAsync(User);
+			User = UserDetailModel.Empty;
+			_navigationService.NavigateTo<HomeViewModel>();
+		}
+	}
+	
+	[RelayCommand]
+	private void GoToHomeView()
+	{
 		User = UserDetailModel.Empty;
 		_navigationService.NavigateTo<HomeViewModel>();
-	}
-
-	protected override async Task LoadDataAsync()
-	{
-		await _userFacade.GetAsync(User.Id);
 	}
 }
