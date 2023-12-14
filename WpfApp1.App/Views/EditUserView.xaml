@@ -32,9 +32,9 @@
         <TextBox Grid.Row="6" x:Name="imageLinkInput" Style="{StaticResource BasicTextBox}" Margin="0,0,0,10"/>
         
         <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="deleteUserButton" Style="{StaticResource BasicButton}" Content="Delete User"/>
-            <Button x:Name="dismissButton" Style="{StaticResource BasicButton}" Content="Dismiss"/>
-            <Button x:Name="saveChangesButton" Style="{StaticResource BasicButton}" Content="Save Changes"/>
+            <Button x:Name="deleteUserButton" Style="{StaticResource RedButton}" Content="Delete User"/>
+            <Button x:Name="dismissButton" Style="{StaticResource OrangeButton}" Content="Dismiss"/>
+            <Button x:Name="saveChangesButton" Style="{StaticResource GreenButton}" Content="Save Changes"/>
         </StackPanel>
     </Grid>
 </Window>

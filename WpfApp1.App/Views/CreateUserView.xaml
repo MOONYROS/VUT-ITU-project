@@ -34,8 +34,8 @@
         <TextBox Grid.Row="6" x:Name="imageLinkInput" Style="{StaticResource BasicTextBox}" Margin="0,0,0,10"/>
         
         <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="dismissButton" Style="{StaticResource BasicButton}" Content="Dismiss"/>
-            <Button x:Name="createUserButton" Style="{StaticResource BasicButton}" Content="Create"/>
+            <Button x:Name="dismissButton" Style="{StaticResource RedButton}" Content="Dismiss"/>
+            <Button x:Name="createUserButton" Style="{StaticResource GreenButton}" Content="Create"/>
         </StackPanel>
     </Grid>
 </UserControl>
