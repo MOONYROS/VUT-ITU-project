@@ -10,6 +10,10 @@
         Background="#FFF4E7">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -17,14 +21,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Style="{StaticResource CreateUserImage}">
-            <Image Grid.Row="0" x:Name="userImage" Width="100" Height="100"/>
+        <TextBlock Grid.Row="1" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        
+        <Border Grid.Row="2" Style="{StaticResource CreateUserImage}">
+            <Image x:Name="userImage" Width="100" Height="100"/>
         </Border>
         
-        <TextBox Grid.Row="1" x:Name="usernameInput"/>
-        <TextBox Grid.Row="2" x:Name="imageLinkInput"/>
+        <Label Grid.Row="3" Content="Username:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0"/>
+        <TextBox Grid.Row="4" x:Name="usernameInput" Margin="0,0,0,20"/>
         
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <Label Grid.Row="5" Content="Image Link URL:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0"/>
+        <TextBox Grid.Row="6" x:Name="imageLinkInput" Margin="0,0,0,10"/>
+        
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button x:Name="createUserButton" Content="Create User"/>
             <Button x:Name="dismissButton" Content="Dismiss"/>
         </StackPanel>
