@@ -1,6 +1,5 @@
-﻿namespace WpfApp1.BL
+﻿namespace WpfApp1.BL;
+
+public class BusinessLogic
 {
-    internal class BusinessLogic
-    {
-    }
 }

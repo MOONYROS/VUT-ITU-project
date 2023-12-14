@@ -7,7 +7,8 @@
         xmlns:views="clr-namespace:WpfApp1.App.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Background="#fef4e6" d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}">
+        Background="#fef4e6"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}">
 
         <ContentControl Content="{Binding NavigationService.CurrentViewModel}">
                 <ContentControl.Resources>

@@ -1,11 +1,23 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic.FileIO;
 using WpfApp1.APP.Services;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.APP.ViewModels;
+using WpfApp1.APP.ViewModels.Interfaces;
 using WpfApp1.App.Views;
+using WpfApp1.BL.Facades.Interfaces;
+using WpfApp1.BL;
+using WpfApp1.BL.Mappers.Interfaces;
+using WpfApp1.DAL;
+using WpfApp1.DAL.Factories;
+using WpfApp1.DAL.Mappers;
+using WpfApp1.DAL.UnitOfWork;
 
 namespace WpfApp1.App;
 /// <summary>
@@ -26,19 +38,60 @@ public partial class App : Application
 
 		serviceCollection.AddSingleton<INavigationService, NavigationService>();
 
-		serviceCollection.AddSingleton<CreateUserViewModel>();
-		serviceCollection.AddSingleton<HomeViewModel>();
-		serviceCollection.AddSingleton<MainViewModel>();
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<App>()
+			.AddClasses(filter => filter.AssignableTo<IViewModel>())
+			.AsSelf()
+			.WithSingletonLifetime());
 
-		serviceCollection.AddSingleton<MainWindow>(provider => new MainWindow
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<BusinessLogic>()
+			.AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
+			.AsMatchingInterface()
+			.WithSingletonLifetime());
+
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<BusinessLogic>()
+			.AddClasses(filter => filter.AssignableTo(typeof(IFacadeDetailOnly<,>)))
+			.AsMatchingInterface()
+			.WithSingletonLifetime()
+		);
+
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<BusinessLogic>()
+			.AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
+			.AsMatchingInterface()
+			.WithSingletonLifetime()
+		);
+
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<BusinessLogic>()
+			.AddClasses(filter => filter.AssignableTo(typeof(IModelMapperDetailOnly<,>)))
+			.AsMatchingInterface()
+			.WithSingletonLifetime()
+		);
+
+		string databaseFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
+		serviceCollection.AddSingleton<IDbContextFactory<ProjectDbContext>>(provider => new DbContextSqLiteFactory(databaseFilePath));
+		serviceCollection.AddSingleton<IDbMigrator, SqliteDbMigrator>();
+
+		serviceCollection.AddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<DataAccessLayer>()
+			.AddClasses(filter => filter.AssignableTo(typeof(IEntityIDMapper<>)))
+			.AsSelf()
+			.WithSingletonLifetime());
+
+		serviceCollection.AddTransient<MainWindow>(provider => new MainWindow
 		{
 			DataContext = provider.GetRequiredService<MainViewModel>()
 		});
-		serviceCollection.AddSingleton<HomeView>(provider => new HomeView
+		serviceCollection.AddTransient<HomeView>(provider => new HomeView
 		{
 			DataContext = provider.GetRequiredService<HomeViewModel>()
 		});
-		serviceCollection.AddSingleton<CreateUserView>(provider => new CreateUserView
+		serviceCollection.AddTransient<CreateUserView>(provider => new CreateUserView
 		{
 			DataContext = provider.GetRequiredService<CreateUserViewModel>()
 		});
@@ -47,6 +100,7 @@ public partial class App : Application
 	}
 	protected override void OnStartup(StartupEventArgs e)
 	{
+		_serviceProvider.GetRequiredService<IDbMigrator>().Migrate();
 		var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
 		mainWindow.Show();
 		base.OnStartup(e);
