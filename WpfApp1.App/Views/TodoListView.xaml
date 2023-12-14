@@ -24,9 +24,13 @@
                             Command="{Binding GoToTagListViewCommand}"/>
                 </StackPanel>
                 
-                <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
-                    <Button Content="LOG OUT" Style="{StaticResource BasicButton}"/>
-                    <Button Content="PROFILE" Style="{StaticResource BasicButton}"/>
+                <StackPanel VerticalAlignment="Bottom"
+                            DockPanel.Dock="Bottom">
+                    <Button Content="LOG OUT"
+                            Style="{StaticResource BasicButton}"
+                            Command="{Binding LogOutCommand}"/>
+                    <Button Content="PROFILE"
+                            Style="{StaticResource BasicButton}"/>
                 </StackPanel>
             </DockPanel>
         </Border>

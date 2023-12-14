@@ -7,14 +7,18 @@ using CommunityToolkit.Mvvm.Messaging;
 using WpfApp1.App;
 using WpfApp1.App.Messages;
 using WpfApp1.APP.Services.Interfaces;
+using WpfApp1.App.Views;
 using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL.Models;
 
 namespace WpfApp1.APP.ViewModels;
 
 public partial class TodoListViewModel : ViewModelBase,
-	IRecipient<NavigationMessage>
+	IRecipient<NavigationMessage>,
+	IRecipient<TodoAddedMessage>,
+	IRecipient<LogOutMessage>
 {
+	private bool _firstLoad = true;
 	private readonly ITodoFacade _todoFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
@@ -32,7 +36,9 @@ public partial class TodoListViewModel : ViewModelBase,
 		_todoFacade = todoFacade;
 		_navigationService = navigationService;
 		_idService = idService;
-		messengerService.Messenger.Register<NavigationMessage>(this);
+		_messengerService.Messenger.Register<NavigationMessage>(this);
+		_messengerService.Messenger.Register<TodoAddedMessage>(this);
+		_messengerService.Messenger.Register<LogOutMessage>(this);
 	}
 
 	protected override async Task LoadDataAsync()
@@ -42,9 +48,16 @@ public partial class TodoListViewModel : ViewModelBase,
 	}
 	
 	[RelayCommand]
-	private void test()
+	private async void test()
 	{
-		MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
+		var tmpTodo = new TodoDetailModel
+		{
+			Name = "Todo Brother",
+			Date = default,
+			Finished = false
+		};
+		await _todoFacade.SaveAsync(tmpTodo, _idService.UserId);
+		_messengerService.Send(new TodoAddedMessage());
 	}
 	
 		
@@ -55,8 +68,30 @@ public partial class TodoListViewModel : ViewModelBase,
 		_messengerService.Send(new NavigationMessage());
 	}
 
+	[RelayCommand]
+	private void LogOut()
+	{
+		_idService.UserId = Guid.Empty;
+		_messengerService.Send(new LogOutMessage());
+		_navigationService.NavigateTo<HomeViewModel>();
+	}
+
 	public async void Receive(NavigationMessage message)
 	{
+		if (_firstLoad)
+		{
+			await LoadDataAsync();
+			_firstLoad = false;
+		}
+	}
+
+	public async void Receive(TodoAddedMessage message)
+	{
 		await LoadDataAsync();
+	}
+
+	public void Receive(LogOutMessage message)
+	{
+		_firstLoad = true;
 	}
 }

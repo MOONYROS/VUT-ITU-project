@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using WpfApp1.App;
@@ -13,12 +13,15 @@ using WpfApp1.BL.Models;
 namespace WpfApp1.APP.ViewModels;
 
 public partial class TagListViewModel : ViewModelBase,
-	IRecipient<NavigationMessage>
+	IRecipient<NavigationMessage>,
+	IRecipient<TagAddedMessage>,
+	IRecipient<LogOutMessage>
 {
 	private readonly ITagFacade _tagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
 	private ISharedUserIdService _idService;
+	private bool _firstLoad = true;
 
 	public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
 		public TagListViewModel(
@@ -31,6 +34,9 @@ public partial class TagListViewModel : ViewModelBase,
 			_tagFacade = tagFacade;
 			_navigationService = navigationService;
 			_idService = idService;
+			_messengerService.Messenger.Register<NavigationMessage>(this);
+			_messengerService.Messenger.Register<TagAddedMessage>(this);
+			_messengerService.Messenger.Register<LogOutMessage>(this);
 		}
 
 		protected override async Task LoadDataAsync()
@@ -53,12 +59,34 @@ public partial class TagListViewModel : ViewModelBase,
 		[RelayCommand]
 		private void GoToTagListView()
 		{
-			_messengerService.Send(new NavigationMessage());
 			_navigationService.NavigateTo<TodoListViewModel>();
+			_messengerService.Send(new NavigationMessage());
 		}
-		
+
+		[RelayCommand]
+		private void LogOut()
+		{
+			_idService.UserId = Guid.Empty;
+			_navigationService.NavigateTo<HomeViewModel>();
+			_messengerService.Send(new LogOutMessage());
+		}
+
 		public async void Receive(NavigationMessage message)
 		{
+			if (_firstLoad)
+			{
+				_firstLoad = false;
+				await LoadDataAsync();
+			}
+		}
+
+		public async void Receive(TagAddedMessage message)
+		{
 			await LoadDataAsync();
+		}
+
+		public void Receive(LogOutMessage message)
+		{
+			_firstLoad = true;
 		}
 }
