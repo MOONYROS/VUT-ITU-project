@@ -6,85 +6,73 @@
         xmlns:local="clr-namespace:WpfApp1.App.Views"
         xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
         mc:Ignorable="d"
-        Height="600"
-        Width="800"
         Background="#FFF4E7"
         d:DataContext="{d:DesignInstance Type=viewModels:CreateUserViewModel}">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
         
-        <Border Grid.Row="2"
-                Style="{StaticResource CreateUserImage}">
-            <Image Width="100"
-                   Height="100"
-                   Stretch="UniformToFill">
-                <Image.Source>
-                    <Binding Path="User.ImageUrl">
-                        <Binding.Converter>
-                            <local:UrlImageConverter/>
-                        </Binding.Converter>
-                    </Binding>
-                </Image.Source>
-            </Image>
-        </Border>
-        
-        <Label Grid.Row="3"
-               Content="Profile Name:"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Margin="150,0,0,0"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Border Style="{StaticResource CreateUserImage}">
+                    <Image Width="100"
+                           Height="100"
+                           Stretch="UniformToFill">
+                        <Image.Source>
+                            <Binding Path="User.ImageUrl">
+                                <Binding.Converter>
+                                    <local:UrlImageConverter/>
+                                </Binding.Converter>
+                            </Binding>
+                        </Image.Source>
+                    </Image>
+                </Border>
+                
+                <Label Content="Profile Name:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Margin="150,0,0,0"/>
 
-        <TextBox Grid.Row="4"
-                 Style="{StaticResource BasicTextBox}"
-                 Margin="0,0,0,20"
-                 Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
-        
-        <Label Grid.Row="5"
-               Content="Full Name:"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Margin="150,0,0,0"/>
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,20"
+                         Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <Label Content="Full Name:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Margin="150,0,0,0"/>
 
-        <TextBox Grid.Row="6"
-                 x:Name="Fullname"
-                 Style="{StaticResource BasicTextBox}"
-                 Margin="0,0,0,10"
-                 Text="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}"/>
-        
-        <Label Grid.Row="7"
-               Content="Profile Picture Link:"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Margin="150,0,0,0"/>
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <Label Content="Profile Picture Link:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Margin="150,0,0,0"/>
 
-        <TextBox Grid.Row="8"
-                 Style="{StaticResource BasicTextBox}"
-                 Margin="0,0,0,10"
-                 Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            Margin="10">
+                    <Button Style="{StaticResource RedButton}" 
+                            Content="Dismiss"
+                            Command="{Binding GoToHomeViewCommand}"/>
+                    
+                    <Button Style="{StaticResource GreenButton}"
+                            Content="Create"
+                            Command="{Binding CreateUserCommand}"/>
+                </StackPanel>    
+            </StackPanel>
+        </ScrollViewer>
         
-        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Style="{StaticResource RedButton}" 
-                    Content="Dismiss"
-                    Command="{Binding GoToHomeViewCommand}"/>
-            
-            <Button Style="{StaticResource GreenButton}"
-                    Content="Create"
-                    Command="{Binding CreateUserCommand}"/>
-        </StackPanel>
     </Grid>
 </UserControl>
