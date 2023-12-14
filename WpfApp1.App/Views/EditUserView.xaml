@@ -8,33 +8,76 @@
         Height="450" Width="800" Background="#FFF4E7">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Text="Edit User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" 
+                   Text="Edit User" 
+                   FontSize="32" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
         
-        <Border Grid.Row="2" Style="{StaticResource CreateUserImage}">
-            <Image x:Name="userImage" Width="100" Height="100"/>
-        </Border>
-        
-        <Label Grid.Row="3" Content="Profile Name:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0"/>
-        <TextBox Grid.Row="4" x:Name="usernameInput" Style="{StaticResource BasicTextBox}" Margin="0,0,0,20"/>
-        
-        <Label Grid.Row="5" Content="Profile Picture Link:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0"/>
-        <TextBox Grid.Row="6" x:Name="imageLinkInput" Style="{StaticResource BasicTextBox}" Margin="0,0,0,10"/>
-        
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="deleteUserButton" Style="{StaticResource RedButton}" Content="Delete User"/>
-            <Button x:Name="dismissButton" Style="{StaticResource OrangeButton}" Content="Dismiss"/>
-            <Button x:Name="saveChangesButton" Style="{StaticResource GreenButton}" Content="Save Changes"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Center">
+            <StackPanel Width="500"
+                        HorizontalAlignment="Center">
+                <Border Style="{StaticResource CreateUserImage}">
+                    <Image Width="100"
+                           Height="100"
+                           Stretch="UniformToFill">
+                        <Image.Source>
+                            <Binding Path="User.ImageUrl">
+                                <Binding.Converter>
+                                    <local:UrlImageConverter/>
+                                </Binding.Converter>
+                            </Binding>
+                        </Image.Source>
+                    </Image>
+                </Border>
+                
+                <Label Content="Profile Name:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <Label Content="Full Name:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <Label Content="Profile Picture Link:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding User.ImageUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            Margin="10">
+                    <Button Style="{StaticResource RedButton}" 
+                            Content="Delete User"
+                            Command="{Binding GoToHomeViewCommand}"/>
+                    
+                    <Button Style="{StaticResource OrangeButton}"
+                            Content="Dismiss"
+                            Command="{Binding CreateUserCommand}"/>
+                    
+                    <Button Style="{StaticResource GreenButton}"
+                            Content="Save Changes"
+                            Command="{Binding CreateUserCommand}"/>
+                </StackPanel>    
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

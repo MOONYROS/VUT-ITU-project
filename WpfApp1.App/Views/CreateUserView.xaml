@@ -15,10 +15,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" 
+                   Text="Create User" 
+                   FontSize="32" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
         
         <ScrollViewer Grid.Row="1" 
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Center">
             <StackPanel Width="500"
                         HorizontalAlignment="Center">
                 <Border Style="{StaticResource CreateUserImage}">
@@ -72,6 +78,5 @@
                 </StackPanel>    
             </StackPanel>
         </ScrollViewer>
-        
     </Grid>
 </UserControl>
