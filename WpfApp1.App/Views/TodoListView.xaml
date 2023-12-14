@@ -4,7 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:WpfApp1.App.Views"
+        xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModels:TodoListViewModel}"
         Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -18,7 +20,8 @@
                 <StackPanel VerticalAlignment="Top" DockPanel.Dock="Top">
                     <Button Content="TODOS" Style="{StaticResource BasicButton}"/>
                     <Button Content="EVENTS" Style="{StaticResource BasicButton}"/>
-                    <Button Content="TAGS" Style="{StaticResource BasicButton}"/>
+                    <Button Content="TAGS" Style="{StaticResource BasicButton}"
+                            Command="{Binding GoToTagListViewCommand}"/>
                 </StackPanel>
                 
                 <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
@@ -37,7 +40,10 @@
             
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Text="TODO LIST" Style="{StaticResource Heading}"/>
-                <Button Content="CREATE TODO" Style="{StaticResource GreenButton}" Width="200"/>
+                <Button Content="CREATE TODO" 
+                        Style="{StaticResource GreenButton}" 
+                        Width="200"
+                        Command="{Binding testCommand}"/>
             </StackPanel>
             
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
