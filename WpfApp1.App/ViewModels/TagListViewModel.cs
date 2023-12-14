@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
@@ -39,9 +40,14 @@ public partial class TagListViewModel : ViewModelBase,
 		}
 		
 		[RelayCommand]
-		private void test()
+		private async void test()
 		{
-			MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
+			// MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
+			var tag = TagDetailModel.Empty;
+			tag.Name = "Kokot";
+			tag.Color = Color.Fuchsia;
+			await _tagFacade.SaveAsync(tag, _idService.UserId);
+			await LoadDataAsync();
 		}
 		
 		[RelayCommand]

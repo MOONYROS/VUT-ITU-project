@@ -51,8 +51,8 @@ public partial class TodoListViewModel : ViewModelBase,
 	[RelayCommand]
 	private void GoToTagListView()
 	{
-		_messengerService.Send(new NavigationMessage());
 		_navigationService.NavigateTo<TagListViewModel>();
+		_messengerService.Send(new NavigationMessage());
 	}
 
 	public async void Receive(NavigationMessage message)
