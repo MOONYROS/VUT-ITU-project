@@ -5,7 +5,13 @@
              xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
              xmlns:views="clr-namespace:WpfApp1.App.Views">
     <Application.Resources>
-        <Style TargetType="Button">
+        <Style x:Key="WindowStyle" TargetType="Window">
+            <Setter Property="Width" Value="800"/>
+            <Setter Property="Height" Value="450"/>
+            <Setter Property="Background" Value="#FFF4E7"/>
+        </Style>
+        
+        <Style x:Key="BasicButton" TargetType="Button">
             <Setter Property="Background" Value="#FFF4E7"/>
             <Setter Property="BorderBrush" Value="#FF8200"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -32,7 +38,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TextBox">
+        
+        <Style x:Key="BasicTextBox" TargetType="TextBox">
             <Setter Property="Background" Value="#FFF4E7"/>
             <Setter Property="BorderBrush" Value="#FF8200"/>
             <Setter Property="Margin" Value="10"/>
@@ -53,6 +60,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="CreateUserImage" TargetType="Border">
             <Setter Property="BorderBrush" Value="#FF8200"/>
             <Setter Property="BorderThickness" Value="2"/>
