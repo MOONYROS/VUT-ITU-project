@@ -39,6 +39,8 @@ public partial class App : Application
 
 		serviceCollection.AddSingleton<INavigationService, NavigationService>();
 
+		serviceCollection.AddSingleton<ISharedUserIdService, SharedUserIdService>();
+
 		serviceCollection.Scan(selector => selector
 			.FromAssemblyOf<App>()
 			.AddClasses(filter => filter.AssignableTo<IViewModel>())

@@ -19,16 +19,19 @@ public partial class HomeViewModel : ViewModelBase,
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
 	private readonly IMessengerService _messengerService;
+	private ISharedUserIdService _idService;
 	public ObservableCollection<UserListModel> Users { get; set; }
 
 	public HomeViewModel(
 		INavigationService navigationService,
 		IMessengerService messengerService,
-		IUserFacade userFacade) : base(messengerService)
+		IUserFacade userFacade,
+		ISharedUserIdService idService) : base(messengerService)
 	{
 		_navigationService = navigationService;
 		_messengerService = messengerService;
 		_userFacade = userFacade;
+		_idService = idService;
 		messengerService.Messenger.Register<UserCreatedMessage>(this);
 		messengerService.Messenger.Register<BootMessage>(this);
 	}
@@ -42,7 +45,8 @@ public partial class HomeViewModel : ViewModelBase,
 	[RelayCommand]
 	private void GoToUserTodos(Guid userGuid)
 	{
-		_messengerService.Send(new TodoListNavigateMessage());
+		_idService.UserId = userGuid;
+		_messengerService.Send(new TodoNavigationMessage());
 		_navigationService.NavigateTo<TodoListViewModel>();
 	}
 
