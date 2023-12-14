@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewmodels="clr-namespace:WpfApp1.APP.ViewModels"
+        xmlns:views="clr-namespace:WpfApp1.App.Views"
         d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
         mc:Ignorable="d">
 
@@ -26,17 +27,38 @@
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
-            <ListBox Grid.Column="1"
-                     ItemsSource="{Binding Users}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding UserName}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
+            <ScrollViewer Grid.Column="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Users}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.GoToUserTodosCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding Id}">
+                                <StackPanel Orientation="Vertical">
+                                    <Image Width="100"
+                                           Height="100"
+                                           Stretch="Uniform">
+                                        <Image.Source>
+                                            <Binding Path="ImageUrl">
+                                                <Binding.Converter>
+                                                    <views:UrlImageConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBox Text="{Binding UserName}"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
         
         <Grid Grid.Row="4">
@@ -46,7 +68,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1" Command="{Binding GoToCreateUserCommand}" Style="{StaticResource BasicButton}">
+            <Button Grid.Column="1"
+                    Command="{Binding GoToCreateUserCommand}"
+                    Style="{StaticResource BasicButton}">
                 <TextBlock >Create user</TextBlock>
             </Button>
         </Grid>

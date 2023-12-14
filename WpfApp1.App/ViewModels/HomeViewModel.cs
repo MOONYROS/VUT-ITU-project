@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -17,6 +18,7 @@ public partial class HomeViewModel : ViewModelBase,
 {
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
+	private readonly IMessengerService _messengerService;
 	public ObservableCollection<UserListModel> Users { get; set; }
 
 	public HomeViewModel(
@@ -25,6 +27,7 @@ public partial class HomeViewModel : ViewModelBase,
 		IUserFacade userFacade) : base(messengerService)
 	{
 		_navigationService = navigationService;
+		_messengerService = messengerService;
 		_userFacade = userFacade;
 		messengerService.Messenger.Register<UserCreatedMessage>(this);
 		messengerService.Messenger.Register<BootMessage>(this);
@@ -34,6 +37,13 @@ public partial class HomeViewModel : ViewModelBase,
 	private void GoToCreateUser()
 	{
 		_navigationService.NavigateTo<CreateUserViewModel>();
+	}
+
+	[RelayCommand]
+	private void GoToUserTodos(Guid userGuid)
+	{
+		_messengerService.Send(new TodoListNavigateMessage());
+		_navigationService.NavigateTo<TodoListViewModel>();
 	}
 
 	protected override async Task LoadDataAsync()
