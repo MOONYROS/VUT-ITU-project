@@ -25,4 +25,8 @@
   	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
   	</ItemGroup>
 
+  	<ItemGroup>
+  	  <Compile Remove="ViewModels\MainWindowViewModel.cs" />
+  	</ItemGroup>
+
 </Project>

@@ -6,16 +6,12 @@ namespace WpfApp1.APP.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-	private readonly INavigationService _navigationService;
-
-	public event Action CurrentViewModelChanged;
-	public ViewModelBase CurrentViewModel => _navigationService.CurrentViewModel;
-
+	public INavigationService NavigationService { get; set; }
 	public MainViewModel(
 		INavigationService navigationService,
 		HomeViewModel starting)
 	{
-		_navigationService = navigationService;
-		_navigationService.CurrentViewModel = starting;
+		NavigationService = navigationService;
+		NavigationService.CurrentViewModel = starting;
 	}
 }

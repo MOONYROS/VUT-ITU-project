@@ -13,7 +13,7 @@ public partial class HomeViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	public void GoToCreateUser()
+	private void GoToCreateUser()
 	{
 		_navigationService.NavigateTo<CreateUserViewModel>();
 	}

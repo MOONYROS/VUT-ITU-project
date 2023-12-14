@@ -38,7 +38,7 @@ public partial class App : Application
 		{
 			DataContext = provider.GetRequiredService<HomeViewModel>()
 		});
-		serviceCollection.AddSingleton<CreateUserView>(provider => new CreateUserView()
+		serviceCollection.AddSingleton<CreateUserView>(provider => new CreateUserView
 		{
 			DataContext = provider.GetRequiredService<CreateUserViewModel>()
 		});

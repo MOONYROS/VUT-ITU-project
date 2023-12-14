@@ -1,5 +1,6 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.APP.ViewModels;
 
@@ -10,24 +11,7 @@ public class NavigationService : ObservableObject, INavigationService
 	private readonly Func<Type, ViewModelBase> _viewModelFactory;
 	private readonly IMessengerService _messengerService;
 
-	public event Action CurrentViewModelChanged;
-	private ViewModelBase _currentViewModel;
-
-	public ViewModelBase CurrentViewModel
-	{
-		get => _currentViewModel;
-		set 
-		{
-			_currentViewModel = value;
-			OnPropertyChanged();
-		}
-	}
-
-	private void OnCurrentViewModelChanged()
-	{
-		CurrentViewModelChanged?.Invoke();
-	}
-
+	public ViewModelBase CurrentViewModel { get; set; }
 	public NavigationService(
 		IMessengerService messengerService,
 		Func<Type, ViewModelBase> viewModelFactory)
