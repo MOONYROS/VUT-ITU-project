@@ -18,7 +18,7 @@
         <TextBlock Grid.Row="0" Text="Create User" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
         
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
+            <StackPanel Width="500">
                 <Border Style="{StaticResource CreateUserImage}">
                     <Image Width="100"
                            Height="100"
@@ -35,17 +35,15 @@
                 
                 <Label Content="Profile Name:"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Left"
-                       Margin="150,0,0,0"/>
+                       HorizontalAlignment="Left"/>
 
                 <TextBox Style="{StaticResource BasicTextBox}"
-                         Margin="0,0,0,20"
+                         Margin="0,0,0,10"
                          Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged}"/>
                 
                 <Label Content="Full Name:"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Left"
-                       Margin="150,0,0,0"/>
+                       HorizontalAlignment="Left"/>
 
                 <TextBox Style="{StaticResource BasicTextBox}"
                          Margin="0,0,0,10"
@@ -53,8 +51,7 @@
                 
                 <Label Content="Profile Picture Link:"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Left"
-                       Margin="150,0,0,0"/>
+                       HorizontalAlignment="Left"/>
 
                 <TextBox Style="{StaticResource BasicTextBox}"
                          Margin="0,0,0,10"
