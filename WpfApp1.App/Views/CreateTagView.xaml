@@ -38,7 +38,10 @@
                          Margin="0,0,0,10"
                          Text="{Binding Tag.Name, UpdateSourceTrigger=PropertyChanged}"/>
                 
-                <!-- color picker-->
+                <Label Content="Pick a color:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+                
                 <xctk:ColorPicker Name="ColorPicker">
                     <xctk:ColorPicker.SelectedColor>
                         <Binding Path="Tag.Color">
