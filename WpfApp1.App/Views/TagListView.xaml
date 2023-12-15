@@ -25,7 +25,7 @@
                             DockPanel.Dock="Top">
                     <Button Content="TODOS" 
                             Style="{StaticResource BasicButton}"
-                            Command="{Binding GoToTagListViewCommand}"/>
+                            Command="{Binding GoToTodoListViewCommand}"/>
                     <Button Content="EVENTS" 
                             Style="{StaticResource BasicButton}"/>
                     <Button Content="TAGS" 

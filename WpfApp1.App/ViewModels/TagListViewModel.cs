@@ -51,6 +51,12 @@ public partial class TagListViewModel : ViewModelBase,
 			_navigationService.NavigateTo<CreateTagViewModel>();
 		}
 		
+		[RelayCommand]
+		private void GoToTodoListView()
+		{
+			_navigationService.NavigateTo<TodoListViewModel>();
+		}
+		
 		
 		[RelayCommand]
 		private async void DeleteTag(Guid userId)
