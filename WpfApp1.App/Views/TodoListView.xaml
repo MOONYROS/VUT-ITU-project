@@ -30,7 +30,8 @@
                             Style="{StaticResource BasicButton}"
                             Command="{Binding LogOutCommand}"/>
                     <Button Content="PROFILE"
-                            Style="{StaticResource BasicButton}"/>
+                            Style="{StaticResource BasicButton}"
+                            Command="{Binding GoToEditUserViewCommand}"/>
                 </StackPanel>
             </DockPanel>
         </Border>

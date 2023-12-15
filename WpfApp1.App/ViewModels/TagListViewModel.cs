@@ -56,6 +56,12 @@ public partial class TagListViewModel : ViewModelBase,
 		{
 			_navigationService.NavigateTo<TodoListViewModel>();
 		}
+		[RelayCommand]
+		private void GoToEditUserView()
+		{
+			_navigationService.NavigateTo<EditUserViewModel>();
+			_messengerService.Send(new NavigationMessage());
+		}
 		
 		
 		[RelayCommand]

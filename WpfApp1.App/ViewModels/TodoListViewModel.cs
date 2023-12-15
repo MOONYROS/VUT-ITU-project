@@ -60,6 +60,13 @@ public partial class TodoListViewModel : ViewModelBase,
 		_messengerService.Send(new TodoAddedMessage());
 	}
 	
+	[RelayCommand]
+	private void GoToEditUserView()
+	{
+		_navigationService.NavigateTo<EditUserViewModel>();
+		_messengerService.Send(new NavigationMessage());
+	}
+	
 		
 	[RelayCommand]
 	private void GoToTagListView()
