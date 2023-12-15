@@ -48,7 +48,6 @@ public partial class TagListViewModel : ViewModelBase,
 		[RelayCommand]
 		private async void test()
 		{
-			// MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
 			var tag = TagDetailModel.Empty;
 			tag.Name = "Kokot Jebnuty blbecek";
 			tag.Color = Color.Fuchsia;
