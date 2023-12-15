@@ -14,6 +14,7 @@ using WpfApp1.APP.ViewModels.Interfaces;
 using WpfApp1.App.Views;
 using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL;
+using WpfApp1.BL.Facades;
 using WpfApp1.BL.Mappers.Interfaces;
 using WpfApp1.DAL;
 using WpfApp1.DAL.Factories;
@@ -40,6 +41,8 @@ public partial class App : Application
 		serviceCollection.AddSingleton<INavigationService, NavigationService>();
 
 		serviceCollection.AddSingleton<ISharedUserIdService, SharedUserIdService>();
+
+		serviceCollection.AddSingleton<IActivityTagFacade, ActivityTagFacade>();
 
 		serviceCollection.Scan(selector => selector
 			.FromAssemblyOf<App>()
