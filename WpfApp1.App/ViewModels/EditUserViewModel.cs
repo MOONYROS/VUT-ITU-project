@@ -30,6 +30,8 @@ public partial class EditUserViewModel : ViewModelBase,
 		_navigationService = navigationService;
 		_userFacade = userFacade;
 		_idService = idService;
+		messengerService.Messenger.Register<NavigationMessage>(this);
+		messengerService.Messenger.Register<LogOutMessage>(this);
 	}
 	
 	protected override async Task LoadDataAsync()
@@ -47,8 +49,9 @@ public partial class EditUserViewModel : ViewModelBase,
 	}
 	
 	[RelayCommand]
-	private void GoToTodoListView()//dismiss
+	private async void GoToTodoListView()//dismiss
 	{
+		User = await _userFacade.GetAsync(_idService.UserId); 
 		_navigationService.NavigateTo<TodoListViewModel>();
 	}
 	

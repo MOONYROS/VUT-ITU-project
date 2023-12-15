@@ -42,7 +42,7 @@
                     </Image>
                 </Border>
                 
-                <Label Content="Profile Name:"
+                <Label Content="User Name:"
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
 

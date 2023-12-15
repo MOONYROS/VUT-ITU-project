@@ -5,8 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:WpfApp1.App.Views"
         xmlns:converters="clr-namespace:WpfApp1.App.Converters"
+        xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
         mc:Ignorable="d"
-        Height="450" Width="800" Background="#FFF4E7">
+        Background="#FFF4E7"
+        d:DataContext="{d:DesignInstance Type=viewModels:EditUserViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
@@ -39,7 +41,7 @@
                     </Image>
                 </Border>
                 
-                <Label Content="Profile Name:"
+                <Label Content="User Name:"
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
 
@@ -68,15 +70,15 @@
                             Margin="10">
                     <Button Style="{StaticResource RedButton}" 
                             Content="Delete User"
-                            Command="{Binding GoToHomeViewCommand}"/>
+                            Command="{Binding DeleteUserCommand}"/>
                     
                     <Button Style="{StaticResource OrangeButton}"
                             Content="Dismiss"
-                            Command="{Binding CreateUserCommand}"/>
+                            Command="{Binding GoToTodoListViewCommand}"/>
                     
                     <Button Style="{StaticResource GreenButton}"
                             Content="Save Changes"
-                            Command="{Binding CreateUserCommand}"/>
+                            Command="{Binding EditUserCommand}"/>
                 </StackPanel>    
             </StackPanel>
         </ScrollViewer>
