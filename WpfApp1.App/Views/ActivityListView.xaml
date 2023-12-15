@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:WpfApp1.App.Views"
              xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
              mc:Ignorable="d"
@@ -40,6 +41,40 @@
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Text="ACTIVITY LIST" Style="{StaticResource Heading}"/>
                 <Button Content="CREATE ACTIVITY" Style="{StaticResource GreenButton}" Width="200"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0" Content="From :"></Label>
+                    <xctk:DateTimePicker Format="Custom" FormatString="dd.MM.yyyy HH:mm" Value="{Binding From}" Grid.Column="1"></xctk:DateTimePicker>
+                    <Label Grid.Column="2" Content="To :"></Label>
+                    <xctk:DateTimePicker Format="Custom" FormatString="dd.MM.yyyy HH:mm" Value="{Binding To}" Grid.Column="3"></xctk:DateTimePicker>
+                    <Label Grid.Column="4" Content="Tag :"></Label>
+                    <ComboBox Grid.Column="5" 
+                              ItemsSource="{Binding Tags}"
+                              SelectedItem="{Binding SelectedTag}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Grid.Column="6" 
+                        Command="{Binding ApplyFilterCommand}"
+                        Content="Apply filter">
+                    </Button>
+                </Grid>
+                
             </StackPanel>
             
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
