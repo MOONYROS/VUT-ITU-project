@@ -11,6 +11,6 @@ public record TagDetailModel : ModelBase
     {
         Id = Guid.Empty,
         Name = string.Empty,
-        Color = Color.Empty
+        Color = Color.Black
     };
 }

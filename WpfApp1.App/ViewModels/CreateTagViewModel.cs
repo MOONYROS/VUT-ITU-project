@@ -39,11 +39,10 @@ public partial class CreateTagViewModel : ViewModelBase
 		}
 		else
 		{
-			Tag.Color = Color.Fuchsia;
 			await _tagFacade.SaveAsync(Tag, _idService.UserId);
 			Tag = TagDetailModel.Empty;
-			_messengerService.Send(new TagAddedMessage());
 			_navigationService.NavigateTo<TagListViewModel>();
+			_messengerService.Send(new TagAddedMessage());
 		}
 	}
 	
