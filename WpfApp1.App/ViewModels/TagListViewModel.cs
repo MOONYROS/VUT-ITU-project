@@ -50,7 +50,7 @@ public partial class TagListViewModel : ViewModelBase,
 		{
 			// MessageBox.Show($"{_idService.UserId}", "jolol", MessageBoxButton.OK, MessageBoxImage.Error);
 			var tag = TagDetailModel.Empty;
-			tag.Name = "Kokot";
+			tag.Name = "Kokot Jebnuty blbecek";
 			tag.Color = Color.Fuchsia;
 			await _tagFacade.SaveAsync(tag, _idService.UserId);
 			await LoadDataAsync();
