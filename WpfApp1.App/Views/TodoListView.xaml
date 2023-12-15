@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModels:TodoListViewModel}"
-        >
+        d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
@@ -52,28 +52,108 @@
                         Command="{Binding GoToCreateTodoViewCommand}"/>
             </StackPanel>
             
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <!-- SETTING UP ITEM COLUMNS -->
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Vertical" Margin="10">
-                        <!-- ITEM -->
-                        <Border Background="#FFF4E7" BorderBrush="#FF8200" BorderThickness="2" Margin="5" Padding="10" CornerRadius="5">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Cry alone in the bathroom knowing there is no escape." HorizontalAlignment="Left" Width="150" TextWrapping="Wrap"/>
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
-                                    <Button Content="ACCEPT" Style="{StaticResource GreenButton}" Margin="20,0,0,5"/>
-                                    <Button Content="DELETE" Style="{StaticResource RedButton}" Margin="20,0,0,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="UNFINISHED"
+                           Style="{StaticResource Heading}"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="DONE"
+                           Style="{StaticResource Heading}"></TextBlock>
+
+                <ScrollViewer Grid.Row="1" Grid.Column="0"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding UnfinishedTodos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="#FFF4E7"
+                                            BorderBrush="#FF8200"
+                                            BorderThickness="2"
+                                            Margin="5"
+                                            Padding="10"
+                                            CornerRadius="5"
+                                            HorizontalAlignment="Stretch">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.RowSpan="2" Grid.Column="0"
+                                                       Text="{Binding Name}"/>
+                                            <Button Grid.Row="0" Grid.Column="1"
+                                                    Command="{Binding DataContext.FinishToDoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Content="Finish"
+                                                    Style="{StaticResource GreenButton}"/>
+                                            <Button Grid.Row="1" Grid.Column="1"
+                                                    Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Content="Remove"
+                                                    Style="{StaticResource RedButton}"/>
+                                        </Grid>
+                                    </Border>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <ScrollViewer Grid.Row="1" Grid.Column="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding FinishedTodos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="#FFF4E7"
+                                            BorderBrush="#FF8200"
+                                            BorderThickness="2"
+                                            Margin="5"
+                                            Padding="10"
+                                            CornerRadius="5">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.RowSpan="2" Grid.Column="0"
+                                                       Text="{Binding Name}"/>
+                                            <Button Grid.Row="0" Grid.Column="1"
+                                                    Command="{Binding DataContext.UnfinishToDoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Content="Unfinish"
+                                                    Style="{StaticResource OrangeButton}"/>
+                                            <Button Grid.Row="1" Grid.Column="1"
+                                                    Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Content="Remove"
+                                                    Style="{StaticResource RedButton}"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

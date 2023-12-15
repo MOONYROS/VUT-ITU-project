@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
@@ -24,7 +25,9 @@ public partial class TodoListViewModel : ViewModelBase,
 	private readonly INavigationService _navigationService;
 	private ISharedUserIdService _idService;
 
-	public ObservableCollection<TodoDetailModel> Todos { get; set; } = new();
+	public ObservableCollection<TodoDetailModel> UnfinishedTodos { get; set; } = new();
+
+	public ObservableCollection<TodoDetailModel> FinishedTodos { get; set; } = new();
 	public TodoListViewModel(
 		IMessengerService messengerService,
 		ITodoFacade todoFacade,
@@ -44,7 +47,9 @@ public partial class TodoListViewModel : ViewModelBase,
 	protected override async Task LoadDataAsync()
 	{
 		var bruh = await _todoFacade.GetAsyncUser(_idService.UserId, false);
-		Todos = bruh.ToObservableCollection();
+		UnfinishedTodos = bruh.ToObservableCollection();
+		bruh = await _todoFacade.GetAsyncUser(_idService.UserId, true);
+		FinishedTodos = bruh.ToObservableCollection();
 	}
 	
 	[RelayCommand]
@@ -79,6 +84,31 @@ public partial class TodoListViewModel : ViewModelBase,
 		_idService.UserId = Guid.Empty;
 		_messengerService.Send(new LogOutMessage());
 		_navigationService.NavigateTo<HomeViewModel>();
+	}
+
+	[RelayCommand]
+	private async void FinishToDo(Guid todoId)
+	{
+		var tmpTodo = UnfinishedTodos.FirstOrDefault(element => element.Id == todoId);
+		tmpTodo.Finished = true;
+		await _todoFacade.SaveAsync(tmpTodo, _idService.UserId);
+		await LoadDataAsync();
+	}
+
+	[RelayCommand]
+	private async void UnfinishToDo(Guid todoId)
+	{
+		var tmpTodo = FinishedTodos.FirstOrDefault(element => element.Id == todoId);
+		tmpTodo.Finished = false;
+		await _todoFacade.SaveAsync(tmpTodo, _idService.UserId);
+		await LoadDataAsync();
+	}
+
+	[RelayCommand]
+	private async void DeleteTodo(Guid todoId)
+	{
+		await _todoFacade.DeleteAsync(todoId);
+		await LoadDataAsync();
 	}
 
 	public async void Receive(NavigationMessage message)
