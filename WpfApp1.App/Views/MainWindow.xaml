@@ -36,6 +36,9 @@
                         <DataTemplate DataType="{x:Type viewModels:ActivityListViewModel}">
                                 <views:ActivityListView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:CreateActivityViewModel}">
+                                <views:CreateActivityView/>
+                        </DataTemplate>
                 </ContentControl.Resources>
         </ContentControl>
 </Window>

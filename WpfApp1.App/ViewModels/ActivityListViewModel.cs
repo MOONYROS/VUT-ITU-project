@@ -117,6 +117,12 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_messengerService.Send(new LogOutMessage());
 	}
 
+	[RelayCommand]
+	private void GoToCreateActivity()
+	{
+		_navigationService.NavigateTo<CreateActivityViewModel>();
+	}
+	
 	public async void Receive(NavigationMessage message)
 	{
 		if (_firstLoad)

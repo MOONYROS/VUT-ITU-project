@@ -40,7 +40,10 @@
             
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Text="ACTIVITY LIST" Style="{StaticResource Heading}"/>
-                <Button Content="CREATE ACTIVITY" Style="{StaticResource GreenButton}" Width="200"/>
+                <Button Content="CREATE ACTIVITY" 
+                        Style="{StaticResource GreenButton}" 
+                        Width="200"
+                        Command="{Binding GoToCreateActivityCommand}"/>
                 
                 <Grid>
                     <Grid.ColumnDefinitions>

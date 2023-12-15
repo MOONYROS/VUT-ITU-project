@@ -6,8 +6,10 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:WpfApp1.App.Views"
              xmlns:converters="clr-namespace:WpfApp1.App.Converters"
+             xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
              Background="#FFF4E7"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:CreateActivityViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -88,17 +90,30 @@
                         </Binding>
                     </xctk:ColorPicker.SelectedColor>
                 </xctk:ColorPicker>
-
+                
+                <Label Content="Select a Tag:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+                
+                <ComboBox ItemsSource="{Binding AvailableTags}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Width="500">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
                             Margin="10">
                     <Button Style="{StaticResource RedButton}" 
-                            Content="Dismiss"
-                            Command="{Binding GoToTagListViewCommand}"/>
+                            Content="Dismiss"/>
                     
                     <Button Style="{StaticResource GreenButton}"
-                            Content="Create"
-                            Command="{Binding CreateTagCommand}"/>
+                            Content="Create"/>
                 </StackPanel>    
             </StackPanel>
         </ScrollViewer>
