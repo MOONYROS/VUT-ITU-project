@@ -51,6 +51,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     
                     <Label Grid.Column="0" Content="From :"></Label>
@@ -72,6 +73,10 @@
                     <Button Grid.Column="6" 
                         Command="{Binding ApplyFilterCommand}"
                         Content="Apply filter">
+                    </Button>
+                    <Button Grid.Column="7" 
+                            Command="{Binding }"
+                            Content="List all">
                     </Button>
                 </Grid>
                 
