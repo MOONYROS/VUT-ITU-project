@@ -24,6 +24,9 @@
                         <DataTemplate DataType="{x:Type viewModels:TagListViewModel}">
                                 <views:TagListView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:CreateTagViewModel}">
+                                <views:CreateTagView/>
+                        </DataTemplate>
                 </ContentControl.Resources>
         </ContentControl>
 </Window>

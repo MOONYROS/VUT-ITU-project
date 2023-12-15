@@ -77,7 +77,11 @@
                                             </Binding>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="{Binding Name}" Width="250" Height="35" FontSize="25" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Name}" Width="200" Height="35" FontSize="20" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold" Margin="0,6,0,0"/>
+                                    <Button Width="50" Height="35" 
+                                            Command="{Binding DataContext.DeleteTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Id}">
+                                        Delete
+                                    </Button>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

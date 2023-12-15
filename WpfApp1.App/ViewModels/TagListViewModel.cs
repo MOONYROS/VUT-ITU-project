@@ -46,13 +46,9 @@ public partial class TagListViewModel : ViewModelBase,
 		}
 		
 		[RelayCommand]
-		private async void test()
+		private void GoToCreateTag()
 		{
-			var tag = TagDetailModel.Empty;
-			tag.Name = "Kokot Jebnuty blbecek";
-			tag.Color = Color.Fuchsia;
-			await _tagFacade.SaveAsync(tag, _idService.UserId);
-			await LoadDataAsync();
+			_navigationService.NavigateTo<CreateTagViewModel>();
 		}
 		
 		[RelayCommand]
