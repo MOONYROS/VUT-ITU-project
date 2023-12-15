@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewmodels="clr-namespace:WpfApp1.APP.ViewModels"
         xmlns:views="clr-namespace:WpfApp1.App.Views"
+        xmlns:converters="clr-namespace:WpfApp1.App.Converters"
         d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
         mc:Ignorable="d">
 
@@ -42,7 +43,7 @@
                                         <Image.Source>
                                             <Binding Path="ImageUrl">
                                                 <Binding.Converter>
-                                                    <views:UrlImageConverter/>
+                                                    <converters:UrlImageConverter/>
                                                 </Binding.Converter>
                                             </Binding>
                                         </Image.Source>

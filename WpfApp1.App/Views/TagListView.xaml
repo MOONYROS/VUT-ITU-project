@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WpfApp1.App.Views"
              xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
+             xmlns:converters="clr-namespace:WpfApp1.App.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=viewModels:TagListViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -67,8 +68,15 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Width="10"
                                                MinHeight="10"
-                                               Fill="Red"
-                                               Margin="0,0,5,0"/>
+                                               Margin="0,0,5,0">
+                                        <Rectangle.Fill>
+                                            <Binding Path="Color">
+                                                <Binding.Converter>
+                                                    <converters:ColorToBrushConverter />
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
                                     <TextBlock Text="{Binding Name}" Width="250" Height="35" FontSize="25" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold"/>
                                 </StackPanel>
                             </Border>
