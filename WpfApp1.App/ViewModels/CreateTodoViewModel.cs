@@ -33,6 +33,7 @@ public partial class CreateTodoViewModel : ViewModelBase
 	[RelayCommand]
 	private void GoToTodoListView()
 	{
+		Todo = TodoDetailModel.Empty;
 		_navigationService.NavigateTo<TodoListViewModel>();
 	}
 
