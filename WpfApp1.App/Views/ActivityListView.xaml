@@ -36,8 +36,8 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Text="TODO LIST" Style="{StaticResource Heading}"/>
-                <Button Content="CREATE TODO" Style="{StaticResource GreenButton}" Width="200"/>
+                <TextBlock Text="ACTIVITY LIST" Style="{StaticResource Heading}"/>
+                <Button Content="CREATE ACTIVITY" Style="{StaticResource GreenButton}" Width="200"/>
             </StackPanel>
             
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -64,42 +64,42 @@
                                        MinHeight="10"
                                        Fill="Red"/>
                             <!-- NAME -->
-                            <TextBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Style="{StaticResource InnerTextBox}"
-                                     Margin="5,0,0,0"
-                                     FontWeight="Bold"
-                                     FontSize="18"
-                                     Text="ACTIVITY NAME"/>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="1"
+                                       Style="{StaticResource InnerTextBlock}"
+                                       Margin="5,0,0,0"
+                                       FontWeight="Bold"
+                                       FontSize="18"
+                                       Text="ACTIVITY NAME"/>
                             <!-- TAGS -->
-                            <TextBox Grid.Row="0"
-                                     Grid.Column="2" 
-                                     Grid.RowSpan="2"
-                                     Style="{StaticResource InnerTextBox}"
-                                     HorizontalAlignment="Right"
-                                     Foreground="Gray"
-                                     Text="SOME TAGS"/>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="2" 
+                                       Grid.RowSpan="2"
+                                       Style="{StaticResource InnerTextBlock}"
+                                       HorizontalAlignment="Right"
+                                       Foreground="Gray"
+                                       Text="SOME TAGS"/>
                             <!-- FROM -->
                             <StackPanel Grid.Row="1"
                                         Grid.Column="1"
                                         Margin="5,0,0,0"
                                         Orientation="Horizontal">
-                                <TextBox Style="{StaticResource InnerTextBox}"
-                                         FontWeight="Bold"
-                                         Text="FROM: "/>
-                                <TextBox Style="{StaticResource InnerTextBox}"
-                                         Text="Datetime From"/>
+                                <TextBlock Style="{StaticResource InnerTextBlock}"
+                                           FontWeight="Bold"
+                                           Text="FROM: "/>
+                                <TextBlock Style="{StaticResource InnerTextBlock}"
+                                           Text="Datetime From"/>
                             </StackPanel>
                             <!-- TO -->
                             <StackPanel Grid.Row="2"
                                         Grid.Column="1"
                                         Margin="5,0,0,0"
                                         Orientation="Horizontal">
-                                <TextBox Style="{StaticResource InnerTextBox}"
-                                         FontWeight="Bold"
-                                         Text="TO: "/>
-                                <TextBox Style="{StaticResource InnerTextBox}"
-                                         Text="Datetime To"/>
+                                <TextBlock Style="{StaticResource InnerTextBlock}"
+                                           FontWeight="Bold"
+                                           Text="TO: "/>
+                                <TextBlock Style="{StaticResource InnerTextBlock}"
+                                           Text="Datetime To"/>
                             </StackPanel>
                             <!-- EDIT BUTTON -->
                             <Button Grid.Row="2"

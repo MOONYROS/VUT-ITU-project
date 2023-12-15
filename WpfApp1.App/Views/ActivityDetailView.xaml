@@ -36,7 +36,9 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Text="ACTIVITY DETAIL" Style="{StaticResource Heading}"/>
+                <TextBlock Text="ACTIVITY DETAIL" 
+                           Margin="5,0,0,0"
+                           Style="{StaticResource Heading}"/>
             </StackPanel>
             
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
