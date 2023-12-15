@@ -48,7 +48,7 @@
                                             </Binding>
                                         </Image.Source>
                                     </Image>
-                                    <TextBox Text="{Binding UserName}"/>
+                                    <TextBlock Text="{Binding UserName}"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>
