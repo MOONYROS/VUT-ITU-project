@@ -51,11 +51,12 @@ public partial class TagListViewModel : ViewModelBase,
 			_navigationService.NavigateTo<CreateTagViewModel>();
 		}
 		
+		
 		[RelayCommand]
-		private void GoToTagListView()
+		private async void DeleteTag(Guid userId)
 		{
-			_navigationService.NavigateTo<TodoListViewModel>();
-			_messengerService.Send(new NavigationMessage());
+			await _tagFacade.DeleteAsync(userId);
+			await LoadDataAsync();
 		}
 
 		[RelayCommand]
