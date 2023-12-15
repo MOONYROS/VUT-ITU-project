@@ -14,7 +14,8 @@ namespace WpfApp1.APP.ViewModels;
 
 public partial class HomeViewModel : ViewModelBase,
 	IRecipient<BootMessage>,
-	IRecipient<UserCreatedMessage>
+	IRecipient<UserCreatedMessage>,
+	IRecipient<UserDeletedMessage>
 {
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
@@ -34,6 +35,7 @@ public partial class HomeViewModel : ViewModelBase,
 		_idService = idService;
 		messengerService.Messenger.Register<UserCreatedMessage>(this);
 		messengerService.Messenger.Register<BootMessage>(this);
+		messengerService.Messenger.Register<UserDeletedMessage>(this);
 	}
 
 	[RelayCommand]
@@ -62,6 +64,11 @@ public partial class HomeViewModel : ViewModelBase,
 	}
 
 	public async void Receive(UserCreatedMessage message)
+	{
+		await LoadDataAsync();
+	}
+
+	public async void Receive(UserDeletedMessage message)
 	{
 		await LoadDataAsync();
 	}

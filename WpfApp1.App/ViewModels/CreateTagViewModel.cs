@@ -51,5 +51,6 @@ public partial class CreateTagViewModel : ViewModelBase
 	{
 		Tag = TagDetailModel.Empty;
 		_navigationService.NavigateTo<TagListViewModel>();
+		_messengerService.Send(new NavigationMessage());
 	}
 }
