@@ -43,7 +43,7 @@ public partial class TodoListViewModel : ViewModelBase,
 
 	protected override async Task LoadDataAsync()
 	{
-		var bruh = await _todoFacade.GetAsyncUser(_idService.UserId);
+		var bruh = await _todoFacade.GetAsyncUser(_idService.UserId, false);
 		Todos = bruh.ToObservableCollection();
 	}
 	
