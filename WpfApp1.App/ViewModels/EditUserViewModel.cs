@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using WpfApp1.App.Messages;
@@ -58,10 +59,16 @@ public partial class EditUserViewModel : ViewModelBase,
 	[RelayCommand]
 	private async Task DeleteUser()
 	{
-		await _userFacade.DeleteAsync(_idService.UserId);
-		_messengerService.Send(new UserDeletedMessage());
-		_messengerService.Send(new LogOutMessage());
-		_navigationService.NavigateTo<HomeViewModel>();
+		if (MessageBox.Show("Opravdu chcete smazat uživatele?",
+			    "Joooo fakt??!?",
+			    MessageBoxButton.YesNo,
+			    MessageBoxImage.Question) == MessageBoxResult.Yes)
+		{
+			await _userFacade.DeleteAsync(_idService.UserId);
+			_messengerService.Send(new UserDeletedMessage());
+			_messengerService.Send(new LogOutMessage());
+			_navigationService.NavigateTo<HomeViewModel>();
+		}
 	}
 	
 	[RelayCommand]

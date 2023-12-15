@@ -33,9 +33,9 @@ public partial class CreateTagViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task CreateTag()
 	{
-		if (Tag.Name.Length < 1 || Tag.Name.Length > 10)
+		if (Tag.Name.Length < 1 || Tag.Name.Length > 9)
 		{
-			MessageBox.Show("Jmeno Tagu musí být dlouhé 1 až 10 znaků", "Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+			MessageBox.Show("Jmeno Tagu musí být dlouhé 1 až 9 znaků", "Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 		else
 		{
