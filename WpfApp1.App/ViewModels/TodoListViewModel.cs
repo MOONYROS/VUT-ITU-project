@@ -48,19 +48,6 @@ public partial class TodoListViewModel : ViewModelBase,
 	}
 	
 	[RelayCommand]
-	private async void test()
-	{
-		var tmpTodo = new TodoDetailModel
-		{
-			Name = "Todo Brother",
-			Date = default,
-			Finished = false
-		};
-		await _todoFacade.SaveAsync(tmpTodo, _idService.UserId);
-		_messengerService.Send(new TodoAddedMessage());
-	}
-	
-	[RelayCommand]
 	private void GoToEditUserView()
 	{
 		_navigationService.NavigateTo<EditUserViewModel>();
@@ -73,6 +60,12 @@ public partial class TodoListViewModel : ViewModelBase,
 	{
 		_navigationService.NavigateTo<TagListViewModel>();
 		_messengerService.Send(new NavigationMessage());
+	}
+
+	[RelayCommand]
+	private void GoToCreateTodoView()
+	{
+		_navigationService.NavigateTo<CreateTodoViewModel>();
 	}
 
 	[RelayCommand]

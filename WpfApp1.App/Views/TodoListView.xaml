@@ -48,7 +48,7 @@
                 <Button Content="CREATE TODO" 
                         Style="{StaticResource GreenButton}" 
                         Width="200"
-                        Command="{Binding testCommand}"/>
+                        Command="{Binding GoToCreateTodoViewCommand}"/>
             </StackPanel>
             
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -58,7 +58,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <StackPanel Orientation="Vertical" Margin="10">
                         <!-- ITEM -->
                         <Border Background="#FFF4E7" BorderBrush="#FF8200" BorderThickness="2" Margin="5" Padding="10" CornerRadius="5">

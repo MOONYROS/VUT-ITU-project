@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="WpfApp1.App.Views.CreateTodoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp1.App.Views"
+             xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:WpfApp1.App.Converters"
+             mc:Ignorable="d"
+             Background="#FFF4E7"
+             d:DataContext="{d:DesignInstance Type=viewModels:CreateTodoViewModel}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Create Todo"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Center">
+            <StackPanel Width="500"
+                        HorizontalAlignment="Center">
+
+                <Label Content="What to do?"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="{Binding Todo.Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="10">
+                    <Button Style="{StaticResource RedButton}"
+                            Content="Dismiss"
+                            Command="{Binding GoToTodoListViewCommand}"/>
+
+                    <Button Style="{StaticResource GreenButton}"
+                            Content="Create"
+                            Command="{Binding CreateTodoCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
