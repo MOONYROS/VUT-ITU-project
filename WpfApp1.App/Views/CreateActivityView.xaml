@@ -36,7 +36,7 @@
 
                 <TextBox Style="{StaticResource BasicTextBox}"
                          Margin="0,0,0,10"
-                         Text="IDK SOME TEXT I GUESS"/>
+                         Text="{Binding Activity.Name}"/>
                 
                 <Label Content="Activity Description:"
                        VerticalAlignment="Bottom"
@@ -44,7 +44,7 @@
 
                 <TextBox Style="{StaticResource BasicTextBox}"
                          Margin="0,0,0,10"
-                         Text="Some activity description"/>
+                         Text="{Binding Activity.Description}"/>
                 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -62,7 +62,8 @@
                                HorizontalAlignment="Left"/>
 
                         <xctk:DateTimePicker Format="Custom" 
-                                             FormatString="dd.MM.yyyy" />
+                                             FormatString="dd.MM.yyyy"
+                                             Value="{Binding Activity.DateTimeFrom}"/>
                     </StackPanel>
                     
                     <StackPanel Grid.Column="1"
@@ -72,7 +73,8 @@
                                HorizontalAlignment="Left"/>
 
                         <xctk:DateTimePicker Format="Custom" 
-                                             FormatString="dd.MM.yyyy" />
+                                             FormatString="dd.MM.yyyy"
+                                             Value="{Binding Activity.DateTimeTo}"/>
                     </StackPanel>
                     
                 </Grid>
@@ -83,7 +85,7 @@
                 
                 <xctk:ColorPicker Name="ColorPicker">
                     <xctk:ColorPicker.SelectedColor>
-                        <Binding Path="Tag.Color">
+                        <Binding Path="Activity.Color">
                             <Binding.Converter>
                                 <converters:MediaColorToDrawingColorConverter />
                             </Binding.Converter>
@@ -95,25 +97,42 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <ComboBox ItemsSource="{Binding AvailableTags}"
-                          HorizontalAlignment="Center"
+                <ComboBox HorizontalAlignment="Center"
                           VerticalAlignment="Center"
-                          Width="500">
+                          Width="500"
+                          SelectedItem="{Binding SelectedTag, Mode=TwoWay}">
+                    <ComboBox.ItemsSource>
+                        <Binding Path="AvailableTags" />
+                    </ComboBox.ItemsSource>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding Name}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Margin="5"/>
+                                <Rectangle Width="20" Height="20" Margin="5">
+                                    <Rectangle.Fill>
+                                        <Binding Path="Color">
+                                            <Binding.Converter>
+                                                <converters:ColorToBrushConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+
                 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
                             Margin="10">
                     <Button Style="{StaticResource RedButton}" 
-                            Content="Dismiss"/>
+                            Content="Dismiss"
+                            Command="{Binding GoToActivityListCommand}"/>
                     
                     <Button Style="{StaticResource GreenButton}"
-                            Content="Create"/>
+                            Content="Create"
+                            Command="{Binding CreateActivityCommand}"/>
                 </StackPanel>    
             </StackPanel>
         </ScrollViewer>

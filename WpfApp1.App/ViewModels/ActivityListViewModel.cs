@@ -18,7 +18,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 	IRecipient<ActivityAddedMessage>,
 	IRecipient<LogOutMessage>
 {
-	private readonly IActivityFacade _ActivityFacadeFacade;
+	private readonly IActivityFacade _activityFacade;
 	private readonly ITagFacade _tagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
@@ -35,13 +35,13 @@ public partial class ActivityListViewModel : ViewModelBase,
 	
 	public ActivityListViewModel(
 		IMessengerService messengerService,
-		IActivityFacade ActivityFacadeFacade,
+		IActivityFacade activityFacade,
 		INavigationService navigationService,
 		ISharedUserIdService idService, 
 		ITagFacade tagFacade) : base(messengerService)
 	{
 		_messengerService = messengerService;
-		_ActivityFacadeFacade = ActivityFacadeFacade;
+		_activityFacade = activityFacade;
 		_navigationService = navigationService;
 		_idService = idService;
 		_tagFacade = tagFacade;
@@ -52,6 +52,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 
 	protected override async Task LoadDataAsync()
 	{
+		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_idService.UserId);
+		Activities = tmpActivities.ToObservableCollection();
 		var tmpTags = await _tagFacade.GetAsyncUser(_idService.UserId);
 		Tags = tmpTags.ToObservableCollection();
 		Tags.Insert(0, TagDetailModel.Empty);
@@ -121,6 +123,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 	private void GoToCreateActivity()
 	{
 		_navigationService.NavigateTo<CreateActivityViewModel>();
+		_messengerService.Send(new NavigationMessage());
 	}
 	
 	public async void Receive(NavigationMessage message)
@@ -137,5 +140,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_firstLoad = true;
 	}
 	
-	public void Receive(ActivityAddedMessage message) => throw new System.NotImplementedException();
+	public async void Receive(ActivityAddedMessage message)
+	{
+		await LoadDataAsync();
+	}
 }
