@@ -47,7 +47,7 @@
                                             <Image.Source>
                                                 <Binding Path="ImageUrl">
                                                     <Binding.Converter>
-                                                        <views:UrlImageConverter/>
+                                                        <converters:UrlImageConverter/>
                                                     </Binding.Converter>
                                                 </Binding>
                                             </Image.Source>
