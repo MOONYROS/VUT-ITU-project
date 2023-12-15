@@ -31,9 +31,55 @@
             <ScrollViewer Grid.Column="1"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer.Resources>
+                    <!-- SCROLLBAR THUMB -->
+                    <Style x:Key="ScrollBarThumb" TargetType="Thumb">
+                        <Setter Property="Background" Value="#FFF4E7"/>
+                        <Setter Property="BorderBrush" Value="#FF8200"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                    </Style>
+
+                    <!-- SCROLLBAR BUTTON -->
+                    <Style x:Key="ScrollBarLineButton" TargetType="RepeatButton">
+                        <Setter Property="Background" Value="#FFF4E7"/>
+                        <Setter Property="Foreground" Value="#FF8200"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <!-- SCROLLBAR STYLE -->
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ScrollBar">
+                                    <Grid>
+                                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Command="ScrollBar.LineUpCommand" Style="{StaticResource ScrollBarLineButton}"/>
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource ScrollBarThumb}"/>
+                                            </Track.Thumb>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Command="ScrollBar.LineDownCommand" Style="{StaticResource ScrollBarLineButton}"/>
+                                            </Track.IncreaseRepeatButton>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ScrollViewer.Resources>
+                
                 <ItemsControl ItemsSource="{Binding Users}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
+                            <!-- USER LOGIN ICONS -->
                             <Button Command="{Binding DataContext.GoToUserTodosCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding Id}"
                                     Margin="10,0,10,0"
