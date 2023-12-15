@@ -54,7 +54,7 @@
             
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -62,11 +62,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0"
+                <TextBlock Grid.Row="0" 
+                           Grid.Column="0"
                            Text="UNFINISHED"
                            Style="{StaticResource Heading}"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="1"
+                <TextBlock Grid.Row="0" 
+                           Grid.Column="1"
                            Text="DONE"
                            Style="{StaticResource Heading}"></TextBlock>
 
@@ -75,7 +77,8 @@
                     <ItemsControl ItemsSource="{Binding UnfinishedTodos}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
                                     <Border Background="#FFF4E7"
                                             BorderBrush="#FF8200"
                                             BorderThickness="2"
@@ -90,21 +93,31 @@
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Grid.RowSpan="2" Grid.Column="0"
-                                                       Text="{Binding Name}"/>
+                                            <TextBlock Grid.Row="0" 
+                                                       Grid.RowSpan="2" 
+                                                       Grid.Column="0"
+                                                       Text="{Binding Name}"
+                                                       Width="170"
+                                                       TextWrapping="Wrap"/>
                                             <Button Grid.Row="0" Grid.Column="1"
                                                     Command="{Binding DataContext.FinishToDoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                     CommandParameter="{Binding Id}"
                                                     Content="Finish"
-                                                    Style="{StaticResource GreenButton}"/>
+                                                    Style="{StaticResource GreenButton}"
+                                                    Margin="2"
+                                                    Width="60"
+                                                    Height="25"/>
                                             <Button Grid.Row="1" Grid.Column="1"
                                                     Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                     CommandParameter="{Binding Id}"
                                                     Content="Remove"
-                                                    Style="{StaticResource RedButton}"/>
+                                                    Style="{StaticResource RedButton}"
+                                                    Margin="2"
+                                                    Width="60"
+                                                    Height="25"/>
                                         </Grid>
                                     </Border>
                                 </StackPanel>
@@ -117,7 +130,8 @@
                     <ItemsControl ItemsSource="{Binding FinishedTodos}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
                                     <Border Background="#FFF4E7"
                                             BorderBrush="#FF8200"
                                             BorderThickness="2"
@@ -131,21 +145,29 @@
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.RowSpan="2" Grid.Column="0"
-                                                       Text="{Binding Name}"/>
+                                                       Text="{Binding Name}"
+                                                       Width="170"
+                                                       TextWrapping="Wrap"/>
                                             <Button Grid.Row="0" Grid.Column="1"
                                                     Command="{Binding DataContext.UnfinishToDoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                     CommandParameter="{Binding Id}"
                                                     Content="Unfinish"
-                                                    Style="{StaticResource OrangeButton}"/>
+                                                    Style="{StaticResource OrangeButton}"
+                                                    Margin="2"
+                                                    Width="60"
+                                                    Height="25"/>
                                             <Button Grid.Row="1" Grid.Column="1"
                                                     Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                     CommandParameter="{Binding Id}"
                                                     Content="Remove"
-                                                    Style="{StaticResource RedButton}"/>
+                                                    Style="{StaticResource RedButton}"
+                                                    Margin="2"
+                                                    Width="60"
+                                                    Height="25"/>
                                         </Grid>
                                     </Border>
                                 </StackPanel>
