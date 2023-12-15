@@ -55,7 +55,6 @@ public partial class ActivityListViewModel : ViewModelBase,
 		var tmpTags = await _tagFacade.GetAsyncUser(_idService.UserId);
 		Tags = tmpTags.ToObservableCollection();
 		Tags.Insert(0, TagDetailModel.Empty);
-		SelectedTag = Tags.First();
 	}
 	
 	[RelayCommand]
