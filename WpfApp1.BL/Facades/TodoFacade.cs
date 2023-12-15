@@ -20,13 +20,14 @@ public class TodoFacade :
         _todoModelMapper = modelMapper;
     }
 
-    public async Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId)
+    public async Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId, bool done)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<TodoEntity> entities = await uow
             .GetRepository<TodoEntity, TodoEntityMapper>()
             .Get()
-            .Where(i => i.UserId == userId)
+            .Where(i => i.UserId == userId )
+            .Where(i=> i.Finished == done)
             .ToListAsync();
 
         return _todoModelMapper.MapToDetailModel(entities);

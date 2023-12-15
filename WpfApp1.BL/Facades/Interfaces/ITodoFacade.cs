@@ -5,5 +5,5 @@ namespace WpfApp1.BL.Facades.Interfaces;
 
 public interface ITodoFacade : IFacadeDetailOnly<TodoEntity, TodoDetailModel>
 {
-    Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId);
+    Task<IEnumerable<TodoDetailModel>> GetAsyncUser(Guid userId, bool done);
 }
