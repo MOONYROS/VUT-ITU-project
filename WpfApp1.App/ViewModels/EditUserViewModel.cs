@@ -76,7 +76,7 @@ public partial class EditUserViewModel : ViewModelBase,
 	{
 		await _userFacade.SaveAsync(User);
 		_messengerService.Send(new UserCreatedMessage());
-		_navigationService.NavigateTo<TodoListViewModel>();
+		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
 
 

@@ -26,8 +26,9 @@
                     <Button Content="TODOS" 
                             Style="{StaticResource BasicButton}"
                             Command="{Binding GoToTodoListViewCommand}"/>
-                    <Button Content="EVENTS" 
-                            Style="{StaticResource BasicButton}"/>
+                    <Button Content="ACTIVITIES" 
+                            Style="{StaticResource BasicButton}"
+                            Command="{Binding GoToActivityListViewCommand}"/>
                     <Button Content="TAGS" 
                             Style="{StaticResource BasicButton}"/>
                 </StackPanel>

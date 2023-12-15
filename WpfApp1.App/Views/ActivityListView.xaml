@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WpfApp1.App.Views"
+             xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=viewModels:ActivityListViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
@@ -16,14 +18,14 @@
         <Border Grid.Column="0" BorderThickness="2" BorderBrush="#FF8200">
             <DockPanel LastChildFill="True" Background="#FFF4E7">
                 <StackPanel VerticalAlignment="Top" DockPanel.Dock="Top">
-                    <Button Content="TODOS" Style="{StaticResource BasicButton}"/>
-                    <Button Content="EVENTS" Style="{StaticResource BasicButton}"/>
-                    <Button Content="TAGS" Style="{StaticResource BasicButton}"/>
+                    <Button Content="TODOS" Style="{StaticResource BasicButton}" Command="{Binding GoToTodoListViewCommand}"/>
+                    <Button Content="ACTIVITIES" Style="{StaticResource BasicButton}"/>
+                    <Button Content="TAGS" Style="{StaticResource BasicButton}" Command="{Binding GoToTagListViewCommand}"/>
                 </StackPanel>
                 
                 <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
-                    <Button Content="LOG OUT" Style="{StaticResource BasicButton}"/>
-                    <Button Content="PROFILE" Style="{StaticResource BasicButton}"/>
+                    <Button Content="LOG OUT" Style="{StaticResource BasicButton}" Command="{Binding LogOutCommand}"/>
+                    <Button Content="PROFILE" Style="{StaticResource BasicButton}" Command="{Binding GoToEditUserViewCommand}"/>
                 </StackPanel>
             </DockPanel>
         </Border>

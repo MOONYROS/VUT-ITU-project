@@ -67,6 +67,11 @@ public partial class TodoListViewModel : ViewModelBase,
 	{
 		_navigationService.NavigateTo<CreateTodoViewModel>();
 	}
+	[RelayCommand]
+	private void GoToActivityListView()
+	{
+		_navigationService.NavigateTo<ActivityListViewModel>();
+	}
 
 	[RelayCommand]
 	private void LogOut()

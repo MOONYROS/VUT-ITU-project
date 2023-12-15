@@ -17,7 +17,7 @@
             <DockPanel LastChildFill="True" Background="#FFF4E7">
                 <StackPanel VerticalAlignment="Top" DockPanel.Dock="Top">
                     <Button Content="TODOS" Style="{StaticResource BasicButton}"/>
-                    <Button Content="EVENTS" Style="{StaticResource BasicButton}"/>
+                    <Button Content="ACTIVITIES" Style="{StaticResource BasicButton}"/>
                     <Button Content="TAGS" Style="{StaticResource BasicButton}"/>
                 </StackPanel>
                 

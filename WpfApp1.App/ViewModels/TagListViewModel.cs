@@ -55,7 +55,9 @@ public partial class TagListViewModel : ViewModelBase,
 		private void GoToTodoListView()
 		{
 			_navigationService.NavigateTo<TodoListViewModel>();
+			_messengerService.Send(new NavigationMessage());
 		}
+		
 		[RelayCommand]
 		private void GoToEditUserView()
 		{
@@ -63,9 +65,15 @@ public partial class TagListViewModel : ViewModelBase,
 			_messengerService.Send(new NavigationMessage());
 		}
 		
+		[RelayCommand]
+		private void GoToActivityListView()
+		{
+			_navigationService.NavigateTo<ActivityListViewModel>();
+		}
+		
 		
 		[RelayCommand]
-		private async void DeleteTag(Guid userId)
+		private async Task DeleteTag(Guid userId)
 		{
 			await _tagFacade.DeleteAsync(userId);
 			await LoadDataAsync();

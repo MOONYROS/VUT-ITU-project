@@ -80,7 +80,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <!-- USER LOGIN ICONS -->
-                            <Button Command="{Binding DataContext.GoToUserTodosCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            <Button Command="{Binding DataContext.GoToActivityListViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding Id}"
                                     Margin="10,0,10,0"
                                     Background="#FFF4E7"

@@ -45,10 +45,10 @@ public partial class HomeViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private void GoToUserTodos(Guid userGuid)
+	private void GoToActivityListView(Guid userGuid)
 	{
 		_idService.UserId = userGuid;
-		_navigationService.NavigateTo<TodoListViewModel>();
+		_navigationService.NavigateTo<ActivityListViewModel>();
 		_messengerService.Send(new NavigationMessage());
 	}
 
