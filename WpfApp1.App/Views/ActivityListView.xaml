@@ -80,7 +80,7 @@
                                      Foreground="Gray"
                                      Text="SOME TAGS"/>
                             <!-- FROM -->
-                            <StackPanel Grid.Row="2"
+                            <StackPanel Grid.Row="1"
                                         Grid.Column="1"
                                         Margin="5,0,0,0"
                                         Orientation="Horizontal">
@@ -92,7 +92,8 @@
                             </StackPanel>
                             <!-- TO -->
                             <StackPanel Grid.Row="2"
-                                        Grid.Column="2"
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
                                         Orientation="Horizontal">
                                 <TextBox Style="{StaticResource InnerTextBox}"
                                          FontWeight="Bold"
@@ -100,6 +101,12 @@
                                 <TextBox Style="{StaticResource InnerTextBox}"
                                          Text="Datetime To"/>
                             </StackPanel>
+                            <!-- EDIT BUTTON -->
+                            <Button Grid.Row="2"
+                                    Grid.Column="2"
+                                    Style="{StaticResource BasicButton}"
+                                    HorizontalAlignment="Right"
+                                    Content="EDIT"/>
                         </Grid>
                     </Border>
                 </StackPanel>
