@@ -34,20 +34,30 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button Command="{Binding DataContext.GoToUserTodosCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding Id}">
+                                    CommandParameter="{Binding Id}"
+                                    Margin="10,0,10,0"
+                                    Background="#FFF4E7"
+                                    BorderThickness="0"
+                                    MaxHeight="150">
                                 <StackPanel Orientation="Vertical">
-                                    <Image Width="100"
-                                           Height="100"
-                                           Stretch="Uniform">
-                                        <Image.Source>
-                                            <Binding Path="ImageUrl">
-                                                <Binding.Converter>
-                                                    <views:UrlImageConverter/>
-                                                </Binding.Converter>
-                                            </Binding>
-                                        </Image.Source>
-                                    </Image>
-                                    <TextBlock Text="{Binding UserName}"/>
+                                    <Border Style="{StaticResource CreateUserImage}">
+                                        <Image Stretch="Fill"
+                                               Margin="0">
+                                            <Image.Source>
+                                                <Binding Path="ImageUrl">
+                                                    <Binding.Converter>
+                                                        <views:UrlImageConverter/>
+                                                    </Binding.Converter>
+                                                </Binding>
+                                            </Image.Source>
+                                        </Image>
+                                    </Border>
+                                    <TextBlock Text="{Binding UserName}"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Center"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>
