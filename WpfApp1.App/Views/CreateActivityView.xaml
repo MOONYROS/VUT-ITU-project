@@ -1,0 +1,106 @@
+<UserControl x:Class="WpfApp1.App.Views.CreateActivityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:WpfApp1.App.Views"
+             xmlns:converters="clr-namespace:WpfApp1.App.Converters"
+             Background="#FFF4E7"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="Create Activity" 
+                   FontSize="32" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+        
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Center">
+            <StackPanel Width="500"
+                        HorizontalAlignment="Center">
+                
+                <Label Content="Activity Name:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="IDK SOME TEXT I GUESS"/>
+                
+                <Label Content="Activity Description:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+
+                <TextBox Style="{StaticResource BasicTextBox}"
+                         Margin="0,0,0,10"
+                         Text="Some activity description"/>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0"
+                                Margin="5">
+                        <Label Content="Date From:"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"/>
+
+                        <xctk:DateTimePicker Format="Custom" 
+                                             FormatString="dd.MM.yyyy" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1"
+                                Margin="5">
+                        <Label Content="Date To:"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"/>
+
+                        <xctk:DateTimePicker Format="Custom" 
+                                             FormatString="dd.MM.yyyy" />
+                    </StackPanel>
+                    
+                </Grid>
+                
+                <Label Content="Pick a color:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
+                
+                <xctk:ColorPicker Name="ColorPicker">
+                    <xctk:ColorPicker.SelectedColor>
+                        <Binding Path="Tag.Color">
+                            <Binding.Converter>
+                                <converters:MediaColorToDrawingColorConverter />
+                            </Binding.Converter>
+                        </Binding>
+                    </xctk:ColorPicker.SelectedColor>
+                </xctk:ColorPicker>
+
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            Margin="10">
+                    <Button Style="{StaticResource RedButton}" 
+                            Content="Dismiss"
+                            Command="{Binding GoToTagListViewCommand}"/>
+                    
+                    <Button Style="{StaticResource GreenButton}"
+                            Content="Create"
+                            Command="{Binding CreateTagCommand}"/>
+                </StackPanel>    
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

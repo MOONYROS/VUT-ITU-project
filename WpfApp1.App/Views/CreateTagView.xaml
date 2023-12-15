@@ -9,7 +9,8 @@
         xmlns:converters="clr-namespace:WpfApp1.App.Converters"
         mc:Ignorable="d"
         Background="#FFF4E7"
-        d:DataContext="{d:DesignInstance Type=viewModels:CreateTagViewModel}">
+        d:DataContext="{d:DesignInstance Type=viewModels:CreateTagViewModel}"
+        d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
         <Grid.RowDefinitions>
