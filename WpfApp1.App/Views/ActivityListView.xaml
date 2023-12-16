@@ -40,49 +40,84 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Text="ACTIVITY LIST" Style="{StaticResource Heading}"/>
+                <TextBlock Text="ACTIVITY LIST"
+                           Style="{StaticResource Heading}"/>
+                
                 <Button Content="CREATE ACTIVITY" 
                         Style="{StaticResource GreenButton}" 
                         Width="200"
                         Command="{Binding GoToCreateActivityCommand}"/>
                 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,10,0,10">
+                    <!-- DATETIME FILTERS -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="From: "/>
+                        
+                        <Border Grid.Row="0" 
+                                Grid.Column="1"
+                                Style="{StaticResource BasicBorder}">
+                            <xctk:DateTimePicker Format="Custom" 
+                                                 FormatString="dd.MM.yyyy HH:mm" 
+                                                 Style="{StaticResource BasicDateTime}"
+                                                 Value="{Binding From}"/>
+                        </Border>
+                        
+                        <Label Grid.Row="1" 
+                               Grid.Column="0" 
+                               Content="To: "/>
+                        
+                        <Border Grid.Row="1"  
+                                Grid.Column="1"
+                                Style="{StaticResource BasicBorder}">
+                            <xctk:DateTimePicker Grid.Column="3" 
+                                                 Format="Custom" 
+                                                 FormatString="dd.MM.yyyy HH:mm"
+                                                 Style="{StaticResource BasicDateTime}"
+                                                 Value="{Binding To}"/>
+                        </Border>
+                    </Grid>
                     
-                    <Label Grid.Column="0" Content="From :"></Label>
-                    <xctk:DateTimePicker Format="Custom" FormatString="dd.MM.yyyy HH:mm" Value="{Binding From}" Grid.Column="1"></xctk:DateTimePicker>
-                    <Label Grid.Column="2" Content="To :"></Label>
-                    <xctk:DateTimePicker Format="Custom" FormatString="dd.MM.yyyy HH:mm" Value="{Binding To}" Grid.Column="3"></xctk:DateTimePicker>
-                    <Label Grid.Column="4" Content="Tag :"></Label>
-                    <ComboBox Grid.Column="5" 
-                              ItemsSource="{Binding Tags}"
-                              SelectedItem="{Binding SelectedTag}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Button Grid.Column="6" 
-                        Command="{Binding ApplyFilterCommand}"
-                        Content="Apply filter">
-                    </Button>
-                    <Button Grid.Column="7" 
-                            Command="{Binding ListAllCommand}"
-                            Content="List all">
-                    </Button>
-                </Grid>
+                    <Label Content="Tag: "
+                           VerticalAlignment="Center"/>
+                    
+                    <Border Style="{StaticResource BasicBorder}">
+                        <ComboBox ItemsSource="{Binding Tags}"
+                                  SelectedItem="{Binding SelectedTag}"
+                                  Style="{StaticResource BasicComboBox}"
+                                  Width="100">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        
+                    </Border>
+                    
+                    <Button Command="{Binding ApplyFilterCommand}"
+                            Content="Apply filter"
+                            Style="{StaticResource GreenButton}"/>
+                    
+                    <Button Command="{Binding ListAllCommand}"
+                            Content="List all"
+                            Style="{StaticResource OrangeButton}"/>
+                </StackPanel>
                 
             </StackPanel>
             
