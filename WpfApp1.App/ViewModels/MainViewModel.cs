@@ -4,13 +4,12 @@ using WpfApp1.APP.Services.Interfaces;
 
 namespace WpfApp1.APP.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public class MainViewModel : ViewModelBase
 {
 	public INavigationService NavigationService { get; set; }
 	public MainViewModel(
 		INavigationService navigationService,
-		HomeViewModel starting,
-		IMessengerService messengerService) : base(messengerService)
+		HomeViewModel starting)
 	{
 		NavigationService = navigationService;
 		NavigationService.CurrentViewModel = starting;

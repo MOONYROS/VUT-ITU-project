@@ -13,7 +13,7 @@ namespace WpfApp1.BL.Facades;
 
 public abstract class
     FacadeBase<TEntity, TListModel, TDetailModel, TEntityMapper> : IFacade<TEntity, TListModel, TDetailModel>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
     where TListModel : IModel
     where TDetailModel : class, IModel
     where TEntityMapper : IEntityIDMapper<TEntity>, new()
@@ -36,7 +36,7 @@ public abstract class
     public abstract Task<IEnumerable<TListModel>> GetAsync();
     public abstract Task<TDetailModel> SaveAsync(TDetailModel model);
 
-    public static void GuardCollectionsAreNotSet(TDetailModel model)
+    protected static void GuardCollectionsAreNotSet(TDetailModel model)
     {
         IEnumerable<PropertyInfo> collectionProperties = model
             .GetType()

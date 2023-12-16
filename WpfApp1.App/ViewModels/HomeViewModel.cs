@@ -20,14 +20,14 @@ public partial class HomeViewModel : ViewModelBase,
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
 	private readonly IMessengerService _messengerService;
-	private ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _idService;
 	public ObservableCollection<UserListModel> Users { get; set; }
 
 	public HomeViewModel(
 		INavigationService navigationService,
 		IMessengerService messengerService,
 		IUserFacade userFacade,
-		ISharedUserIdService idService) : base(messengerService)
+		ISharedUserIdService idService)
 	{
 		_navigationService = navigationService;
 		_messengerService = messengerService;

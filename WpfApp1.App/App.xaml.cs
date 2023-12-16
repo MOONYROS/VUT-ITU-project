@@ -21,9 +21,7 @@ using WpfApp1.DAL.Mappers;
 using WpfApp1.DAL.UnitOfWork;
 
 namespace WpfApp1.App;
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
+
 public partial class App : Application
 {
 	private readonly ServiceProvider _serviceProvider;
@@ -31,17 +29,12 @@ public partial class App : Application
 	{
 		IServiceCollection serviceCollection = new ServiceCollection();
 		serviceCollection.AddSingleton<IMessenger>(idk => StrongReferenceMessenger.Default);
-
 		serviceCollection.AddSingleton<IMessengerService, MessengerService>();
-
 		serviceCollection.AddSingleton<Func<Type, ViewModelBase>>(provider =>
 			viewModelType => (ViewModelBase)provider.GetRequiredService(viewModelType));
-
 		serviceCollection.AddSingleton<INavigationService, NavigationService>();
-
 		serviceCollection.AddSingleton<ISharedUserIdService, SharedUserIdService>();
 		serviceCollection.AddSingleton<ISharedActivityIdService, SharedActivityIdService>();
-
 		serviceCollection.AddSingleton<IActivityTagFacade, ActivityTagFacade>();
 
 		serviceCollection.Scan(selector => selector
@@ -107,9 +100,42 @@ public partial class App : Application
 		{
 			DataContext = provider.GetRequiredService<CreateUserViewModel>()
 		});
+		serviceCollection.AddTransient<ActivityEditView>(provider => new ActivityEditView
+		{
+			DataContext = provider.GetRequiredService<ActivityEditViewModel>()
+		});
+		serviceCollection.AddTransient<ActivityListView>(provider => new ActivityListView
+		{
+			DataContext = provider.GetRequiredService<ActivityEditViewModel>()
+		});
+		serviceCollection.AddTransient<CreateActivityView>(provider => new CreateActivityView
+		{
+			DataContext = provider.GetRequiredService<CreateActivityViewModel>()
+		});
+		serviceCollection.AddTransient<CreateTagView>(provider => new CreateTagView
+		{
+			DataContext = provider.GetRequiredService<CreateTagViewModel>()
+		});
+		serviceCollection.AddTransient<CreateTodoView>(provider => new CreateTodoView
+		{
+			DataContext = provider.GetRequiredService<CreateTodoViewModel>()
+		});
+		serviceCollection.AddTransient<EditUserView>(provider => new EditUserView
+		{
+			DataContext = provider.GetRequiredService<EditUserViewModel>()
+		});
+		serviceCollection.AddTransient<TagListView>(provider => new TagListView
+		{
+			DataContext = provider.GetRequiredService<TagListViewModel>()
+		});
+		serviceCollection.AddTransient<TodoListView>(provider => new TodoListView
+		{
+			DataContext = provider.GetRequiredService<TodoListViewModel>()
+		});
 
 		_serviceProvider = serviceCollection.BuildServiceProvider();
 	}
+
 	protected override void OnStartup(StartupEventArgs e)
 	{
 		_serviceProvider.GetRequiredService<IDbMigrator>().Migrate();

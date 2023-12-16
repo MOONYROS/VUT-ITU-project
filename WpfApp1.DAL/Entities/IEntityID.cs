@@ -1,6 +1,6 @@
 ﻿namespace WpfApp1.DAL.Entities;
 
-public interface IEntityID
+public interface IEntityId
 {
     public Guid Id { get; set; }
 }

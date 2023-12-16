@@ -5,7 +5,7 @@ using WpfApp1.DAL.Mappers;
 namespace WpfApp1.DAL.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
 {
     private readonly DbSet<TEntity> _dbSet;
     private readonly IEntityIDMapper<TEntity> _entityMapper;

@@ -13,7 +13,7 @@ public sealed class UnitOfWork : IUnitOfWork
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
     public IRepository<TEntity> GetRepository<TEntity, TEntityMapper>()
-        where TEntity : class, IEntityID
+        where TEntity : class, IEntityId
         where TEntityMapper : IEntityIDMapper<TEntity>, new()
         => new Repository<TEntity>(_dbContext, new TEntityMapper());
 

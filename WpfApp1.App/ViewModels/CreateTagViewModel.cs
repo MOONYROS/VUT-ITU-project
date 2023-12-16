@@ -14,15 +14,15 @@ public partial class CreateTagViewModel : ViewModelBase
 	private readonly INavigationService _navigationService;
 	private readonly ITagFacade _tagFacade;
 	private readonly IMessengerService _messengerService;
-	private ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _idService;
 
-	public TagDetailModel Tag { get; set; } = TagDetailModel.Empty;
+	public TagDetailModel Tag { get; private set; } = TagDetailModel.Empty;
 
 	public CreateTagViewModel(
 		INavigationService navigationService, 
 		ITagFacade tagFacade, 
 		IMessengerService messengerService, 
-		ISharedUserIdService idService) : base(messengerService)
+		ISharedUserIdService idService)
 	{
 		_navigationService = navigationService;
 		_tagFacade = tagFacade;

@@ -1,6 +1,6 @@
 ﻿namespace WpfApp1.DAL.Entities;
 
-public record ActivityEntity : IEntityID
+public record ActivityEntity : IEntityId
 {
     public required Guid Id { get; set; }
     public required DateTime DateTimeFrom { get; set; }

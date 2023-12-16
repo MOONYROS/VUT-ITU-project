@@ -9,11 +9,11 @@ using WpfApp1.DAL.UnitOfWork;
 namespace WpfApp1.BL.Facades;
 
 public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
     where TDetailModel : class, IModel
     where TEntityMapper : IEntityIDMapper<TEntity>, new()
 {
-    protected readonly IModelMapperDetailOnly<TEntity, TDetailModel> ModelMapper;
+	private readonly IModelMapperDetailOnly<TEntity, TDetailModel> _modelMapper;
     protected readonly IUnitOfWorkFactory UnitOfWorkFactory;
 
     protected FacadeBaseDetailOnly(
@@ -21,7 +21,7 @@ public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
         IModelMapperDetailOnly<TEntity, TDetailModel> modelMapper)
     {
         UnitOfWorkFactory = unitOfWorkFactory;
-        ModelMapper = modelMapper;
+        _modelMapper = modelMapper;
     }
 
     public async Task DeleteAsync(Guid id)
@@ -48,14 +48,14 @@ public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
 
         return entity is null
             ? null
-            : ModelMapper.MapToDetailModel(entity);
+            : _modelMapper.MapToDetailModel(entity);
     }
 
     public virtual async Task<TDetailModel> SaveAsync(TDetailModel model, Guid userId)
     {
         TDetailModel result;
 
-        TEntity entity = ModelMapper.MapToEntity(model, userId);
+        TEntity entity = _modelMapper.MapToEntity(model, userId);
 
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<TEntity> repository = uow.GetRepository<TEntity, TEntityMapper>();
@@ -63,13 +63,13 @@ public class FacadeBaseDetailOnly<TEntity, TDetailModel, TEntityMapper>
         if (await repository.ExistsAsync(entity))
         {
             TEntity updatedEntity = await repository.UpdateAsync(entity);
-            result = ModelMapper.MapToDetailModel(updatedEntity);
+            result = _modelMapper.MapToDetailModel(updatedEntity);
         }
         else
         {
             entity.Id = Guid.NewGuid();
             TEntity insertedEntity = await repository.InsertAsync(entity);
-            result = ModelMapper.MapToDetailModel(insertedEntity);
+            result = _modelMapper.MapToDetailModel(insertedEntity);
         }
 
         await uow.CommitAsync();

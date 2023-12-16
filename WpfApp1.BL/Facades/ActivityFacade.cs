@@ -15,6 +15,7 @@ public class ActivityFacade :
     FacadeBase<ActivityEntity, ActivityListModel, ActivityDetailModel, ActivityEntityMapper>, IActivityFacade
 {
     private readonly IActivityModelMapper _modelMapper;
+
     public ActivityFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
         IActivityModelMapper modelMapper)

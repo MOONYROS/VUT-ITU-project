@@ -1,6 +1,6 @@
 ﻿namespace WpfApp1.DAL.Entities;
 
-public record ActivityTagListEntity : IEntityID
+public record ActivityTagListEntity : IEntityId
 {
     public required Guid Id { get; set; }
     public required Guid ActivityId { get; set; }

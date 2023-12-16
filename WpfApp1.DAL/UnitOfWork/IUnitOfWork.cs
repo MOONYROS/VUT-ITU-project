@@ -7,7 +7,7 @@ namespace WpfApp1.DAL.UnitOfWork;
 public interface IUnitOfWork : IAsyncDisposable
 {
     IRepository<TEntity> GetRepository<TEntity, TEntityMapper>()
-        where TEntity : class, IEntityID
+        where TEntity : class, IEntityId
         where TEntityMapper : IEntityIDMapper<TEntity>, new();
 
     Task CommitAsync();

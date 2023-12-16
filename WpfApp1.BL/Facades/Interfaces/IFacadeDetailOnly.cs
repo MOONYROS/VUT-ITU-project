@@ -4,7 +4,7 @@ using WpfApp1.DAL.Entities;
 namespace WpfApp1.BL.Facades.Interfaces;
 
 public interface IFacadeDetailOnly<TEntity, TDetailModel>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
     where TDetailModel : class, IModel
 {
     Task DeleteAsync(Guid id);
