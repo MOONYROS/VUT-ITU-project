@@ -106,8 +106,15 @@
                                                Grid.Column="0"
                                                Grid.RowSpan="3"
                                                Width="10"
-                                               MinHeight="10"
-                                               Fill="{Binding Color}" />
+                                               MinHeight="10">
+                                        <Rectangle.Fill>
+                                            <Binding Path="Color">
+                                                <Binding.Converter>
+                                                    <converters:ColorToBrushConverter />
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
                                     <TextBlock Grid.Row="0"
                                                Grid.Column="1"
                                                Style="{StaticResource InnerTextBlock}"
@@ -169,7 +176,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-
         </Grid>
     </Grid>
 </UserControl>

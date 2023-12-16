@@ -76,7 +76,13 @@ public partial class CreateActivityViewModel : ViewModelBase,
 		{
 			await _activityTagFacade.SaveAsync(tmpActivity.Id, SelectedTag.Id);
 		}
-		Activity = ActivityDetailModel.Empty;
+		Activity = new ActivityDetailModel
+		{
+			Name = String.Empty,
+			DateTimeFrom = DateTime.Now,
+			DateTimeTo = DateTime.Now,
+			Color = default
+		};;
 		_navigationService.NavigateTo<ActivityListViewModel>();
 		_messengerService.Send(new ActivityAddedMessage());
 	}
