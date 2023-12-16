@@ -131,7 +131,8 @@
                     <ItemsControl ItemsSource="{Binding AvailableUsers}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox Content="{Binding  UserName}" IsChecked="{Binding IsChecked}"/>
+                                <CheckBox Content="{Binding  UserName}" 
+                                          IsChecked="{Binding IsChecked}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

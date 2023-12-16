@@ -61,7 +61,8 @@
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Left"/>
                         
-                        <Border Style="{StaticResource BasicBorder}">
+                        <Border Style="{StaticResource BasicBorder}"
+                                HorizontalAlignment="Left">
                             <xctk:DateTimePicker Style="{StaticResource BasicDateTime}" 
                                                  Format="Custom" 
                                                  FormatString="dd.MM.yyyy"
@@ -75,7 +76,8 @@
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Left"/>
                         
-                        <Border Style="{StaticResource BasicBorder}">
+                        <Border Style="{StaticResource BasicBorder}"
+                                HorizontalAlignment="Left">
                             <xctk:DateTimePicker Style="{StaticResource BasicDateTime}" 
                                                  Format="Custom" 
                                                  FormatString="dd.MM.yyyy"
@@ -89,7 +91,8 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <Border Style="{StaticResource BasicBorder}">
+                <Border Style="{StaticResource BasicBorder}"
+                        HorizontalAlignment="Left">
                     <xctk:ColorPicker Name="ColorPicker"
                                       Style="{StaticResource BasicColorPicker}">
                         <xctk:ColorPicker.SelectedColor>
@@ -106,13 +109,19 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <ItemsControl ItemsSource="{Binding AvailableTagsSelect}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding  Name}" IsChecked="{Binding IsChecked}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <Border Style="{StaticResource BasicBorder}"
+                        HorizontalAlignment="Left"
+                        Padding="5">
+                    
+                    <ItemsControl ItemsSource="{Binding AvailableTagsSelect}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding  Name}" 
+                                          IsChecked="{Binding IsChecked}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
                 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
