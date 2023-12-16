@@ -23,17 +23,16 @@ public partial class TodoListViewModel : ViewModelBase,
 	private readonly ITodoFacade _todoFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
-	private ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _idService;
 
-	public ObservableCollection<TodoDetailModel> UnfinishedTodos { get; set; } = new();
+	public ObservableCollection<TodoDetailModel> UnfinishedTodos { get; private set; } = new();
+	public ObservableCollection<TodoDetailModel> FinishedTodos { get; private set; } = new();
 
-	public ObservableCollection<TodoDetailModel> FinishedTodos { get; set; } = new();
 	public TodoListViewModel(
 		IMessengerService messengerService,
 		ITodoFacade todoFacade,
 		INavigationService navigationService, 
 		ISharedUserIdService idService)
-		: base(messengerService)
 	{
 		_messengerService = messengerService;
 		_todoFacade = todoFacade;
@@ -58,8 +57,7 @@ public partial class TodoListViewModel : ViewModelBase,
 		_navigationService.NavigateTo<EditUserViewModel>();
 		_messengerService.Send(new NavigationMessage());
 	}
-	
-		
+
 	[RelayCommand]
 	private void GoToTagListView()
 	{
@@ -88,7 +86,7 @@ public partial class TodoListViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private async void FinishToDo(Guid todoId)
+	private async Task FinishToDo(Guid todoId)
 	{
 		var tmpTodo = UnfinishedTodos.FirstOrDefault(element => element.Id == todoId);
 		tmpTodo.Finished = true;
@@ -97,7 +95,7 @@ public partial class TodoListViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private async void UnfinishToDo(Guid todoId)
+	private async Task UnfinishToDo(Guid todoId)
 	{
 		var tmpTodo = FinishedTodos.FirstOrDefault(element => element.Id == todoId);
 		tmpTodo.Finished = false;
@@ -106,7 +104,7 @@ public partial class TodoListViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private async void DeleteTodo(Guid todoId)
+	private async Task DeleteTodo(Guid todoId)
 	{
 		await _todoFacade.DeleteAsync(todoId);
 		await LoadDataAsync();

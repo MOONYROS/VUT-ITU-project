@@ -3,7 +3,7 @@
 namespace WpfApp1.DAL.Mappers;
 
 public interface IEntityIDMapper<in TEntity>
-    where TEntity : IEntityID
+    where TEntity : IEntityId
 {
     void MapToExistingEntity(TEntity existingEntity, TEntity newEntity);
 }

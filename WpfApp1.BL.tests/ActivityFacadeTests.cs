@@ -58,7 +58,8 @@ public class ActivityFacadeTests : FacadeTestsBase
     {
 	    var activity = ActivitySeeds.ActivitySeed();
 	    
-	    IEnumerable<Guid> userIds = new List<Guid>();// empty list
+	    // empty list
+	    IEnumerable<Guid> userIds = new List<Guid>();
 
 	    var returnedActivity = await _activityFacade.CreateActivityAsync(activity,userIds);
 

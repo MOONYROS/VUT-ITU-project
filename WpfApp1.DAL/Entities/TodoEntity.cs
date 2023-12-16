@@ -1,6 +1,6 @@
 ﻿namespace WpfApp1.DAL.Entities;
 
-public record TodoEntity : IEntityID
+public record TodoEntity : IEntityId
 {
     public required Guid Id { get; set; }
     public required string Name { get; set; }

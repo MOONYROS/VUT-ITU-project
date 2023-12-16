@@ -21,17 +21,15 @@ public partial class ActivityEditViewModel : ViewModelBase,
 {
 	private readonly ISharedActivityIdService _activityIdService;
 	private readonly ISharedUserIdService _userIdService;
-	private INavigationService _navigationService;
-	private IMessengerService _messengerService;
+	private readonly INavigationService _navigationService;
+	private readonly IMessengerService _messengerService;
 	private readonly IActivityFacade _activityFacade;
-	private ITagFacade _tagFacade;
-	private IActivityTagFacade _activityTagFacade;
+	private readonly ITagFacade _tagFacade;
+	private readonly IActivityTagFacade _activityTagFacade;
 
-	public ActivityDetailModel Activity { get; set; }
-	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; set; } = new();
-	public IEnumerable<Guid> AssignedTags { get; set; } = new List<Guid>();
-
-
+	public ActivityDetailModel Activity { get; private set; }
+	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; private set; } = new();
+	private IEnumerable<Guid> AssignedTags { get; set; } = new List<Guid>();
 
 	public ActivityEditViewModel(
 		IMessengerService messengerService,
@@ -40,8 +38,7 @@ public partial class ActivityEditViewModel : ViewModelBase,
 		INavigationService navigationService,
 		IActivityFacade activityFacade, 
 		ITagFacade tagFacade, 
-		IActivityTagFacade activityTagFacade) :
-		base(messengerService)
+		IActivityTagFacade activityTagFacade)
 	{
 		_messengerService = messengerService;
 		_activityIdService = activityIdService;
@@ -64,25 +61,24 @@ public partial class ActivityEditViewModel : ViewModelBase,
 		}
 		
 		//tags
-		var tmp = await _tagFacade.GetAsyncUser(_userIdService.UserId);
-
-		IEnumerable<TagSelectModel> idkbro2 = new List<TagSelectModel>();
-		foreach (var tagDetail in tmp)
+		var tmpTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
+		IEnumerable<TagSelectModel> tmpTagList = new List<TagSelectModel>();
+		foreach (var tagDetail in tmpTags)
 		{
 			var tagSelect = TagSelectModel.Empty;
 			tagSelect.Id = tagDetail.Id;
 			tagSelect.Name = tagDetail.Name;
 			tagSelect.Color = tagDetail.Color;
-			
+
 			//pokud uz je v aktivite
 			if (AssignedTags.Contains(tagDetail.Id))
 			{
 				tagSelect.IsChecked = true;
 			}
-			
-			idkbro2 = idkbro2.Append(tagSelect);
+
+			tmpTagList = tmpTagList.Append(tagSelect);
 		}
-		AvailableTagsSelect = idkbro2.ToObservableCollection();
+		AvailableTagsSelect = tmpTagList.ToObservableCollection();
 	}
 
 	private bool ValidCheck()

@@ -14,12 +14,12 @@ public partial class CreateUserViewModel : ViewModelBase
 	private readonly IUserFacade _userFacade;
 	private readonly IMessengerService _messengerService;
 
-	public UserDetailModel User { get; set; } = UserDetailModel.Empty;
+	public UserDetailModel User { get; private set; } = UserDetailModel.Empty;
 
 	public CreateUserViewModel(
 		INavigationService navigationService,
 		IUserFacade userFacade,
-		IMessengerService messengerService) : base(messengerService)
+		IMessengerService messengerService)
 	{
 		_navigationService = navigationService;
 		_userFacade = userFacade;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,27 +20,26 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	IRecipient<LogOutMessage>,
 	IRecipient<TagAddedMessage>
 {
-	private ISharedUserIdService _idService;
-	private IActivityFacade _activityFacade;
-	private INavigationService _navigationService;
-	private IMessengerService _messengerService;
-	private IActivityTagFacade _activityTagFacade;
-	private ITagFacade _tagFacade;
-	private IUserFacade _userFacade;
+	private readonly ISharedUserIdService _idService;
+	private readonly IActivityFacade _activityFacade;
+	private readonly INavigationService _navigationService;
+	private readonly IMessengerService _messengerService;
+	private readonly IActivityTagFacade _activityTagFacade;
+	private readonly ITagFacade _tagFacade;
+	private readonly IUserFacade _userFacade;
 	private bool _firstLoad = true;
 
-	public ObservableCollection<UserSelectModel> AvailableUsers { get; set; } = new();
-	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; set; } = new();
-	public IEnumerable<Guid> SelectedUsers { get; set; } = new List<Guid>();
+	public ObservableCollection<UserSelectModel> AvailableUsers { get; private set; } = new();
+	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; private set; } = new();
+	private IEnumerable<Guid> SelectedUsers { get; set; } = new List<Guid>();
 
-	public ActivityDetailModel Activity { get; set; } = new()
+	public ActivityDetailModel Activity { get; private set; } = new()
 	{
 		Name = String.Empty,
 		DateTimeFrom = DateTime.Now,
 		DateTimeTo = DateTime.Now,
 		Color = default
 	};
-
 
 	public CreateActivityViewModel(
 		IMessengerService messengerService,
@@ -51,7 +49,6 @@ public partial class CreateActivityViewModel : ViewModelBase,
 		IActivityTagFacade activityTagFacade,
 		ITagFacade tagFacade, 
 		IUserFacade userFacade)
-		: base(messengerService)
 	{
 		_messengerService = messengerService;
 		_idService = idService;
@@ -68,24 +65,24 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	protected override async Task LoadDataAsync()
 	{
 		//tags
-		var tmp = await _tagFacade.GetAsyncUser(_idService.UserId);
+		var tmpTags = await _tagFacade.GetAsyncUser(_idService.UserId);
 
-		IEnumerable<TagSelectModel> idkbro2 = new List<TagSelectModel>();
-		foreach (var tagDetail in tmp)
+		IEnumerable<TagSelectModel> tmpTagList = new List<TagSelectModel>();
+		foreach (var tagDetail in tmpTags)
 		{
 			var tagSelect = TagSelectModel.Empty;
 			tagSelect.Id = tagDetail.Id;
 			tagSelect.Name = tagDetail.Name;
 			tagSelect.Color = tagDetail.Color;
-			
-			idkbro2 = idkbro2.Append(tagSelect);
+
+			tmpTagList = tmpTagList.Append(tagSelect);
 		}
-		AvailableTagsSelect = idkbro2.ToObservableCollection();
+		AvailableTagsSelect = tmpTagList.ToObservableCollection();
 		
 		//users
-		var tmp2 = await _userFacade.GetAsync();
-		IEnumerable<UserSelectModel> idkbro = new List<UserSelectModel>();
-		foreach (var userDetail in tmp2)
+		var tmpUsers = await _userFacade.GetAsync();
+		IEnumerable<UserSelectModel> tmpUserList = new List<UserSelectModel>();
+		foreach (var userDetail in tmpUsers)
 		{
 			if (userDetail.Id != _idService.UserId)
 			{
@@ -93,11 +90,11 @@ public partial class CreateActivityViewModel : ViewModelBase,
 				userSelect.Id = userDetail.Id;
 				userSelect.UserName = userDetail.UserName;
 				userSelect.ImageUrl = userDetail.ImageUrl;
-				
-				idkbro = idkbro.Append(userSelect);
+
+				tmpUserList = tmpUserList.Append(userSelect);
 			}
 		}
-		AvailableUsers = idkbro.ToObservableCollection();
+		AvailableUsers = tmpUserList.ToObservableCollection();
 	}
 
 	private bool ValidCheck()

@@ -20,89 +20,90 @@ public partial class TagListViewModel : ViewModelBase,
 	private readonly ITagFacade _tagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
-	private ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _idService;
 	private bool _firstLoad = true;
 
-	public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
-		public TagListViewModel(
-			IMessengerService messengerService, 
-			ITagFacade tagFacade, 
-			INavigationService navigationService, 
-			ISharedUserIdService idService) : base(messengerService)
-		{
-			_messengerService = messengerService;
-			_tagFacade = tagFacade;
-			_navigationService = navigationService;
-			_idService = idService;
-			_messengerService.Messenger.Register<NavigationMessage>(this);
-			_messengerService.Messenger.Register<TagAddedMessage>(this);
-			_messengerService.Messenger.Register<LogOutMessage>(this);
-		}
+	public ObservableCollection<TagDetailModel> Tags { get; private set; } = new();
 
-		protected override async Task LoadDataAsync()
+	public TagListViewModel(
+		IMessengerService messengerService,
+		ITagFacade tagFacade,
+		INavigationService navigationService,
+		ISharedUserIdService idService)
+	{
+		_messengerService = messengerService;
+		_tagFacade = tagFacade;
+		_navigationService = navigationService;
+		_idService = idService;
+		_messengerService.Messenger.Register<NavigationMessage>(this);
+		_messengerService.Messenger.Register<TagAddedMessage>(this);
+		_messengerService.Messenger.Register<LogOutMessage>(this);
+	}
+
+	protected override async Task LoadDataAsync()
+	{
+		var bruh = await _tagFacade.GetAsyncUser(_idService.UserId);
+		Tags = bruh.ToObservableCollection();
+	}
+
+	[RelayCommand]
+	private void GoToCreateTag()
+	{
+		_navigationService.NavigateTo<CreateTagViewModel>();
+	}
+
+	[RelayCommand]
+	private void GoToTodoListView()
+	{
+		_navigationService.NavigateTo<TodoListViewModel>();
+		_messengerService.Send(new NavigationMessage());
+	}
+
+	[RelayCommand]
+	private void GoToEditUserView()
+	{
+		_navigationService.NavigateTo<EditUserViewModel>();
+		_messengerService.Send(new NavigationMessage());
+	}
+
+	[RelayCommand]
+	private void GoToActivityListView()
+	{
+		_navigationService.NavigateTo<ActivityListViewModel>();
+	}
+
+
+	[RelayCommand]
+	private async Task DeleteTag(Guid userId)
+	{
+		await _tagFacade.DeleteAsync(userId);
+		await LoadDataAsync();
+	}
+
+	[RelayCommand]
+	private void LogOut()
+	{
+		_idService.UserId = Guid.Empty;
+		_navigationService.NavigateTo<HomeViewModel>();
+		_messengerService.Send(new LogOutMessage());
+	}
+
+	public async void Receive(NavigationMessage message)
+	{
+		if (_firstLoad)
 		{
-			var bruh = await _tagFacade.GetAsyncUser(_idService.UserId);
-			Tags = bruh.ToObservableCollection();
-		}
-		
-		[RelayCommand]
-		private void GoToCreateTag()
-		{
-			_navigationService.NavigateTo<CreateTagViewModel>();
-		}
-		
-		[RelayCommand]
-		private void GoToTodoListView()
-		{
-			_navigationService.NavigateTo<TodoListViewModel>();
-			_messengerService.Send(new NavigationMessage());
-		}
-		
-		[RelayCommand]
-		private void GoToEditUserView()
-		{
-			_navigationService.NavigateTo<EditUserViewModel>();
-			_messengerService.Send(new NavigationMessage());
-		}
-		
-		[RelayCommand]
-		private void GoToActivityListView()
-		{
-			_navigationService.NavigateTo<ActivityListViewModel>();
-		}
-		
-		
-		[RelayCommand]
-		private async Task DeleteTag(Guid userId)
-		{
-			await _tagFacade.DeleteAsync(userId);
+			_firstLoad = false;
 			await LoadDataAsync();
 		}
+	}
 
-		[RelayCommand]
-		private void LogOut()
-		{
-			_idService.UserId = Guid.Empty;
-			_navigationService.NavigateTo<HomeViewModel>();
-			_messengerService.Send(new LogOutMessage());
-		}
+	public async void Receive(TagAddedMessage message)
+	{
+		await LoadDataAsync();
+	}
 
-		public async void Receive(NavigationMessage message)
-		{
-			if (_firstLoad)
-			{
-				_firstLoad = false;
-				await LoadDataAsync();
-			}
-		}
-
-		public async void Receive(TagAddedMessage message)
-		{
-			await LoadDataAsync();
-		}
-
-		public void Receive(LogOutMessage message)
-		{
-			_firstLoad = true;
-		}
+	public void Receive(LogOutMessage message)
+	{
+		_firstLoad = true;
+	}
 }

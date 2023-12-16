@@ -27,17 +27,16 @@ public partial class ActivityListViewModel : ViewModelBase,
 	private readonly IActivityTagFacade _activityTagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
-	private ISharedUserIdService _userIdService;
-	private ISharedActivityIdService _activityIdService;
+	private readonly ISharedUserIdService _userIdService;
+	private readonly ISharedActivityIdService _activityIdService;
 	private bool _firstLoad = true;
 
-	public DateTime From { get; set; } = DateTime.Now;
-	public DateTime To { get; set; } = DateTime.Now;
+	public DateTime From { get; set; } = DateTime.Today;
+	public DateTime To { get; set; } = DateTime.Today;
 
 	public TagDetailModel SelectedTag { get; set; }
-
-	public ObservableCollection<TagDetailModel> Tags { get; set; } = new();
-	public ObservableCollection<ActivityListModel> Activities { get; set; } = new();
+	public ObservableCollection<TagDetailModel> Tags { get; private set; } = new();
+	public ObservableCollection<ActivityListModel> Activities { get; private set; } = new();
 	
 	public ActivityListViewModel(
 		IMessengerService messengerService,
@@ -46,7 +45,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 		ISharedUserIdService userIdService,
 		ITagFacade tagFacade,
 		ISharedActivityIdService activityIdService,
-		TagDetailModel selectedTag, IActivityTagFacade activityTagFacade) : base(messengerService)
+		TagDetailModel selectedTag, IActivityTagFacade activityTagFacade)
 	{
 		_messengerService = messengerService;
 		_activityFacade = activityFacade;
@@ -81,7 +80,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 	{
 		var tmpActList = tmpActivities.ToList();
 		var tmpUserTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
-		var tmpUsTa = tmpUserTags.ToList();
+		// Musi byt list, u IEnumerable se clear nepropise do puvodni kolekces
+		tmpUserTags = tmpUserTags.ToList();
 		foreach (var activity in tmpActList)
 		{
 			activity.Tags.Clear();
@@ -89,7 +89,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 
 			foreach (var tmpAtBinding in tmpAtBindings)
 			{
-				AddTagToActivity(tmpAtBinding, tmpUsTa, activity);
+				AddTagToActivity(tmpAtBinding, tmpUserTags, activity);
 			}
 		}
 
@@ -108,27 +108,27 @@ public partial class ActivityListViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private async void ApplyFilter()
+	private async Task ApplyFilter()
 	{
-		Guid? TagId;
+		Guid? tagId;
 		try
 		{
 			if (SelectedTag.Name == String.Empty)
 			{
-				TagId = null;
+				tagId = null;
 			}
 			else
 			{
-				TagId = SelectedTag.Id;
+				tagId = SelectedTag.Id;
 			}
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
-			TagId = null;
+			tagId = null;
 		}
 		if (DateTime.Compare(From, To) < 0)
 		{
-			var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_userIdService.UserId, From, To, TagId);
+			var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_userIdService.UserId, From, To, tagId);
 			var activitiesList = await FixTags(tmpActivities);
 			Activities = activitiesList.ToObservableCollection();
 		}
@@ -140,7 +140,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 	}
 
 	[RelayCommand]
-	private async void ListAll()
+	private async Task ListAll()
 	{
 		await LoadDataAsync();
 	}

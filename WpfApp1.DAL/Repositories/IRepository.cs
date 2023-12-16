@@ -3,7 +3,7 @@
 namespace WpfApp1.DAL.Repositories;
 
 public interface IRepository<TEntity>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
 {
     IQueryable<TEntity> Get();
     void Delete(Guid entityId);

@@ -1,6 +1,6 @@
 ﻿namespace WpfApp1.DAL.Entities;
 
-public record UserEntity : IEntityID
+public record UserEntity : IEntityId
 {
     public required Guid Id { get; set; }
     public required string FullName { get; set; }

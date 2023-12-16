@@ -16,16 +16,16 @@ public partial class EditUserViewModel : ViewModelBase,
 	private readonly INavigationService _navigationService;
 	private readonly IUserFacade _userFacade;
 	private readonly IMessengerService _messengerService;
-	private ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _idService;
 	private bool _firstLoad = true;
 
-	public UserDetailModel User { get; set; } = UserDetailModel.Empty;
+	public UserDetailModel User { get; private set; } = UserDetailModel.Empty;
 
 	public EditUserViewModel(
 		IMessengerService messengerService, 
 		INavigationService navigationService, 
 		IUserFacade userFacade,
-		ISharedUserIdService idService) : base(messengerService)
+		ISharedUserIdService idService)
 	{
 		_messengerService = messengerService;
 		_navigationService = navigationService;
@@ -50,7 +50,7 @@ public partial class EditUserViewModel : ViewModelBase,
 	}
 	
 	[RelayCommand]
-	private async void GoToTodoListView()//dismiss
+	private async Task GoToTodoListView()//dismiss
 	{
 		User = await _userFacade.GetAsync(_idService.UserId); 
 		_navigationService.NavigateTo<ActivityListViewModel>();
@@ -78,7 +78,6 @@ public partial class EditUserViewModel : ViewModelBase,
 		_messengerService.Send(new UserCreatedMessage());
 		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
-
 
 	public void Receive(LogOutMessage message)
 	{

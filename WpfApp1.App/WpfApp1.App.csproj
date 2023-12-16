@@ -29,6 +29,8 @@
   	<ItemGroup>
   	  <Compile Remove="ViewModels\MainWindowViewModel.cs" />
   	  <Compile Remove="Views\UserControlBase.xaml.cs" />
+  	  <Compile Remove="AssemblyInfo.cs" />
+  	  <Compile Remove="Converters\SelectedItemConverter.cs" />
   	</ItemGroup>
 
   	<ItemGroup>

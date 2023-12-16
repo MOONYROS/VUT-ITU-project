@@ -22,7 +22,6 @@ public partial class CreateTodoViewModel : ViewModelBase
 		ITodoFacade todoFacade,
 		ISharedUserIdService idService,
 		INavigationService navigationService)
-		: base(messengerService)
 	{
 		_messengerService = messengerService;
 		_todoFacade = todoFacade;

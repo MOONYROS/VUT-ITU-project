@@ -4,7 +4,7 @@ using WpfApp1.DAL.Entities;
 namespace WpfApp1.BL.Facades.Interfaces;
 
 public interface IFacade<TEntity, TListModel, TDetailModel>
-    where TEntity : class, IEntityID
+    where TEntity : class, IEntityId
     where TListModel : IModel
     where TDetailModel : class, IModel
 {

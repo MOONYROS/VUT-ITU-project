@@ -4,7 +4,7 @@ namespace WpfApp1.DAL.Factories;
 
 public class DbContextSqLiteFactory : IDbContextFactory<ProjectDbContext>
 {
-    private bool _seedTestingData;
+    private readonly bool _seedTestingData;
     private readonly DbContextOptionsBuilder<ProjectDbContext> _contextOptionBuilder = new();
 
     public DbContextSqLiteFactory(string databaseName, bool seedTestingData = false)
