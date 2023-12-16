@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using WpfApp1.App;
 using WpfApp1.App.Messages;
+using WpfApp1.App.Models;
 using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL.Models;
@@ -25,9 +27,10 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	private IMessengerService _messengerService;
 	private IActivityTagFacade _activityTagFacade;
 	private ITagFacade _tagFacade;
+	private IUserFacade _userFacade;
 	private bool _firstLoad = true;
 
-	public ObservableCollection<UserListModel> AvailableUsers { get; set; } = new();
+	public ObservableCollection<UserSelectModel> AvailableUsers { get; set; } = new();
 	public IEnumerable<Guid> SelectedUsers { get; set; } = new List<Guid>();
 	public ObservableCollection<TagDetailModel> AvailableTags { get; set; } = new();
 	public TagDetailModel SelectedTag { get; set; } = TagDetailModel.Empty;
@@ -47,7 +50,8 @@ public partial class CreateActivityViewModel : ViewModelBase,
 		IActivityFacade activityFacade,
 		INavigationService navigationService,
 		IActivityTagFacade activityTagFacade,
-		ITagFacade tagFacade)
+		ITagFacade tagFacade, 
+		IUserFacade userFacade)
 		: base(messengerService)
 	{
 		_messengerService = messengerService;
@@ -56,6 +60,7 @@ public partial class CreateActivityViewModel : ViewModelBase,
 		_navigationService = navigationService;
 		_activityTagFacade = activityTagFacade;
 		_tagFacade = tagFacade;
+		_userFacade = userFacade;
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<LogOutMessage>(this);
 		_messengerService.Messenger.Register<TagAddedMessage>(this);
@@ -65,13 +70,37 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	{
 		var tmp = await _tagFacade.GetAsyncUser(_idService.UserId);
 		AvailableTags = tmp.ToObservableCollection();
+
+		var tmp2 = await _userFacade.GetAsync();
+		IEnumerable<UserSelectModel> idkbro = new List<UserSelectModel>();
+		foreach (var userDetail in tmp2)
+		{
+			if (userDetail.Id != _idService.UserId)
+			{
+				var userSelect = UserSelectModel.Empty;
+				userSelect.Id = userDetail.Id;
+				userSelect.UserName = userDetail.UserName;
+				userSelect.ImageUrl = userDetail.ImageUrl;
+				
+				idkbro = idkbro.Append(userSelect);
+			}
+		}
+		AvailableUsers = idkbro.ToObservableCollection();
 	}
 
 	[RelayCommand]
 	private async Task CreateActivity()
 	{
 		SelectedUsers = SelectedUsers.Append(_idService.UserId);
+		foreach (var user in AvailableUsers)
+		{
+			if (user.IsChecked)
+			{
+				SelectedUsers = SelectedUsers.Append(user.Id);
+			}
+		}
 		var tmpActivity = await _activityFacade.CreateActivityAsync(Activity, SelectedUsers);
+		SelectedUsers = new List<Guid>();
 		if (SelectedTag.Id != Guid.Empty)
 		{
 			await _activityTagFacade.SaveAsync(tmpActivity.Id, SelectedTag.Id);
@@ -82,7 +111,7 @@ public partial class CreateActivityViewModel : ViewModelBase,
 			DateTimeFrom = DateTime.Now,
 			DateTimeTo = DateTime.Now,
 			Color = default
-		};;
+		};
 		_navigationService.NavigateTo<ActivityListViewModel>();
 		_messengerService.Send(new ActivityAddedMessage());
 	}
@@ -90,6 +119,14 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	[RelayCommand]
 	private void GoToActivityList()
 	{
+		Activity = new ActivityDetailModel
+		{
+			Name = String.Empty,
+			DateTimeFrom = DateTime.Now,
+			DateTimeTo = DateTime.Now,
+			Color = default
+		};
+		SelectedTag = TagDetailModel.Empty;
 		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
 

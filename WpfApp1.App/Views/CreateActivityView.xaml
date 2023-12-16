@@ -121,7 +121,14 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-
+                
+                <ItemsControl ItemsSource="{Binding AvailableUsers}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding  UserName}" IsChecked="{Binding IsChecked}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
