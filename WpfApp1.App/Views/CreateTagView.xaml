@@ -43,15 +43,18 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <xctk:ColorPicker Name="ColorPicker">
-                    <xctk:ColorPicker.SelectedColor>
-                        <Binding Path="Tag.Color">
-                            <Binding.Converter>
-                                <converters:MediaColorToDrawingColorConverter />
-                            </Binding.Converter>
-                        </Binding>
-                    </xctk:ColorPicker.SelectedColor>
-                </xctk:ColorPicker>
+                <Border Style="{StaticResource BasicBorder}">
+                    <xctk:ColorPicker Name="ColorPicker"
+                                      Style="{StaticResource BasicColorPicker}">
+                        <xctk:ColorPicker.SelectedColor>
+                            <Binding Path="Tag.Color">
+                                <Binding.Converter>
+                                    <converters:MediaColorToDrawingColorConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </xctk:ColorPicker.SelectedColor>
+                    </xctk:ColorPicker>
+                </Border>
 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
