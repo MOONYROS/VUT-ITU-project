@@ -61,9 +61,12 @@
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Left"/>
 
-                        <xctk:DateTimePicker Format="Custom" 
-                                             FormatString="dd.MM.yyyy"
-                                             Value="{Binding Activity.DateTimeFrom}"/>
+                        <Border Style="{StaticResource BasicBorder}">
+                            <xctk:DateTimePicker Format="Custom" 
+                                                 FormatString="dd.MM.yyyy"
+                                                 Style="{StaticResource BasicDateTime}"
+                                                 Value="{Binding Activity.DateTimeFrom}"/>
+                        </Border>
                     </StackPanel>
                     
                     <StackPanel Grid.Column="1"
@@ -72,9 +75,12 @@
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Left"/>
 
-                        <xctk:DateTimePicker Format="Custom" 
-                                             FormatString="dd.MM.yyyy"
-                                             Value="{Binding Activity.DateTimeTo}"/>
+                        <Border Style="{StaticResource BasicBorder}">
+                            <xctk:DateTimePicker Format="Custom" 
+                                                 FormatString="dd.MM.yyyy"
+                                                 Style="{StaticResource BasicDateTime}"
+                                                 Value="{Binding Activity.DateTimeTo}"/>
+                        </Border>
                     </StackPanel>
                     
                 </Grid>
@@ -83,15 +89,18 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <xctk:ColorPicker Name="ColorPicker">
-                    <xctk:ColorPicker.SelectedColor>
-                        <Binding Path="Activity.Color">
-                            <Binding.Converter>
-                                <converters:MediaColorToDrawingColorConverter />
-                            </Binding.Converter>
-                        </Binding>
-                    </xctk:ColorPicker.SelectedColor>
-                </xctk:ColorPicker>
+                <Border Style="{StaticResource BasicBorder}">
+                    <xctk:ColorPicker Name="ColorPicker"
+                                      Style="{StaticResource BasicColorPicker}">
+                        <xctk:ColorPicker.SelectedColor>
+                            <Binding Path="Activity.Color">
+                                <Binding.Converter>
+                                    <converters:MediaColorToDrawingColorConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </xctk:ColorPicker.SelectedColor>
+                    </xctk:ColorPicker>
+                </Border>
                 
                 <Label Content="Select a Tag:"
                        VerticalAlignment="Bottom"
@@ -121,6 +130,10 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                
+                <Label Content="Select attendees:"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"/>
                 
                 <ItemsControl ItemsSource="{Binding AvailableUsers}">
                     <ItemsControl.ItemTemplate>
