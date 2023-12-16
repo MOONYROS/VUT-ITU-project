@@ -5,6 +5,7 @@ using WpfApp1.DAL.Mappers;
 using WpfApp1.DAL.Repositories;
 using WpfApp1.DAL.UnitOfWork;
 using System.Threading.Tasks;
+using WpfApp1.BL.Models;
 
 namespace WpfApp1.BL.Facades;
 
@@ -14,6 +15,16 @@ public class ActivityTagFacade : IActivityTagFacade
     public ActivityTagFacade(IUnitOfWorkFactory unitOfWorkFactory)
     {
         _unitOfWorkFactory = unitOfWorkFactory;
+    }
+
+    public async Task<IEnumerable<ActivityTagListEntity>> GetAsync(Guid activityId)
+    {
+	    await using IUnitOfWork uow = _unitOfWorkFactory.Create();
+	    var tmpAtList = await uow.GetRepository<ActivityTagListEntity, ActivityTagListEntityMapper>()
+		    .Get()
+		    .Where(i => i.ActivityId == activityId)
+		    .ToListAsync();
+	    return tmpAtList;
     }
 
     public async Task SaveAsync(Guid activityId, Guid tagId)

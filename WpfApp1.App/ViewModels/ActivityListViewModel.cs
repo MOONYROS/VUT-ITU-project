@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using WpfApp1.APP.Services.Interfaces;
 using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL.Models;
 using WpfApp1.App;
+using WpfApp1.DAL.Entities;
 
 namespace WpfApp1.APP.ViewModels;
 
@@ -22,6 +24,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 {
 	private readonly IActivityFacade _activityFacade;
 	private readonly ITagFacade _tagFacade;
+	private readonly IActivityTagFacade _activityTagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
 	private ISharedUserIdService _userIdService;
@@ -42,7 +45,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 		INavigationService navigationService,
 		ISharedUserIdService userIdService,
 		ITagFacade tagFacade,
-		ISharedActivityIdService activityIdService) : base(messengerService)
+		ISharedActivityIdService activityIdService,
+		TagDetailModel selectedTag, IActivityTagFacade activityTagFacade) : base(messengerService)
 	{
 		_messengerService = messengerService;
 		_activityFacade = activityFacade;
@@ -50,6 +54,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_userIdService = userIdService;
 		_tagFacade = tagFacade;
 		_activityIdService = activityIdService;
+		SelectedTag = selectedTag;
+		_activityTagFacade = activityTagFacade;
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<ActivityAddedMessage>(this);
 		_messengerService.Messenger.Register<ActivityDeletedMessage>(this);
@@ -67,9 +73,33 @@ public partial class ActivityListViewModel : ViewModelBase,
 	protected override async Task LoadDataAsync()
 	{
 		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_userIdService.UserId);
-		Activities = tmpActivities.ToObservableCollection();
+		var tmpUserTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
+		var tmpActList = tmpActivities.ToList();
+		var tmpUsTa = tmpUserTags.ToList();
+		foreach (var activity in tmpActList)
+		{
+			activity.Tags.Clear();
+			var tmpAtBindings = await _activityTagFacade.GetAsync(activity.Id);
+
+			foreach (var tmpAtBinding in tmpAtBindings)
+			{
+				addTagToActivity(tmpAtBinding, tmpUsTa, activity);
+			}
+		}
+		Activities = tmpActList.ToObservableCollection();
 	}
-	
+
+	private void addTagToActivity(ActivityTagListEntity at, IEnumerable<TagDetailModel> userTags, ActivityListModel activity)
+	{
+		foreach (var userTag in userTags)
+		{
+			if (userTag.Id == at.TagId)
+			{
+				activity.Tags.Add(userTag);
+			}
+		}
+	}
+
 	[RelayCommand]
 	private async void ApplyFilter()
 	{
