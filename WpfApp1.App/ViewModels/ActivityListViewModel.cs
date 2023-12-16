@@ -73,8 +73,14 @@ public partial class ActivityListViewModel : ViewModelBase,
 	protected override async Task LoadDataAsync()
 	{
 		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_userIdService.UserId);
-		var tmpUserTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
+		var activitiesList = await FixTags(tmpActivities);
+		Activities = activitiesList.ToObservableCollection();
+	}
+
+	private async Task<List<ActivityListModel>> FixTags(IEnumerable<ActivityListModel> tmpActivities)
+	{
 		var tmpActList = tmpActivities.ToList();
+		var tmpUserTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
 		var tmpUsTa = tmpUserTags.ToList();
 		foreach (var activity in tmpActList)
 		{
@@ -83,13 +89,14 @@ public partial class ActivityListViewModel : ViewModelBase,
 
 			foreach (var tmpAtBinding in tmpAtBindings)
 			{
-				addTagToActivity(tmpAtBinding, tmpUsTa, activity);
+				AddTagToActivity(tmpAtBinding, tmpUsTa, activity);
 			}
 		}
-		Activities = tmpActList.ToObservableCollection();
+
+		return tmpActList;
 	}
 
-	private void addTagToActivity(ActivityTagListEntity at, IEnumerable<TagDetailModel> userTags, ActivityListModel activity)
+	private void AddTagToActivity(ActivityTagListEntity at, IEnumerable<TagDetailModel> userTags, ActivityListModel activity)
 	{
 		foreach (var userTag in userTags)
 		{
@@ -122,7 +129,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 		if (DateTime.Compare(From, To) < 0)
 		{
 			var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_userIdService.UserId, From, To, TagId);
-			Activities = tmpActivities.ToObservableCollection();
+			var activitiesList = await FixTags(tmpActivities);
+			Activities = activitiesList.ToObservableCollection();
 		}
 		else
 		{
