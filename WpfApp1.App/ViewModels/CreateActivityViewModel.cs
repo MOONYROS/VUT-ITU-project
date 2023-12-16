@@ -31,9 +31,9 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	private bool _firstLoad = true;
 
 	public ObservableCollection<UserSelectModel> AvailableUsers { get; set; } = new();
+	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; set; } = new();
 	public IEnumerable<Guid> SelectedUsers { get; set; } = new List<Guid>();
-	public ObservableCollection<TagDetailModel> AvailableTags { get; set; } = new();
-	public TagDetailModel SelectedTag { get; set; } = TagDetailModel.Empty;
+	public IEnumerable<Guid> SelectedTags { get; set; } = new List<Guid>();
 
 	public ActivityDetailModel Activity { get; set; } = new()
 	{
@@ -68,9 +68,22 @@ public partial class CreateActivityViewModel : ViewModelBase,
 
 	protected override async Task LoadDataAsync()
 	{
+		//tags
 		var tmp = await _tagFacade.GetAsyncUser(_idService.UserId);
-		AvailableTags = tmp.ToObservableCollection();
 
+		IEnumerable<TagSelectModel> idkbro2 = new List<TagSelectModel>();
+		foreach (var tagDetail in tmp)
+		{
+			var tagSelect = TagSelectModel.Empty;
+			tagSelect.Id = tagDetail.Id;
+			tagSelect.Name = tagDetail.Name;
+			tagSelect.Color = tagDetail.Color;
+			
+			idkbro2 = idkbro2.Append(tagSelect);
+		}
+		AvailableTagsSelect = idkbro2.ToObservableCollection();
+		
+		//users
 		var tmp2 = await _userFacade.GetAsync();
 		IEnumerable<UserSelectModel> idkbro = new List<UserSelectModel>();
 		foreach (var userDetail in tmp2)
@@ -97,14 +110,21 @@ public partial class CreateActivityViewModel : ViewModelBase,
 			if (user.IsChecked)
 			{
 				SelectedUsers = SelectedUsers.Append(user.Id);
+				user.IsChecked = false;
 			}
 		}
 		var tmpActivity = await _activityFacade.CreateActivityAsync(Activity, SelectedUsers);
 		SelectedUsers = new List<Guid>();
-		if (SelectedTag.Id != Guid.Empty)
+
+		foreach (var tag in AvailableTagsSelect)
 		{
-			await _activityTagFacade.SaveAsync(tmpActivity.Id, SelectedTag.Id);
+			if (tag.IsChecked)
+			{
+				await _activityTagFacade.SaveAsync(tmpActivity.Id, tag.Id);
+				tag.IsChecked = false;
+			}
 		}
+		
 		Activity = new ActivityDetailModel
 		{
 			Name = String.Empty,
@@ -126,7 +146,6 @@ public partial class CreateActivityViewModel : ViewModelBase,
 			DateTimeTo = DateTime.Now,
 			Color = default
 		};
-		SelectedTag = TagDetailModel.Empty;
 		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
 
