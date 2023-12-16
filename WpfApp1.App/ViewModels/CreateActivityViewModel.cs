@@ -101,9 +101,30 @@ public partial class CreateActivityViewModel : ViewModelBase,
 		AvailableUsers = idkbro.ToObservableCollection();
 	}
 
+	private bool ValidCheck()
+	{
+		if (String.IsNullOrWhiteSpace(Activity.Name))
+		{
+			MessageBox.Show("Pole pro jméno aktivity nesmí být prazdné",
+				"Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+			return false;
+		}
+		if ((DateTime.Compare(Activity.DateTimeFrom, Activity.DateTimeTo) >= 0))
+		{
+			MessageBox.Show("\"From\" musi být dříve, než \"To\"...",
+				"Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+			return false;
+		}
+		return true;
+	}
+
 	[RelayCommand]
 	private async Task CreateActivity()
 	{
+		if (!ValidCheck())
+		{
+			return;
+		}
 		SelectedUsers = SelectedUsers.Append(_idService.UserId);
 		foreach (var user in AvailableUsers)
 		{
