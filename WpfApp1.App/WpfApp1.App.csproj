@@ -31,4 +31,9 @@
   	  <Compile Remove="Views\UserControlBase.xaml.cs" />
   	</ItemGroup>
 
+  	<ItemGroup>
+  	  <None Remove="Icons\calendar_icon.ico" />
+  	  <Resource Include="Icons\calendar_icon.ico" />
+  	</ItemGroup>
+
 </Project>

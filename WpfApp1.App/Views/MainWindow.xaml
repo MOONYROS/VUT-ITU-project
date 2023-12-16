@@ -6,6 +6,7 @@
         xmlns:viewModels="clr-namespace:WpfApp1.APP.ViewModels"
         xmlns:views="clr-namespace:WpfApp1.App.Views"
         mc:Ignorable="d"
+        Icon="../Icons/calendar_icon.ico"
         Title="WellPerfoming Funny App" 
         MinHeight="550" 
         MinWidth="800" 
