@@ -33,7 +33,6 @@ public partial class CreateActivityViewModel : ViewModelBase,
 	public ObservableCollection<UserSelectModel> AvailableUsers { get; set; } = new();
 	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; set; } = new();
 	public IEnumerable<Guid> SelectedUsers { get; set; } = new List<Guid>();
-	public IEnumerable<Guid> SelectedTags { get; set; } = new List<Guid>();
 
 	public ActivityDetailModel Activity { get; set; } = new()
 	{

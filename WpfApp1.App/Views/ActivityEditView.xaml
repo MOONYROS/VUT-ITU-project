@@ -106,31 +106,13 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <ComboBox HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Width="500"
-                          SelectedItem="{Binding SelectedTag, Mode=TwoWay}">
-                    <ComboBox.ItemsSource>
-                        <Binding Path="AvailableTags" />
-                    </ComboBox.ItemsSource>
-                    <ComboBox.ItemTemplate>
+                <ItemsControl ItemsSource="{Binding AvailableTagsSelect}">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" Margin="5"/>
-                                <Rectangle Width="20" Height="20" Margin="5">
-                                    <Rectangle.Fill>
-                                        <Binding Path="Color">
-                                            <Binding.Converter>
-                                                <converters:ColorToBrushConverter />
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </StackPanel>
+                            <CheckBox Content="{Binding  Name}" IsChecked="{Binding IsChecked}"/>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
