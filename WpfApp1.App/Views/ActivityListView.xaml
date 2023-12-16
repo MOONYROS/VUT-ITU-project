@@ -112,7 +112,7 @@
                     
                     <Button Command="{Binding ApplyFilterCommand}"
                             Content="Apply filter"
-                            Style="{StaticResource GreenButton}"/>
+                            Style="{StaticResource OrangeButton}"/>
                     
                     <Button Command="{Binding ListAllCommand}"
                             Content="List all"
