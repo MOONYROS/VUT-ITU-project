@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic.FileIO;
 using WpfApp1.App.Messages;
 using WpfApp1.APP.Services;
 using WpfApp1.APP.Services.Interfaces;
@@ -16,6 +14,7 @@ using WpfApp1.BL.Facades.Interfaces;
 using WpfApp1.BL;
 using WpfApp1.BL.Facades;
 using WpfApp1.BL.Mappers.Interfaces;
+using WpfApp1.BL.Models;
 using WpfApp1.DAL;
 using WpfApp1.DAL.Factories;
 using WpfApp1.DAL.Mappers;
@@ -44,6 +43,12 @@ public partial class App : Application
 		serviceCollection.AddSingleton<ISharedActivityIdService, SharedActivityIdService>();
 
 		serviceCollection.AddSingleton<IActivityTagFacade, ActivityTagFacade>();
+
+		serviceCollection.Scan(selector => selector
+			.FromAssemblyOf<BusinessLogic>()
+			.AddClasses(filter => filter.AssignableTo<IModel>())
+			.AsSelf()
+			.WithTransientLifetime());
 
 		serviceCollection.Scan(selector => selector
 			.FromAssemblyOf<App>()
