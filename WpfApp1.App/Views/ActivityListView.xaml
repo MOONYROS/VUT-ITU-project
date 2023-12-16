@@ -79,7 +79,7 @@
                         Content="Apply filter">
                     </Button>
                     <Button Grid.Column="7" 
-                            Command="{Binding }"
+                            Command="{Binding ListAllCommand}"
                             Content="List all">
                     </Button>
                 </Grid>

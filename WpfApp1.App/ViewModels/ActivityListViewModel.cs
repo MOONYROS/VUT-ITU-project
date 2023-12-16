@@ -16,6 +16,7 @@ namespace WpfApp1.APP.ViewModels;
 public partial class ActivityListViewModel : ViewModelBase,
 	IRecipient<NavigationMessage>,
 	IRecipient<ActivityAddedMessage>,
+	IRecipient<TagAddedMessage>,
 	IRecipient<LogOutMessage>
 {
 	private readonly IActivityFacade _activityFacade;
@@ -51,19 +52,24 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<ActivityAddedMessage>(this);
 		_messengerService.Messenger.Register<LogOutMessage>(this);
+		_messengerService.Messenger.Register<TagAddedMessage>(this);
+	}
+
+	private async Task LoadTagsAsync()
+	{
+		var tmpTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
+		Tags = tmpTags.ToObservableCollection();
+		Tags.Insert(0, TagDetailModel.Empty);
 	}
 
 	protected override async Task LoadDataAsync()
 	{
 		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_userIdService.UserId);
 		Activities = tmpActivities.ToObservableCollection();
-		var tmpTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
-		Tags = tmpTags.ToObservableCollection();
-		Tags.Insert(0, TagDetailModel.Empty);
 	}
 	
 	[RelayCommand]
-	private void ApplyFilter()
+	private async void ApplyFilter()
 	{
 		Guid? TagId;
 		try
@@ -83,15 +89,22 @@ public partial class ActivityListViewModel : ViewModelBase,
 		}
 		if (DateTime.Compare(From, To) < 0)
 		{
-			
+			var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_userIdService.UserId, From, To, TagId);
+			Activities = tmpActivities.ToObservableCollection();
 		}
 		else
 		{
-			MessageBox.Show("\"From\" je pozdeji nez \"To\"... Co to zas zkousis...",
+			MessageBox.Show("\"From\" musi být dříve, než \"To\"...",
 				"Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
-	
+
+	[RelayCommand]
+	private async void ListAll()
+	{
+		await LoadDataAsync();
+	}
+
 	[RelayCommand]
 	private void GoToTagListView()
 	{
@@ -142,6 +155,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 		if (_firstLoad)
 		{
 			_firstLoad = false;
+			await LoadTagsAsync();
 			await LoadDataAsync();
 		}
 	}
@@ -154,5 +168,10 @@ public partial class ActivityListViewModel : ViewModelBase,
 	public async void Receive(ActivityAddedMessage message)
 	{
 		await LoadDataAsync();
+	}
+	
+	public async void Receive(TagAddedMessage message)
+	{
+		await LoadTagsAsync();
 	}
 }

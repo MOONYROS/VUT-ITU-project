@@ -53,7 +53,7 @@ public partial class EditUserViewModel : ViewModelBase,
 	private async void GoToTodoListView()//dismiss
 	{
 		User = await _userFacade.GetAsync(_idService.UserId); 
-		_navigationService.NavigateTo<TodoListViewModel>();
+		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
 	
 	[RelayCommand]

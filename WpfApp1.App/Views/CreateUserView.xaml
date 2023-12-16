@@ -31,7 +31,7 @@
                 <Border Style="{StaticResource CreateUserImage}">
                     <Image Width="100"
                            Height="100"
-                           Stretch="UniformToFill">
+                           Stretch="Fill">
                         <Image.Source>
                             <Binding Path="User.ImageUrl">
                                 <Binding.Converter>
