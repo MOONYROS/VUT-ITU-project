@@ -18,6 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- HEADING -->
         <TextBlock Grid.Row="0" 
                    Text="Create Tag" 
                    FontSize="32" 
@@ -25,6 +26,7 @@
                    HorizontalAlignment="Center" 
                    Margin="0,0,0,20"/>
         
+        <!-- FORM -->
         <ScrollViewer Grid.Row="1" 
                       VerticalScrollBarVisibility="Auto"
                       HorizontalAlignment="Center">

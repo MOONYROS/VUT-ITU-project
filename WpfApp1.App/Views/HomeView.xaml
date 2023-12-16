@@ -19,7 +19,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" TextAlignment="Center" Text="WellPerforming Funny App 1" FontSize="50" FontFamily="Comic Sans MS, Verdana" FontWeight="Bold" Foreground="Black"/>
+        <!-- LOGIN PAGE HEADING-->
+        <TextBlock Grid.Row="1" 
+                   TextAlignment="Center" 
+                   Text="WellPerforming Funny App 1" 
+                   FontSize="50" 
+                   FontFamily="Comic Sans MS, Verdana" 
+                   FontWeight="Bold" 
+                   Foreground="Black"/>
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -28,9 +35,11 @@
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
+            <!-- USER SELECTION -->
             <ScrollViewer Grid.Column="1"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto">
+                <!-- SCROLLBAR STYLING -->
                 <ScrollViewer.Resources>
                     <!-- SCROLLBAR THUMB -->
                     <Style x:Key="ScrollBarThumb" TargetType="Thumb">
@@ -46,7 +55,9 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="RepeatButton">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                                    <Border Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}"/>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -58,15 +69,18 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ScrollBar">
                                     <Grid>
-                                        <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                        <Track x:Name="PART_Track" 
+                                               IsDirectionReversed="False">
                                             <Track.DecreaseRepeatButton>
-                                                <RepeatButton Command="ScrollBar.LineUpCommand" Style="{StaticResource ScrollBarLineButton}"/>
+                                                <RepeatButton Command="ScrollBar.LineUpCommand" 
+                                                              Style="{StaticResource ScrollBarLineButton}"/>
                                             </Track.DecreaseRepeatButton>
                                             <Track.Thumb>
                                                 <Thumb Style="{StaticResource ScrollBarThumb}"/>
                                             </Track.Thumb>
                                             <Track.IncreaseRepeatButton>
-                                                <RepeatButton Command="ScrollBar.LineDownCommand" Style="{StaticResource ScrollBarLineButton}"/>
+                                                <RepeatButton Command="ScrollBar.LineDownCommand" 
+                                                              Style="{StaticResource ScrollBarLineButton}"/>
                                             </Track.IncreaseRepeatButton>
                                         </Track>
                                     </Grid>
@@ -79,7 +93,7 @@
                 <ItemsControl ItemsSource="{Binding Users}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <!-- USER LOGIN ICONS -->
+                            <!-- USER LOGIN ICONS WITH USERNAMES -->
                             <Button Command="{Binding DataContext.GoToActivityListViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding Id}"
                                     Margin="10,0,10,0"
@@ -127,9 +141,8 @@
 
             <Button Grid.Column="1"
                     Command="{Binding GoToCreateUserCommand}"
-                    Style="{StaticResource BasicButton}">
-                <TextBlock >Create user</TextBlock>
-            </Button>
+                    Style="{StaticResource BasicButton}"
+                    Content="Create User"/>
         </Grid>
 
     </Grid>

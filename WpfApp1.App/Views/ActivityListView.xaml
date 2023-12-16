@@ -32,7 +32,7 @@
             </DockPanel>
         </Border>
             
-        <!-- TODOLIST AREA -->
+        <!-- ACTIVITY AREA -->
         <Grid Grid.Column="1" Background="#F4F4ED">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -121,7 +121,9 @@
                 
             </StackPanel>
             
-           <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <!-- VIEW CONTENT -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <!-- ACTIVITY -->
                 <ItemsControl ItemsSource="{Binding Activities}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -164,7 +166,10 @@
                                                FontWeight="Bold"
                                                FontSize="18"
                                                Text="{Binding Name}" />
-                                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical"
+                                    <StackPanel Grid.Row="0" 
+                                                Grid.Column="2" 
+                                                Grid.RowSpan="2" 
+                                                Orientation="Vertical"
                                                 HorizontalAlignment="Right">
                                         <ItemsControl ItemsSource="{Binding Tags}">
                                             <ItemsControl.ItemTemplate>
