@@ -54,6 +54,14 @@ public partial class ActivityEditViewModel : ViewModelBase,
 	{
 		_navigationService.NavigateTo<ActivityListViewModel>();
 	}
+	
+	[RelayCommand]
+	private async Task DeleteActivity()
+	{
+		await _activityFacade.RemoveActivityFromUserAsync(Activity.Id, _userIdService.UserId);
+		_navigationService.NavigateTo<ActivityListViewModel>();
+		_messengerService.Send(new ActivityDeletedMessage());
+	}
 
 	public async void Receive(ActivityEditNavigationMessage message)
 	{

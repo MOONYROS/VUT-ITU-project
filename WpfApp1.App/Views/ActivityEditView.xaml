@@ -135,7 +135,12 @@
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
                             Margin="10">
+                    
                     <Button Style="{StaticResource RedButton}" 
+                            Content="Delete Activity"
+                            Command="{Binding DeleteActivityCommand}"/>
+                    
+                    <Button Style="{StaticResource OrangeButton}" 
                             Content="Dismiss"
                             Command="{Binding GoToActivityListViewCommand}"/>
                     

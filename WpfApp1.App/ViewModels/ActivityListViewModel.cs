@@ -16,6 +16,7 @@ namespace WpfApp1.APP.ViewModels;
 public partial class ActivityListViewModel : ViewModelBase,
 	IRecipient<NavigationMessage>,
 	IRecipient<ActivityAddedMessage>,
+	IRecipient<ActivityDeletedMessage>,
 	IRecipient<TagAddedMessage>,
 	IRecipient<LogOutMessage>
 {
@@ -51,6 +52,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_activityIdService = activityIdService;
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<ActivityAddedMessage>(this);
+		_messengerService.Messenger.Register<ActivityDeletedMessage>(this);
 		_messengerService.Messenger.Register<LogOutMessage>(this);
 		_messengerService.Messenger.Register<TagAddedMessage>(this);
 	}
@@ -173,5 +175,10 @@ public partial class ActivityListViewModel : ViewModelBase,
 	public async void Receive(TagAddedMessage message)
 	{
 		await LoadTagsAsync();
+	}
+
+	public async void Receive(ActivityDeletedMessage message)
+	{
+		await LoadDataAsync();
 	}
 }
