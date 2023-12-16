@@ -30,7 +30,7 @@
 
             <ScrollViewer Grid.Column="1"
                           HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
+                          VerticalScrollBarVisibility="Auto">
                 <ScrollViewer.Resources>
                     <!-- SCROLLBAR THUMB -->
                     <Style x:Key="ScrollBarThumb" TargetType="Thumb">
@@ -58,7 +58,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ScrollBar">
                                     <Grid>
-                                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                        <Track x:Name="PART_Track" IsDirectionReversed="False">
                                             <Track.DecreaseRepeatButton>
                                                 <RepeatButton Command="ScrollBar.LineUpCommand" Style="{StaticResource ScrollBarLineButton}"/>
                                             </Track.DecreaseRepeatButton>
