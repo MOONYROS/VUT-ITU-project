@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using WpfApp1.App.Messages;
@@ -41,9 +43,30 @@ public partial class ActivityEditViewModel : ViewModelBase,
 		Activity = await _activityFacade.GetAsync(_activityIdService.ActivityId);
 	}
 
+	private bool ValidCheck()
+	{
+		if (String.IsNullOrWhiteSpace(Activity.Name))
+		{
+			MessageBox.Show("Pole pro jméno aktivity nesmí být prazdné",
+				"Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+			return false;
+		}
+		if ((DateTime.Compare(Activity.DateTimeFrom, Activity.DateTimeTo) >= 0))
+		{
+			MessageBox.Show("\"From\" musi být dříve, než \"To\"...",
+				"Hupsík dupsík...", MessageBoxButton.OK, MessageBoxImage.Error);
+			return false;
+		}
+		return true;
+	}
+	
 	[RelayCommand]
 	private async Task EditActivity()
 	{
+		if (!ValidCheck())
+		{
+			return;
+		}
 		await _activityFacade.SaveAsync(Activity);
 		_navigationService.NavigateTo<ActivityListViewModel>();
 		_messengerService.Send(new ActivityAddedMessage());
