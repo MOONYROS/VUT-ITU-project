@@ -43,7 +43,8 @@
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Left"/>
                 
-                <Border Style="{StaticResource BasicBorder}">
+                <Border Style="{StaticResource BasicBorder}"
+                        HorizontalAlignment="Left">
                     <xctk:ColorPicker Name="ColorPicker"
                                       Style="{StaticResource BasicColorPicker}">
                         <xctk:ColorPicker.SelectedColor>
