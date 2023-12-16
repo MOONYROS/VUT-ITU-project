@@ -22,7 +22,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 	private readonly ITagFacade _tagFacade;
 	private readonly IMessengerService _messengerService;
 	private readonly INavigationService _navigationService;
-	private ISharedUserIdService _idService;
+	private ISharedUserIdService _userIdService;
+	private ISharedActivityIdService _activityIdService;
 	private bool _firstLoad = true;
 
 	public DateTime From { get; set; } = DateTime.Now;
@@ -37,14 +38,16 @@ public partial class ActivityListViewModel : ViewModelBase,
 		IMessengerService messengerService,
 		IActivityFacade activityFacade,
 		INavigationService navigationService,
-		ISharedUserIdService idService, 
-		ITagFacade tagFacade) : base(messengerService)
+		ISharedUserIdService userIdService,
+		ITagFacade tagFacade,
+		ISharedActivityIdService activityIdService) : base(messengerService)
 	{
 		_messengerService = messengerService;
 		_activityFacade = activityFacade;
 		_navigationService = navigationService;
-		_idService = idService;
+		_userIdService = userIdService;
 		_tagFacade = tagFacade;
+		_activityIdService = activityIdService;
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<ActivityAddedMessage>(this);
 		_messengerService.Messenger.Register<LogOutMessage>(this);
@@ -52,9 +55,9 @@ public partial class ActivityListViewModel : ViewModelBase,
 
 	protected override async Task LoadDataAsync()
 	{
-		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_idService.UserId);
+		var tmpActivities = await _activityFacade.GetUserActivitiesAsync(_userIdService.UserId);
 		Activities = tmpActivities.ToObservableCollection();
-		var tmpTags = await _tagFacade.GetAsyncUser(_idService.UserId);
+		var tmpTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
 		Tags = tmpTags.ToObservableCollection();
 		Tags.Insert(0, TagDetailModel.Empty);
 	}
@@ -114,7 +117,7 @@ public partial class ActivityListViewModel : ViewModelBase,
 	[RelayCommand]
 	private void LogOut()
 	{
-		_idService.UserId = Guid.Empty;
+		_userIdService.UserId = Guid.Empty;
 		_navigationService.NavigateTo<HomeViewModel>();
 		_messengerService.Send(new LogOutMessage());
 	}
@@ -124,6 +127,14 @@ public partial class ActivityListViewModel : ViewModelBase,
 	{
 		_navigationService.NavigateTo<CreateActivityViewModel>();
 		_messengerService.Send(new NavigationMessage());
+	}
+
+	[RelayCommand]
+	private void GoToEditActivity(Guid activityId)
+	{
+		_activityIdService.ActivityId = activityId;
+		_navigationService.NavigateTo<ActivityEditViewModel>();
+		_messengerService.Send(new ActivityEditNavigationMessage());
 	}
 	
 	public async void Receive(NavigationMessage message)

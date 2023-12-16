@@ -41,6 +41,7 @@ public partial class App : Application
 		serviceCollection.AddSingleton<INavigationService, NavigationService>();
 
 		serviceCollection.AddSingleton<ISharedUserIdService, SharedUserIdService>();
+		serviceCollection.AddSingleton<ISharedActivityIdService, SharedActivityIdService>();
 
 		serviceCollection.AddSingleton<IActivityTagFacade, ActivityTagFacade>();
 

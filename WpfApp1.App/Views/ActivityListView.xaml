@@ -169,7 +169,9 @@
                                             Grid.Column="2"
                                             Style="{StaticResource BasicButton}"
                                             HorizontalAlignment="Right"
-                                            Content="EDIT"/>
+                                            Content="EDIT"
+                                            Command="{Binding DataContext.GoToEditActivityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding Id}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
