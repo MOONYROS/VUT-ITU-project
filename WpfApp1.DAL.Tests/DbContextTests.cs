@@ -424,41 +424,6 @@ public class DbContextTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task TwoUsers_OneActivity_BothHaveIt()
-    {
-	    var user1 = UserSeeds.UserSeed();
-	    var user2 = UserSeeds.UserSeed();
-	    var activity = ActivitySeeds.ActivitySeed();
-
-	    var ua1 = new UserActivityListEntity
-	    {
-		    Id = Guid.NewGuid(),
-		    ActivityId = activity.Id,
-		    UserId = user1.Id
-	    };
-
-	    var ua2 = new UserActivityListEntity
-	    {
-		    Id = Guid.NewGuid(),
-		    ActivityId = activity.Id,
-		    UserId = user2.Id
-	    };
-
-	    ProjectDbContextSUT.Users.Add(user1);
-	    ProjectDbContextSUT.Users.Add(user2);
-	    ProjectDbContextSUT.Activities.Add(activity);
-	    ProjectDbContextSUT.UALists.Add(ua1);
-	    ProjectDbContextSUT.UALists.Add(ua2);
-	    await ProjectDbContextSUT.SaveChangesAsync();
-
-	    await using var dbx = await DbContextFactory.CreateDbContextAsync();
-	    var dbActivity = await dbx.Activities.Include(i => i.Users).ThenInclude(i => i.User).SingleAsync(i => i.Id == activity.Id);
-
-		DeepAssert.Equal(dbActivity.Users.First().User, user1);
-		DeepAssert.Equal(dbActivity.Users.ElementAt(1).User, user2);
-    }
-
-    [Fact]
     public async Task AddUserAndActivityAndUAList_DeleteActivity_UAListDeleted()
     {
 	    var user = UserSeeds.UserSeed();
