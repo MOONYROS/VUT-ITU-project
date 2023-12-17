@@ -67,21 +67,33 @@
                             <Calendar SelectedDate="{Binding Date, Mode=TwoWay}"/>
                         </Border>
                     </Viewbox>
-                    <ComboBox ItemsSource="{Binding Tags}"
-                              SelectedItem="{Binding SelectedTag}"
-                              Style="{StaticResource BasicComboBox}"
-                              Width="100">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <Label Content="Tag:"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"/>
+                    
+                        <Border Style="{StaticResource BasicBorder}">
+                            <ComboBox ItemsSource="{Binding Tags}"
+                                      SelectedItem="{Binding SelectedTag}"
+                                      Style="{StaticResource BasicComboBox}"
+                                      Width="100">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>    
+                        </Border>
+                    </StackPanel>
+                    
                     <Button Command="{Binding ApplyFilterCommand}"
                             Content="Apply filter"
                             Style="{StaticResource OrangeButton}"/>
+                    
                     <Button Command="{Binding ListAllCommand}"
                             Content="List All"
                             Margin="0"
