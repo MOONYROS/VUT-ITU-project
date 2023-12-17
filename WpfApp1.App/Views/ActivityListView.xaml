@@ -23,6 +23,7 @@
                     <Button Content="TODOS" Style="{StaticResource BasicButton}" Command="{Binding GoToTodoListViewCommand}"/>
                     <Button Content="ACTIVITIES" Style="{StaticResource BasicButton}"/>
                     <Button Content="TAGS" Style="{StaticResource BasicButton}" Command="{Binding GoToTagListViewCommand}"/>
+                    <Button Content="CALENDAR" Style="{StaticResource OrangeButton}" Command="{Binding GoToCalendarViewCommand}"/>
                 </StackPanel>
                 
                 <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
@@ -130,7 +131,7 @@
                             <Border Background="#FFF4E7" 
                                     BorderBrush="#FF8200" 
                                     BorderThickness="2" 
-                                    Margin="20" 
+                                    Margin="20,20,20,0"
                                     Padding="10" 
                                     CornerRadius="5">
                                 <Grid>

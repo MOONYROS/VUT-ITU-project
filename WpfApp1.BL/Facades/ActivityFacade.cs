@@ -269,13 +269,15 @@ public class ActivityFacade :
 	    {
 		    throw new NotSupportedException();
 	    }
-	    else if (from == null)
+
+	    if (from == null)
 	    {
 		    query = query.Where(i => i.DateTimeTo <= to);
 	    }
 	    else if (to == null)
 	    {
-		    query = query.Where(i => i.DateTimeFrom >= from);
+		    DateTime tmpFrom = (DateTime)from;
+		    query = query.Where(i => i.DateTimeFrom >= from && i.DateTimeFrom <= tmpFrom.AddDays(1));
 	    }
 	    else
 	    {

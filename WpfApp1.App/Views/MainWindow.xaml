@@ -47,6 +47,9 @@
                         <DataTemplate DataType="{x:Type viewModels:ActivityEditViewModel}">
                                 <views:ActivityEditView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:ActivityCalendarViewModel}">
+                                <views:ActivityCalendarView/>
+                        </DataTemplate>
                 </ContentControl.Resources>
         </ContentControl>
 </Window>

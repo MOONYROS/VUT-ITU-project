@@ -45,7 +45,8 @@ public partial class ActivityListViewModel : ViewModelBase,
 		ISharedUserIdService userIdService,
 		ITagFacade tagFacade,
 		ISharedActivityIdService activityIdService,
-		TagDetailModel selectedTag, IActivityTagFacade activityTagFacade)
+		TagDetailModel selectedTag,
+		IActivityTagFacade activityTagFacade)
 	{
 		_messengerService = messengerService;
 		_activityFacade = activityFacade;
@@ -188,6 +189,13 @@ public partial class ActivityListViewModel : ViewModelBase,
 		_activityIdService.ActivityId = activityId;
 		_navigationService.NavigateTo<ActivityEditViewModel>();
 		_messengerService.Send(new ActivityEditNavigationMessage());
+	}
+
+	[RelayCommand]
+	private void GoToCalendarView()
+	{
+		_navigationService.NavigateTo<ActivityCalendarViewModel>();
+		_messengerService.Send(new NavigationMessage());
 	}
 	
 	public async void Receive(NavigationMessage message)
