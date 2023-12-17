@@ -23,32 +23,35 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 {
 	private readonly IActivityFacade _activityFacade;
 	private readonly INavigationService _navigationService;
-	private readonly ISharedUserIdService _idService;
+	private readonly ISharedUserIdService _userIdService;
 	private readonly IMessengerService _messengerService;
 	private readonly IActivityTagFacade _activityTagFacade;
 	private readonly ITagFacade _tagFacade;
+	private readonly ISharedActivityIdService _activityIdService;
 	private bool _firstLoad = true;
 
-	public ObservableCollection<ActivityListModel> Activities { get; set; } = new();
+	public ObservableCollection<ActivityListModel> Activities { get; private set; } = new();
 	public DateTime Date { get; set; } = DateTime.Today;
 	public TagDetailModel SelectedTag { get; set; }
-	public ObservableCollection<TagDetailModel> Tags { get; set; }
+	public ObservableCollection<TagDetailModel> Tags { get; private set; }
 
 	public ActivityCalendarViewModel(
 		IActivityFacade activityFacade,
 		INavigationService navigationService,
-		ISharedUserIdService idService,
+		ISharedUserIdService userIdService,
 		IMessengerService messengerService,
 		IActivityTagFacade activityTagFacade,
 		TagDetailModel defaultTag,
-		ITagFacade tagFacade)
+		ITagFacade tagFacade,
+		ISharedActivityIdService activityIdService)
 	{
 		_activityFacade = activityFacade;
 		_navigationService = navigationService;
-		_idService = idService;
+		_userIdService = userIdService;
 		_messengerService = messengerService;
 		_activityTagFacade = activityTagFacade;
 		_tagFacade = tagFacade;
+		_activityIdService = activityIdService;
 		SelectedTag = defaultTag;
 		_messengerService.Messenger.Register<NavigationMessage>(this);
 		_messengerService.Messenger.Register<ActivityAddedMessage>(this);
@@ -59,14 +62,14 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 
 	protected override async Task LoadDataAsync()
 	{
-		var tmpActivities2 = await _activityFacade.GetUserActivitiesAsync(_idService.UserId);
+		var tmpActivities2 = await _activityFacade.GetUserActivitiesAsync(_userIdService.UserId);
 		var activitiesList2 = await FixTags(tmpActivities2);
 		Activities = activitiesList2.ToObservableCollection();
 	}
 
 	private async Task LoadTagsAsync()
 	{
-		var tmpTags = await _tagFacade.GetAsyncUser(_idService.UserId);
+		var tmpTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
 		Tags = tmpTags.ToObservableCollection();
 		Tags.Insert(0, TagDetailModel.Empty);
 	}
@@ -74,7 +77,7 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 	private async Task<List<ActivityListModel>> FixTags(IEnumerable<ActivityListModel> tmpActivities)
 	{
 		var tmpActList = tmpActivities.ToList();
-		var tmpUserTags = await _tagFacade.GetAsyncUser(_idService.UserId);
+		var tmpUserTags = await _tagFacade.GetAsyncUser(_userIdService.UserId);
 		// Musi byt list, u IEnumerable se clear nepropise do puvodni kolekce
 		tmpUserTags = tmpUserTags.ToList();
 		foreach (var activity in tmpActList)
@@ -109,7 +112,7 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 	[RelayCommand]
 	private void LogOut()
 	{
-		_idService.UserId = Guid.Empty;
+		_userIdService.UserId = Guid.Empty;
 		_navigationService.NavigateTo<HomeViewModel>();
 		_messengerService.Send(new LogOutMessage());
 	}
@@ -154,7 +157,7 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 			tagId = null;
 		}
 
-		var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_idService.UserId, Date, null, tagId);
+		var tmpActivities = await _activityFacade.GetActivitiesDateTagFilterAsync(_userIdService.UserId, Date, null, tagId);
 		var activitiesList = await FixTags(tmpActivities);
 		Activities = activitiesList.ToObservableCollection();
 	}
@@ -163,6 +166,14 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 	private async Task ListAll()
 	{
 		await LoadDataAsync();
+	}
+
+	[RelayCommand]
+	private void GoToEditActivity(Guid activityId)
+	{
+		_activityIdService.ActivityId = activityId;
+		_navigationService.NavigateTo<ActivityEditViewModel>();
+		_messengerService.Send(new ActivityEditNavigationMessage());
 	}
 
 	public async void Receive(NavigationMessage message)
