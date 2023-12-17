@@ -86,26 +86,17 @@ public partial class ActivityListViewModel : ViewModelBase,
 		foreach (var activity in tmpActList)
 		{
 			activity.Tags.Clear();
-			var tmpAtBindings = await _activityTagFacade.GetAsync(activity.Id);
-
-			foreach (var tmpAtBinding in tmpAtBindings)
+			var activityTags = await _tagFacade.GetAsyncActivity(activity.Id);
+			foreach (var activityTag in activityTags)
 			{
-				AddTagToActivity(tmpAtBinding, tmpUserTags, activity);
+				if (tmpUserTags.Any(tag => activityTag.Id == tag.Id))
+				{
+					activity.Tags.Add(activityTag);
+				}
 			}
 		}
 
 		return tmpActList;
-	}
-
-	private void AddTagToActivity(ActivityTagListEntity at, IEnumerable<TagDetailModel> userTags, ActivityListModel activity)
-	{
-		foreach (var userTag in userTags)
-		{
-			if (userTag.Id == at.TagId)
-			{
-				activity.Tags.Add(userTag);
-			}
-		}
 	}
 
 	[RelayCommand]

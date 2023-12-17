@@ -6,4 +6,5 @@ namespace WpfApp1.BL.Facades.Interfaces;
 public interface ITagFacade : IFacadeDetailOnly<TagEntity, TagDetailModel>
 {
     Task<IEnumerable<TagDetailModel>> GetAsyncUser(Guid userId);
+    Task<IEnumerable<TagDetailModel>> GetAsyncActivity(Guid activityId);
 }
