@@ -101,4 +101,17 @@ public class UserFacade :
 	        .ToListAsync();
         return _userModelMapper.MapToListModel(entities);
     }
+
+    public async Task<IEnumerable<UserListModel>> GetActivityUsersAsync(Guid activityId)
+    {
+		await using var uow = UnitOfWorkFactory.Create();
+		IEnumerable<UserEntity> entities = await uow
+			.GetRepository<UserEntity, UserEntityMapper>()
+			.Get()
+			.Include($"{nameof(UserEntity.Activities)}.{nameof(UserActivityListEntity.Activity)}")
+			.Where(user => user.Activities.Any(activity => activity.ActivityId == activityId))
+			.ToListAsync();
+
+		return _userModelMapper.MapToListModel(entities);
+    }
 }

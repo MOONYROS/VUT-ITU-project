@@ -5,4 +5,5 @@ namespace WpfApp1.BL.Facades.Interfaces;
 
 public interface IUserFacade : IFacade<UserEntity, UserListModel, UserDetailModel>
 {
+	Task<IEnumerable<UserListModel>> GetActivityUsersAsync(Guid activityId);
 }

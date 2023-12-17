@@ -75,7 +75,7 @@ public partial class ActivityCalendarViewModel : ViewModelBase,
 	{
 		var tmpActList = tmpActivities.ToList();
 		var tmpUserTags = await _tagFacade.GetAsyncUser(_idService.UserId);
-		// Musi byt list, u IEnumerable se clear nepropise do puvodni kolekces
+		// Musi byt list, u IEnumerable se clear nepropise do puvodni kolekce
 		tmpUserTags = tmpUserTags.ToList();
 		foreach (var activity in tmpActList)
 		{

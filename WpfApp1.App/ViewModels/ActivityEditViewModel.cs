@@ -26,11 +26,12 @@ public partial class ActivityEditViewModel : ViewModelBase,
 	private readonly IActivityFacade _activityFacade;
 	private readonly ITagFacade _tagFacade;
 	private readonly IActivityTagFacade _activityTagFacade;
+	private readonly IUserFacade _userFacade;
 
 	public ActivityDetailModel Activity { get; private set; }
 	public ObservableCollection<TagSelectModel> AvailableTagsSelect { get; private set; } = new();
 	private IEnumerable<Guid> AssignedTags { get; set; } = new List<Guid>();
-
+	public ObservableCollection<UserListModel> ParticipatingUsers { get; private set; }
 	public ActivityEditViewModel(
 		IMessengerService messengerService,
 		ISharedActivityIdService activityIdService,
@@ -38,7 +39,8 @@ public partial class ActivityEditViewModel : ViewModelBase,
 		INavigationService navigationService,
 		IActivityFacade activityFacade, 
 		ITagFacade tagFacade, 
-		IActivityTagFacade activityTagFacade)
+		IActivityTagFacade activityTagFacade,
+		IUserFacade userFacade)
 	{
 		_messengerService = messengerService;
 		_activityIdService = activityIdService;
@@ -47,6 +49,7 @@ public partial class ActivityEditViewModel : ViewModelBase,
 		_activityFacade = activityFacade;
 		_tagFacade = tagFacade;
 		_activityTagFacade = activityTagFacade;
+		_userFacade = userFacade;
 		_messengerService.Messenger.Register<ActivityEditNavigationMessage>(this);
 	}
 
@@ -79,6 +82,9 @@ public partial class ActivityEditViewModel : ViewModelBase,
 			tmpTagList = tmpTagList.Append(tagSelect);
 		}
 		AvailableTagsSelect = tmpTagList.ToObservableCollection();
+
+		var tmpUsers = await _userFacade.GetActivityUsersAsync(_activityIdService.ActivityId);
+		ParticipatingUsers = tmpUsers.ToObservableCollection();
 	}
 
 	private bool ValidCheck()
