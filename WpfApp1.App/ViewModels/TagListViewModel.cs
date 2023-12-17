@@ -78,6 +78,7 @@ public partial class TagListViewModel : ViewModelBase,
 	{
 		await _tagFacade.DeleteAsync(userId);
 		await LoadDataAsync();
+		_messengerService.Send(new TagAddedMessage());//delete
 	}
 
 	[RelayCommand]
