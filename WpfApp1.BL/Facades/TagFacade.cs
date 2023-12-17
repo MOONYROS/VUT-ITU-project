@@ -31,4 +31,17 @@ public class TagFacade :
 
         return _tagModelMapper.MapToDetailModel(entities);
     }
+
+    public async Task<IEnumerable<TagDetailModel>> GetAsyncActivity(Guid activityId)
+    {
+	    await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+	    List<TagEntity> entities = await uow
+		    .GetRepository<TagEntity, TagEntityMapper>()
+		    .Get()
+		    .Include($"{nameof(TagEntity.Activities)}.{nameof(ActivityTagListEntity.Activity)}")
+		    .Where(tag => tag.Activities.Any(activity => activity.ActivityId == activityId))
+		    .ToListAsync();
+
+	    return _tagModelMapper.MapToDetailModel(entities);
+    }
 }
